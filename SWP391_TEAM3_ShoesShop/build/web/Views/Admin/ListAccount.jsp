@@ -3,7 +3,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Models.ProductAdmin" %> 
-<%@ page import="Models.Category" %>
 <!DOCTYPE html>
 <html lang="en"> 
     <head>
