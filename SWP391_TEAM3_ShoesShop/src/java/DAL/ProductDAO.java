@@ -124,6 +124,25 @@ public class ProductDAO extends DBContext{
             }
         }
     }
+    public void insertProduct(Product product) {
+        //  truy vấn INSERT 
+        String sql = "INSERT INTO Product ( ProductName, Description, Quantity, Price, BrandID, AvatarP) VALUES ( ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            
+            ps.setString(1, product.getProductName());
+            ps.setString(2, product.getDescription());
+            ps.setInt(3, product.getQuantity());
+            ps.setDouble(4, product.getPrice());
+            ps.setInt(5, product.getBrandId());
+            ps.setString(6, product.getAvatarP());
+            
+            ps.executeUpdate();
+            //chạy query
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     
     //Update a product in the DB
     public boolean updateProduct(Product p){

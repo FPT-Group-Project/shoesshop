@@ -28,6 +28,18 @@ public class Product {
         this.avatarP = avatarP;
     }
 
+    public Product(String productName, String description, int quantity, double price, int brandId, String avatarP) {
+        this.productName = productName;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+        this.brandId = brandId;
+        this.avatarP = avatarP;
+    }
+
+    
+    
+
     public int getProductId() {
         return productId;
     }
