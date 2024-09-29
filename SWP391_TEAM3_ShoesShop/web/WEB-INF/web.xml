@@ -56,4 +56,20 @@
         <servlet-name>OrderComplete</servlet-name>
         <url-pattern>/order-complete</url-pattern>
     </servlet-mapping>
+      <servlet>
+        <servlet-name>DeleteProductController</servlet-name>
+        <servlet-class>ControllersAdmin.DeleteProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BrandController</servlet-name>
+        <servlet-class>ControllersAdmin.BrandController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteProductController</servlet-name>
+        <url-pattern>/DeleteProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BrandController</servlet-name>
+        <url-pattern>/BrandController</url-pattern>
+    </servlet-mapping>
 </web-app>
