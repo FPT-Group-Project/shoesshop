@@ -56,9 +56,9 @@
                                 <div id="colorlib-logo"><a href="home">Footwear</a></div>
                             </div>
                             <div class="col-sm-5 col-md-3">
-                                <form action="#" class="search-wrap">
+                                <form action="searchProduct" method="get" class="search-wrap">
                                     <div class="form-group">
-                                        <input type="search" class="form-control search" placeholder="Search">
+                                        <input type="search" class="form-control search" name="searchQuery" placeholder="Search" value="${searchQuery}">
                                         <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
                                     </div>
                                 </form>
