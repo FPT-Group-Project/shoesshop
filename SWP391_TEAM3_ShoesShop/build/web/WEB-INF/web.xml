@@ -72,4 +72,12 @@
         <servlet-name>BrandController</servlet-name>
         <url-pattern>/BrandController</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>searchProduct</servlet-name>
+        <servlet-class>Controllers.searchProduct</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>searchProduct</servlet-name>
+        <url-pattern>/searchProduct</url-pattern>
+    </servlet-mapping>
 </web-app>
