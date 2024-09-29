@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/src/java/DAL/ListAccountDao.java</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/src/java/DAL/ListBrandDao.java</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/docs.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Admin/ListBrand.jsp</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Admin/ListAccount.jsp</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/sass/bootstrap/_tables.scss</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/BrandController.java</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/settings.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Admin/AdminProductList.jsp</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Admin/ListProduct.jsp</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Customer/cart.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/css/style.css</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/charts.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/assets/css/portal.css</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/DeleteProductController.java</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/sass/bootstrap/_root.scss</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Customer/checkout.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Customer/about.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/AccoutListController.java</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/src/java/DAL/DBContext.java</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/reset-password.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/404.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/index.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/ImageProductAvt/imageP_11.png</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/index.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Customer/add-to-wishlist.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/src/java/DAL/ListProductAdminDao.java</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/login.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/signup.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/notifications.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/.gitignore</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/orders.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/account.html</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/ProductListController.java</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/src/java/Models/Brand.java</file>
+            <file>file:/G:/SWP391_TEAM3_ShoesShop/web/Views/Staff/help.html</file>
+        </group>
+    </open-files>
+</project-private>
