@@ -20,6 +20,22 @@ public class Account {
     private String roleId;
     private String imgAccount;
     private String status;
+    
+    // bien bi trung nhau, doi sua lai sau
+    private int accountID;
+    private String userName;
+    private String password;
+    private int roleID;
+    
+    public Account(int accountID, String userName, String password, String fullName, String email, String phoneNumber, int roleID) {
+        this.accountID = accountID;
+        this.userName = userName;
+        this.password = password;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.roleID = roleID;
+    }
 
     public Account() {
     }
@@ -125,6 +141,7 @@ public class Account {
     public void setStatus(String status) {
         this.status = status;
     }
+    
     
     
 }
