@@ -20,56 +20,18 @@ public class Account {
     private String roleId;
     private String imgAccount;
     private String status;
-    
-    // bien bi trung nhau, doi sua lai sau
-    private int accountID;
-    private String userName;
-    private String password;
-    private int roleID;
-    
-    public Account(int accountID, String userName, String password, String fullName, String email, String phoneNumber, int roleID) {
-        this.accountID = accountID;
-        this.userName = userName;
-        this.password = password;
-        this.fullName = fullName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.roleID = roleID;
-    }
-
-    public int getAccountID() {
-        return accountID;
-    }
-
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getRoleID() {
-        return roleID;
-    }
-
-    public void setRoleID(int roleID) {
-        this.roleID = roleID;
-    }
 
     public Account() {
+    }
+
+    public Account(int accountId, String fullName, String username, String passWord, String email, String phoneNumber, String roleId) {
+        this.accountId = accountId;
+        this.fullName = fullName;
+        this.username = username;
+        this.passWord = passWord;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.roleId = roleId;
     }
 
     public Account(int accountId, String fullName, String username, String passWord, String gender, String email, String phoneNumber, String address, String roleId, String imgAccount, String status) {
@@ -173,7 +135,6 @@ public class Account {
     public void setStatus(String status) {
         this.status = status;
     }
-    
     
     
 }

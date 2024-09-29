@@ -50,7 +50,7 @@ List<Account> listAccounts =new  ArrayList<>();
                 rs.getString("FullName"),
                 rs.getString("Email"),
                 rs.getString("PhoneNumber"),
-                rs.getInt("RoleID"));
+                rs.getString("RoleID"));
             listAccounts.add(acc);
             }
 
@@ -92,7 +92,7 @@ List<Account> listAccounts =new  ArrayList<>();
                 rs.getString("FullName"),
                 rs.getString("Email"),
                 rs.getString("PhoneNumber"),
-                rs.getInt("RoleID"));
+                rs.getString("RoleID"));
             listAccounts.add(acc);
             }
 
