@@ -81,8 +81,7 @@
 								<li><a href="women.html">Women</a></li>
 								<li><a href="about.html">About</a></li>
 								<li><a href="contact.html">Contact</a></li>
-								<li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [${itemCount}]</a></li>
-
+								<li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
 							</ul>
 						</div>
 					</div>
@@ -175,14 +174,15 @@
 									<h3>${cart.product.productName}</h3>
 								</div>
 							</div>
-							<div class="one-eight text-center">
+							
+                                                                <div class="one-eight text-center">
 								<div class="display-tc">
 									<span class="price">$${cart.product.price}</span>
 								</div>
 							</div>
 							<div class="one-eight text-center">
 								<div class="display-tc">
-                                                                    <input type="number" id="quantity" name="quantity" class="form-control input-number text-center" value="${cart.quantity}" min="1" max="100" onchange="changeQuantity(this)">
+                                                                    <input type="number" id="quantity" name="quantity" class="form-control input-number text-center" value="${cart.quantity}" min="1" max="${cart.stock.quantity}" onchange="changeQuantity(this, ${cart.stock.quantity})">
 								</div>
 							</div>
 							<div class="one-eight text-center">
@@ -201,9 +201,12 @@
 					</div>
 				</div>
                             <script>
-                                function changeQuantity(input) {
+                                function changeQuantity(input, max) {
                                     let parent = input.parentNode.parentNode.parentNode;
                                     let quantity = input.value <= 0 ? 1 : input.value;
+                                    if(quantity > max) {
+                                        quantity = max;
+                                    }
                                     let cartId = parent.children[0].value;
                                     let price = parent.querySelectorAll('span[class=price]')[0];
                                     let total = parent.querySelectorAll('span[class=price]')[1];

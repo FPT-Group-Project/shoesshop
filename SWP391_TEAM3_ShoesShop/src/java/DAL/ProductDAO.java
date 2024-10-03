@@ -7,6 +7,7 @@ package DAL;
 import Models.Image;
 import Models.Product;
 import Models.Size;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,15 +32,15 @@ public class ProductDAO extends DBContext{
                 int productId=rs.getInt("ProductID");
                 String productName=rs.getString("ProductName");
                 String description=rs.getString("Description");
-                int quantity=rs.getInt("Quantity");
                 double price=rs.getDouble("Price");
                 int brandId=rs.getInt("BrandID");
                 String avatarP=rs.getString("AvatarP");
-                Product p = new Product(productId, productName, description, quantity, price, brandId, avatarP);
+                Product p = new Product(productId, productName, description, price, brandId, avatarP);
                 list.add(p);
             }
         }
         catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("Can't get products"); 
             return new ArrayList<>();
         }
@@ -105,16 +106,15 @@ public class ProductDAO extends DBContext{
             return false;            
         }
         else{
-            String sql="insert into Product values(?, ?, ?, ?, ?, ?, ?)";
+            String sql="insert into Product values(?, ?, ?, ?, ?, ?)";
             try{
                 PreparedStatement pre=connection.prepareStatement(sql);
                 pre.setInt(1, p.getProductId());
                 pre.setString(2, p.getProductName());
                 pre.setString(3, p.getDescription());
-                pre.setInt(4, p.getQuantity());
-                pre.setDouble(5, p.getPrice());
-                pre.setInt(6, p.getBrandId());
-                pre.setString(7, p.getAvatarP());
+                pre.setDouble(4, p.getPrice());
+                pre.setInt(5, p.getBrandId());
+                pre.setString(6, p.getAvatarP());
                 pre.executeUpdate();
                 return true;
             }
@@ -133,17 +133,16 @@ public class ProductDAO extends DBContext{
         }
         else{
             String sql="update Product\n"
-                     + "set ProductName=?, Description=?, Quantity=?, Price=?, BrandID=?, AvatarP=?\n"
+                     + "set ProductName=?, Description=?, Price=?, BrandID=?, AvatarP=?\n"
                      + "where ProductID=?";
             try{
                 PreparedStatement pre=connection.prepareStatement(sql);
                 pre.setInt(8, p.getProductId());
                 pre.setString(1, p.getProductName());
                 pre.setString(2, p.getDescription());
-                pre.setInt(3, p.getQuantity());
-                pre.setDouble(4, p.getPrice());
-                pre.setInt(5, p.getBrandId());
-                pre.setString(6, p.getAvatarP());
+                pre.setDouble(3, p.getPrice());
+                pre.setInt(4, p.getBrandId());
+                pre.setString(5, p.getAvatarP());
                 pre.executeUpdate();
                 return true;
             }
@@ -173,6 +172,30 @@ public class ProductDAO extends DBContext{
                 return false;
             }
         }        
+    }
+    
+    public List<Models.Stock> getProductStock(Product p){
+        List<Models.Stock> Stocks=new ArrayList<>();
+        String sql="select ps.* from Product p join ProductStock ps on p.ProductID=ps.ProductID\n"
+                 + "where p.ProductID=?";
+        try{
+            PreparedStatement pre=connection.prepareStatement(sql);
+            pre.setInt(1, p.getProductId());
+            ResultSet rs=pre.executeQuery();
+            while(rs.next()){
+                int stockId = rs.getInt("StockId");
+                int colorId=rs.getInt("ColorID");
+                int SizeID=rs.getInt("SizeID");
+                int productId=rs.getInt("ProductID");
+                int quantity = rs.getInt("quantity");
+                Models.Stock c = new Models.Stock(stockId, colorId, SizeID, productId, quantity);
+                Stocks.add(c);
+            }
+        }
+        catch(SQLException e){
+            System.out.println("Can't get colors");
+        }
+        return Stocks;
     }
     
     public List<Models.Color> getProductColors(Product p){
@@ -208,8 +231,7 @@ public class ProductDAO extends DBContext{
                 int sizeId=rs.getInt("SizeID");
                 int productId=rs.getInt("ProductID");
                 int size=rs.getInt("Size");
-                int quantity=rs.getInt("Quantity");
-                Size s = new Size(sizeId, productId, size, quantity);
+                Size s = new Size(sizeId, productId, size);
                 sizes.add(s);
             }
         }
@@ -220,7 +242,7 @@ public class ProductDAO extends DBContext{
     }
     public List<Image> getProductImages(Product p){
         List<Image> images=new ArrayList<>();
-        String sql="select i.* from Product p join Image i on p.ImageID=i.ImageID\n"
+        String sql="select i.* from Product p join Product_Image i on p.ProductID=i.ProductID\n"
                  + "where p.ProductID=?";
         try{
             PreparedStatement pre=connection.prepareStatement(sql);
@@ -234,6 +256,7 @@ public class ProductDAO extends DBContext{
             }
         }
         catch(SQLException e){
+            e.printStackTrace();
             System.out.println("Can't get images");
         }
         return images;
@@ -273,11 +296,10 @@ public class ProductDAO extends DBContext{
                 }
                 String productName=rs.getString("ProductName");
                 String description=rs.getString("Description");
-                int quantity=rs.getInt("Quantity");
                 double price=rs.getDouble("Price");
                 int brandId=rs.getInt("BrandID");
                 String avatarP=rs.getString("AvatarP");
-                Product p = new Product(productId, productName, description, quantity, price, brandId, avatarP);
+                Product p = new Product(productId, productName, description, price, brandId, avatarP);
                 list.add(p);
             }
         }
@@ -287,7 +309,45 @@ public class ProductDAO extends DBContext{
         }
         return list;
     }
+     Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+ public List<Product> searchByName(String txtSearch) {
+    List<Product> list = new ArrayList<>();
+    String query = "SELECT * FROM Product WHERE [ProductName] LIKE ?";
     
+    try {
+        conn = new DBContext().connection; // Open connection with SQL
+        ps = conn.prepareStatement(query);
+        ps.setString(1, "%" + txtSearch + "%");
+        rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            // Assuming the Product constructor matches the fields in the Product table
+            list.add(new Product(
+                rs.getInt("ProductID"), // Field for Product ID
+                rs.getString("ProductName"), // Field for Product Name
+                rs.getString("Description"), // Field for Description
+                rs.getDouble("Price"), // Field for Price
+                rs.getInt("BrandID"), // Field for Brand ID
+                rs.getString("AvatarP") // Field for Avatar Path
+            ));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Print stack trace for debugging
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (conn != null) conn.close(); // Close resources
+        } catch (SQLException e) {
+            e.printStackTrace(); // Print stack trace for debugging
+        }
+    }
+    return list;
+}
+
     //Check if an id (and by extension, a product) already exists in the list
     public boolean productIdExists(int productId, List<Product> list){
         for(int i=0;i<list.size();i++){
@@ -305,11 +365,10 @@ public class ProductDAO extends DBContext{
     public void printAllProducts(List<Product> list){
         for(int i=0;i<list.size();i++){
             Product p = list.get(i);
-            System.out.printf("%-3d | %-30s | %-70s | %-4d | %-8.2f | %-2d | %-20s%n",
+            System.out.printf("%-3d | %-30s | %-70s | %-8.2f | %-2d | %-20s%n",
                     p.getProductId(),
                     p.getProductName(),
                     p.getDescription(),
-                    p.getQuantity(),
                     p.getPrice(),
                     p.getBrandId(),
                     p.getAvatarP()
@@ -333,9 +392,5 @@ public class ProductDAO extends DBContext{
             prd.printAllProducts(pageList.get(i));
             System.out.println();
         }
-    }
-
-    public List<Product> searchByName(String txtSearch) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

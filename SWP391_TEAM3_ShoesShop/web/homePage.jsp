@@ -83,8 +83,7 @@
                                     <li><a href="women.html">Women</a></li>
                                     <li><a href="about.html">About</a></li>
                                     <li><a href="contact.html">Contact</a></li>
-                                   <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [${itemCount}]</a></li>
-
+                                    <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -137,7 +136,7 @@
                                 <div class="col-lg-3 mb-4 text-center" >
                                     <div class="product-entry border">
                                         <a href="productDetail?id=${p.getProductId()}" class="prod-img">
-                                            <img src="ImageProductAvt/imageP_1.png" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                                            <img src="ImageProductAvt/${p.avatarP}" class="img-fluid" alt="Free html5 bootstrap 4 template">
                                         </a>
                                         <div class="desc">
                                             <h2><a href="productDetail?id=${p.getProductId()}">${p.getProductName()}</a></h2>

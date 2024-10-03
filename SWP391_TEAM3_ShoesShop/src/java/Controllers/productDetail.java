@@ -76,6 +76,7 @@ public class productDetail extends HttpServlet {
             request.setAttribute("sizes", prd.getProductSizes(p));
             request.setAttribute("colors", prd.getProductColors(p));
             request.setAttribute("images", prd.getProductImages(p));
+            request.setAttribute("ProductStock", prd.getProductStock(p));
         }
         request.getRequestDispatcher("productDetail.jsp").forward(request, response);
     } 

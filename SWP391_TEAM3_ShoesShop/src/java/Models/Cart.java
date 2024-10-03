@@ -12,23 +12,30 @@ public class Cart extends Product{
     private int cartID;      // Khóa chính
     private int productID;   // Khóa ngoại tham chiếu đến bảng Product
     private int accountID;   // Khóa ngoại tham chiếu đến bảng Account
-    private int colorID; // Có thể null
-    private int sizeID;  // Có thể null
+    private int StockID;
     private int quantity;// Có thể null
     private String image;// Có thể null
     private Product product;
+    private Stock stock;
 
     public Cart() {
     }
 
     // Constructor
-    public Cart(int cartID, int productID, int accountID, Integer colorID, Integer sizeID, Integer quantity) {
+    public Cart(int cartID, int productID, int accountID, Integer StockID, Integer quantity) {
         this.cartID = cartID;
         this.productID = productID;
         this.accountID = accountID;
-        this.colorID = colorID;
-        this.sizeID = sizeID;
+        this.StockID = StockID;
         this.quantity = quantity;
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
 
     public Product getProduct() {
@@ -64,23 +71,15 @@ public class Cart extends Product{
         this.accountID = accountID;
     }
 
-    public Integer getColorID() {
-        return colorID;
+    public int getStockID() {
+        return StockID;
     }
 
-    public void setColorID(Integer colorID) {
-        this.colorID = colorID;
+    public void setStockID(int StockID) {
+        this.StockID = StockID;
     }
+    
 
-    public Integer getSizeID() {
-        return sizeID;
-    }
-
-    public void setSizeID(Integer sizeID) {
-        this.sizeID = sizeID;
-    }
-
-    @Override
     public int getQuantity() {
         return quantity;
     }

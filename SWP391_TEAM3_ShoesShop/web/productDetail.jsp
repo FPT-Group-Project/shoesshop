@@ -201,16 +201,32 @@
                                                         <i class="icon-minus2"></i>
                                                     </button>
                                                 </span>
-                                                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="${p.getQuantity()}">
+                                                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1">
                                                 <span class="input-group-btn ml-1">
                                                     <button type="button" class="quantity-right-plus btn" onclick="changeProductQuantity(1)" data-type="plus" data-field="">
                                                         <i class="icon-plus2"></i>
                                                     </button>
                                                 </span>
                                                 <script>
+                                                    var stocks = new Array();
+                                                        <c:forEach items="${ProductStock}" var="stock">
+                                                            stocks.push({'quantity': ${stock.quantity}, 'colorId': ${stock.colorID}, 'sizeID': ${stock.sizeID}});
+                                                        </c:forEach>
                                                     function changeProductQuantity(n){
                                                         const quantity=document.getElementById("quantity");
-                                                        const current=Number(quantity.value), min=Number(quantity.min), max=Number(quantity.max);
+                                                        const current=Number(quantity.value), min=Number(quantity.min);
+                                                        let max = 0;
+                                                        let size = document.querySelector('input[name=sizes]:checked');
+                                                        let color = document.querySelector('input[name=colors]:checked');
+                                                        if(size && color) {
+                                                            for (var i in stocks) {
+                                                                var stock = stocks[i];
+                                                                if(stock.colorId == parseInt(color.value) && stock.sizeID == parseInt(size.value)) {
+                                                                    max = stock.quantity;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        }
                                                         const changed=current+n;
                                                         if(changed>=min && changed<=max){
                                                             quantity.value=changed;
