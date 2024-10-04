@@ -78,7 +78,7 @@ public class productDetail extends HttpServlet {
             request.setAttribute("images", prd.getProductImages(p));
             request.setAttribute("ProductStock", prd.getProductStock(p));
         }
-        request.getRequestDispatcher("productDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Customer/productDetail.jsp").forward(request, response);
     } 
 
     /** 

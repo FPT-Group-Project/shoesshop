@@ -133,7 +133,7 @@ public class CartDAO extends DBContext {
         }
         return null; // Nếu không tìm thấy sản phẩm trong giỏ hàng
     }
-     public int countItemsByAccountId(int accountId) {
+      public int countItemsByAccountId(int accountId) {
         int itemCount = 0;
         String sql = "SELECT COUNT(ProductID) AS itemCount FROM Cart WHERE AccountID = ?";
         

@@ -5,7 +5,6 @@
 
 package Controllers;
 
-import DAL.CartDAO;
 import DAL.ProductDAO;
 import Models.Product;
 import java.io.IOException;
@@ -58,7 +57,6 @@ public class home extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         ProductDAO prd=new ProductDAO();
-       
         List<Product> productList=prd.getAllProducts();
         List<List<Product>> productPageList=prd.getAllProductsPaginated(productList, 12);
         String page=request.getParameter("page");
@@ -72,7 +70,7 @@ public class home extends HttpServlet {
         List<Product> pageContent=productPageList.get(pageNumber-1);
         request.setAttribute("list", pageContent);
         request.setAttribute("pagesNumber", productPageList.size());
-        request.getRequestDispatcher("homePage.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Customer/homePage.jsp").forward(request, response);
         
     } 
 

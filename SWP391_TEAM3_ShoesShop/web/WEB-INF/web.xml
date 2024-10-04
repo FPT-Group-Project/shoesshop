@@ -29,16 +29,8 @@
         <servlet-class>Controllers.OrderComplete</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>About</servlet-name>
-        <servlet-class>Controllers.About</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>contact</servlet-name>
         <servlet-class>Controllers.contact</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SendMail</servlet-name>
-        <servlet-class>Controllers.SendMail</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>home</servlet-name>
@@ -69,15 +61,7 @@
         <url-pattern>/order-complete</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>About</servlet-name>
-        <url-pattern>/about</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>contact</servlet-name>
         <url-pattern>/contact</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SendMail</servlet-name>
-        <url-pattern>/send</url-pattern>
     </servlet-mapping>
 </web-app>
