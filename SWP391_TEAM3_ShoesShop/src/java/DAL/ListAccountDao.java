@@ -4,23 +4,21 @@
  */
 package DAL;
 
-import Models.AccountAdmin;
+import Models.Account;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-// get list acc để hiển thị 
+    // get list acc để hiển thị 
 
 public class ListAccountDao extends DBContext {
 
-    public List<AccountAdmin> getListAccounts(int page, int roleID, String keyWord) {
-        int itemDisplay = 5; // số lượng item 
-        int offset = (page - 1) * itemDisplay; //
-        List<AccountAdmin> listAccounts = new ArrayList<>();
-
-        // SQL query chỉnh sửa
+    public List<Account> getListAccounts(int page, int roleID, String keyWord) {
+        int itemDisplay = 5;
+        int offset = (page - 1) * itemDisplay;
+List<Account> listAccounts =new  ArrayList<>();
         String sql = "SELECT \n"
                 + "    AccountID,\n"
                 + "    UserName,\n"
@@ -32,43 +30,38 @@ public class ListAccountDao extends DBContext {
                 + "FROM \n"
                 + "    [dbo].[Account]\n"
                 + "WHERE RoleID = ?\n"
-                + "AND (UserName LIKE ? OR Email LIKE ?)\n"
-                + "ORDER BY AccountID desc \n"
+                + 
+                "AND UserName LIKE ?\n"
+                + 
+                "ORDER BY AccountID\n"
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, roleID); // Set RoleID
-            stmt.setString(2, "%" + keyWord + "%");
-            stmt.setString(3, "%" + keyWord + "%");
-            stmt.setInt(4, offset);
-            stmt.setInt(5, itemDisplay);
+            stmt.setInt(1, roleID);
+            stmt.setString(2, "%"+keyWord+"%");
 
-            // Thực thi truy vấn
+            stmt.setInt(3, offset);
+            stmt.setInt(4, page);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                AccountAdmin acc = new AccountAdmin(
-                        rs.getInt("AccountID"),
-                        rs.getString("UserName"),
-                        rs.getString("Password"),
-                        rs.getString("FullName"),
-                        rs.getString("Email"),
-                        rs.getString("PhoneNumber"),
-                        rs.getInt("RoleID")
-                );
-                listAccounts.add(acc);
+            while (rs.next()) {                
+             Account acc= new Account( rs.getInt("AccountID"),
+                rs.getString("UserName"),
+                rs.getString("Password"),
+                rs.getString("FullName"),
+                rs.getString("Email"),
+                rs.getString("PhoneNumber"),
+                rs.getString("RoleID"));
+            listAccounts.add(acc);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
         }
-        return listAccounts;
+       return listAccounts;
     }
-
-    public List<AccountAdmin> getListAccounts(int page, int roleID) {
-        int itemDisplay = 5; // Số lượng item trên mỗi trang
-        int offset = (page - 1) * itemDisplay; // Tính offset cho phân trang
-        List<AccountAdmin> listAccounts = new ArrayList<>();
-
+     public List<Account> getListAccounts(int page, int roleID) {
+        int itemDisplay = 5;
+        int offset = (page - 1) * itemDisplay;
+List<Account> listAccounts =new  ArrayList<>();
         String sql = "SELECT \n"
                 + "    AccountID,\n"
                 + "    UserName,\n"
@@ -79,104 +72,102 @@ public class ListAccountDao extends DBContext {
                 + "    RoleID\n"
                 + "FROM \n"
                 + "    [dbo].[Account]\n"
-                + "WHERE RoleID = ?\n"//1
-                + "ORDER BY AccountID desc \n"
-                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY"; //23
-
+                + "WHERE RoleID = ?\n"
+              
+                + // Tìm kiếm theo từ khóa trong FullName
+                "ORDER BY AccountID\n"
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, roleID);
+        
+
             stmt.setInt(2, offset);
-            stmt.setInt(3, itemDisplay);
-
+            stmt.setInt(3, page);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                AccountAdmin acc = new AccountAdmin(
-                        rs.getInt("AccountID"),
-                        rs.getString("UserName"),
-                        rs.getString("Password"),
-                        rs.getString("FullName"),
-                        rs.getString("Email"),
-                        rs.getString("PhoneNumber"),
-                        rs.getInt("RoleID")
-                );
-                listAccounts.add(acc);
+            while (rs.next()) {                
+             Account acc= new Account( rs.getInt("AccountID"),
+                rs.getString("UserName"),
+                rs.getString("Password"),
+                rs.getString("FullName"),
+                rs.getString("Email"),
+                rs.getString("PhoneNumber"),
+                rs.getString("RoleID"));
+            listAccounts.add(acc);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
         }
-        return listAccounts;
+       return listAccounts;
     }
 
-    // đếm account phan trang
-    public int getTotalAccountCount(String key) {
-        int totalProducts = 0;
+     // đếm account phan trang
+     
+       public int getTotalAccountCount(String key) {
+    int totalProducts = 0;
 
-        String sql = "SELECT COUNT(*) AS total FROM [dbo].[Product] WHERE ProductName LIKE ?";
+    String sql = "SELECT COUNT(*) AS total FROM [dbo].[Product] WHERE ProductName LIKE ?";
 
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, "%" + key + "%");
+    try {
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, "%" + key + "%"); 
 
-            ResultSet rs = stmt.executeQuery();
+        ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                totalProducts = rs.getInt("total");
-            }
-
-            rs.close();
-            stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (rs.next()) {
+            totalProducts = rs.getInt("total"); 
         }
 
-        return totalProducts;
-    } // đếm account
-
-    public int countAccounts(int roleID, String keyWord) {
-        int totalCount = 0;
-        String sql = "SELECT COUNT(*) AS total FROM [dbo].[Account] WHERE RoleID = ? AND UserName LIKE ?";
-
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, roleID);
-            stmt.setString(2, "%" + keyWord + "%");
-
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                totalCount = rs.getInt("total");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return totalCount;
+        rs.close();
+        stmt.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
-    // đếm account
 
-    public int countAccounts(int roleID) {
-        int total = 0;
-        String sql = "SELECT COUNT(*) AS total FROM [dbo].[Account] WHERE RoleID = ?";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, roleID);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                total = rs.getInt("total");
-            }
+    return totalProducts; 
+} // đếm account
+       public int countAccounts(int roleID, String keyWord) {
+    int totalCount = 0;
+    String sql = "SELECT COUNT(*) AS total FROM [dbo].[Account] WHERE RoleID = ? AND UserName LIKE ?";
 
-        } catch (Exception e) {
-            e.printStackTrace();
+    try {
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, roleID);
+        stmt.setString(2, "%" + keyWord + "%");
+        
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            totalCount = rs.getInt("total");
         }
-        return total;
+    } catch (Exception e) {
+        e.printStackTrace(); 
     }
+
+    return totalCount;
+}
+        // đếm account
+       public int countAccounts(int roleID){
+       int total = 0 ;
+       String sql= "SELECT COUNT(*) AS total FROM [dbo].[Account] WHERE RoleID = ?"   ;
+           try {
+                        PreparedStatement stmt = connection.prepareStatement(sql);
+                   stmt.setInt(1, roleID);
+                           ResultSet rs = stmt.executeQuery();
+         if (rs.next()) {
+            total = rs.getInt("total");
+        }
+                  
+           } catch (Exception e) {
+                   e.printStackTrace(); 
+           }
+       return total;
+       }
 
     public static void main(String[] args) {
         ListAccountDao accountDao = new ListAccountDao();
-        List<AccountAdmin> accounts = accountDao.getListAccounts(2, 2);
-        for (AccountAdmin account : accounts) {
-            System.out.println(account.toString());
-        }
+       List<Account> accounts =   accountDao.getListAccounts(1, 1);
+        for (Account account : accounts) {
+        System.out.println(account.toString());
+    }
     }
 }

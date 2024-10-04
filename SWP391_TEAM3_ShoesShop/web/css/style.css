@@ -7431,6 +7431,10 @@ h1, h2, h3, h4, h5,
     letter-spacing: 2px; }
     .colorlib-nav ul li.cart {
       float: right; }
+    .colorlib-nav ul li.logout {
+      float: right; }
+    .colorlib-nav ul li.login {
+      float: right; }
     .colorlib-nav ul li a {
       position: relative;
       padding: 10px 12px;

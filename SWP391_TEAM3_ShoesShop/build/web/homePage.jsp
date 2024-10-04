@@ -56,16 +56,15 @@
                                 <div id="colorlib-logo"><a href="home">Footwear</a></div>
                             </div>
                             <div class="col-sm-5 col-md-3">
-                                <form action="search" method="GET" class="search-wrap">
+                                <form action="searchProduct" method="get" class="search-wrap">
                                     <div class="form-group">
-                                        <input oninput="searchByName(this)" name="txt" type="search" class="form-control search" placeholder="Search">
+                                        <input type="search" class="form-control search" name="searchQuery" placeholder="Search" value="${searchQuery}">
                                         <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
-                                        
                                     </div>
                                 </form>
                             </div>
                         </div>
-                     
+
                         <div class="row">
                             <div class="col-sm-12 text-left menu-1">
                                 <ul>
@@ -83,7 +82,17 @@
                                     <li><a href="women.html">Women</a></li>
                                     <li><a href="about.html">About</a></li>
                                     <li><a href="contact.html">Contact</a></li>
-                                   <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [${itemCount}]</a></li>
+                                    <c:if test="${sessionScope.acc==null}">
+                                       <li class="login">
+                                           <a href="login">Login</a>
+                                       </li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.acc!=null}">
+                                       <li class="logout">
+                                           <a href="logout">Logout</a>
+                                       </li>
+                                    </c:if>
+                                    <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [${itemCount}]</a></li>
 
                                 </ul>
                             </div>
@@ -124,13 +133,13 @@
                     </div>
                 </div>
             </div>
-            
-            
-            
+
+
+
 
             <div class="colorlib-product">
                 <div class="container"> 
-                        
+
                     <form action="home" method="get">
                         <div class="row row-pb-md">
                             <c:forEach items="${list}" var="p">
