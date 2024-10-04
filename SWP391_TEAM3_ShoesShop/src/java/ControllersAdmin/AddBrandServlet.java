@@ -24,18 +24,26 @@ public class AddBrandServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // lấy giá trị từ form
-        int brandID = Integer.parseInt(request.getParameter("brandID"));
         String brandName = request.getParameter("brandName");
 
-        // tạo đối tượng Brand
-        Brand brand = new Brand(brandID, brandName);
+        // tạo đối tượng Brand (không cần brandID)
+        Brand brand = new Brand();
+        brand.setBrandName(brandName);
 
-        // gọi DAO để thêm brand vào db
+        // gọi DAO để kiểm tra thương hiệu đã tồn tại
         BrandDAO brandDAO = new BrandDAO();
+        if (brandDAO.brandExists(brandName)) {
+            // Nếu brand đã tồn tại, thiết lập thông báo lỗi
+            request.setAttribute("errorMessage", "Brand đã tồn tại");
+            request.getRequestDispatcher("/Views/Admin/addBrand.jsp").forward(request, response);
+            return; // Kết thúc phương thức
+        }
+
+        // nếu không tồn tại, thêm brand vào db
         brandDAO.insertBrand(brand);
 
         // lưu thông báo thành công vào request
-        request.setAttribute("successMessage", "Brand added succesfully");
+        request.setAttribute("successMessage", "Brand added successfully");
 
         // chuyển tiếp về trang jsp
         request.getRequestDispatcher("/Views/Admin/addBrand.jsp").forward(request, response);

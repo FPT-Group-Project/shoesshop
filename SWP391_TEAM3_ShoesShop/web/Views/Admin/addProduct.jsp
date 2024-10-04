@@ -1,4 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="Models.Brand" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -33,7 +36,7 @@
                                 <div id="colorlib-logo"><a href="index.html">Footwear</a></div>
                             </div>
                             <div class="col-sm-5 col-md-3">
-                                
+
                             </div>
                         </div>
                         <div class="row">
@@ -42,8 +45,8 @@
                                     <!--quay lai control-->
                                     <li class="active"><a href="/AccoutListController">Back</a></li>
 
-                                    
-                                    
+
+
                                 </ul>
                             </div>
                         </div>
@@ -54,7 +57,6 @@
             <h1 class="text-center">Add New Product</h1>
             <!--form add product-->
             <form action="addProduct" method="post" enctype="multipart/form-data" class="form-group">
-
                 <div class="form-row">
                     <label for="productName">Product Name:</label>
                     <input type="text" id="productName" name="productName" class="form-control" required>
@@ -66,28 +68,40 @@
                 </div>
 
                 <div class="form-row">
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" class="form-control" required>
-                </div>
-
-                <div class="form-row">
                     <label for="price">Price:</label>
                     <input type="text" id="price" name="price" class="form-control" required>
                 </div>
 
                 <div class="form-row">
-                    <label for="categoryId">Brand ID:</label>
-                    <input type="number" id="brandId" name="brandId" class="form-control" required>
+                    <label for="brandId">Brand:</label>
+                    <select id="brandId" name="brandId" class="form-control" required>
+                        <option value="">Select a Brand</option>
+                        <%
+                            List<Brand> brandList = (List<Brand>) request.getAttribute("brandList");
+                            if (brandList != null && !brandList.isEmpty()) {
+                            for (Brand brand : brandList) {
+                        %>
+                        <option value="<%= brand.getBrandID() %>"><%= brand.getBrandName() %></option>
+                        <%
+                                }
+                            } else {
+                        %>
+                        <option value="">No brands available</option>
+                        <%
+                            }
+                        %>
+                    </select>
                 </div>
 
                 <div class="form-row">
-                    <label for="avatarP">Avatar Path:</label>
+                    <label for="avatarP">Product Image:</label>
                     <input type="file" id="avatarP" name="avatarP" class="form-control" required>
                 </div>
 
                 <div class="form-row text-center">
                     <input type="submit" value="Add Product" class="btn btn-primary">
                 </div>
+
                 <% if (request.getAttribute("successMessage") != null) { %>
                 <div class="alert alert-success">
                     <%= request.getAttribute("successMessage") %>
