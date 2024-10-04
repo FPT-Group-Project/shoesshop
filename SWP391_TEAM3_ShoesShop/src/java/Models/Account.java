@@ -9,67 +9,37 @@ package Models;
  * @author biggp
  */
 public class Account {
-    private int accountId;
-    private String fullName;
-    private String username;
-    private String passWord;
-    private String gender;
-    private String email;
-    private String phoneNumber;
-    private String address;
-    private String roleId;
-    private String imgAccount;
-    private String status;
+    private int accountID;
+    private String userName,passWord,fullName,email,phoneNumber;
+    private int roleID;
 
     public Account() {
     }
 
-    public Account(int accountId, String fullName, String username, String passWord, String email, String phoneNumber, String roleId) {
-        this.accountId = accountId;
-        this.fullName = fullName;
-        this.username = username;
+    public Account(int accountID, String userName, String passWord, String fullName, String email, String phoneNumber, int roleID) {
+        this.accountID = accountID;
+        this.userName = userName;
         this.passWord = passWord;
+        this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.roleId = roleId;
+        this.roleID = roleID;
     }
 
-    public Account(int accountId, String fullName, String username, String passWord, String gender, String email, String phoneNumber, String address, String roleId, String imgAccount, String status) {
-        this.accountId = accountId;
-        this.fullName = fullName;
-        this.username = username;
-        this.passWord = passWord;
-        this.gender = gender;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.roleId = roleId;
-        this.imgAccount = imgAccount;
-        this.status = status;
+    public int getAccountID() {
+        return accountID;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassWord() {
@@ -80,12 +50,12 @@ public class Account {
         this.passWord = passWord;
     }
 
-    public String getGender() {
-        return gender;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -104,37 +74,13 @@ public class Account {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
-        return address;
+    public int getRoleID() {
+        return roleID;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
     }
 
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getImgAccount() {
-        return imgAccount;
-    }
-
-    public void setImgAccount(String imgAccount) {
-        this.imgAccount = imgAccount;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    
     
 }

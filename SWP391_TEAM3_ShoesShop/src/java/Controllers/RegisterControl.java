@@ -36,15 +36,25 @@ public class RegisterControl extends HttpServlet {
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
         if(!pass.equals(re_pass)){
-            response.sendRedirect("register");
+            request.setAttribute("error", "Password and re-password must be the same!");
+            response.sendRedirect("login");
         }else{
             AccountDAO dao = new AccountDAO();
-            Account a = dao.checkAccountExist(user);
-            if(a == null){
+            Account a = dao.checkAccountExist(user,email,phone);
+            if(a != null){
                 dao.signup(user, pass, name, email, phone);
+                request.setAttribute("success", "Registered successfully!");
+                request.getRequestDispatcher("login").forward(request,response);
+            } else if(!email.matches("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")){
+                request.setAttribute("error", "Invalid email format");
                 response.sendRedirect("login");
-            }else{
-                response.sendRedirect("register");
+            } else if(phone.matches("^[0-9]{10}$")){
+                request.setAttribute("error", "Invalid phone number");
+                response.sendRedirect("login");
+            }
+            else{
+                request.setAttribute("error", "Username, email or phone number already exists!");
+                response.sendRedirect("login");
             }
         }
     } 
