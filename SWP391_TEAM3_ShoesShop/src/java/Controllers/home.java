@@ -5,7 +5,6 @@
 
 package Controllers;
 
-import DAL.CartDAO;
 import DAL.ProductDAO;
 import Models.Product;
 import java.io.IOException;
@@ -32,8 +31,6 @@ public class home extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
-       
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -73,7 +70,7 @@ public class home extends HttpServlet {
         List<Product> pageContent=productPageList.get(pageNumber-1);
         request.setAttribute("list", pageContent);
         request.setAttribute("pagesNumber", productPageList.size());
-        request.getRequestDispatcher("homePage.jsp").forward(request, response);
+        request.getRequestDispatcher("Views/Customer/homePage.jsp").forward(request, response);
         
     } 
 

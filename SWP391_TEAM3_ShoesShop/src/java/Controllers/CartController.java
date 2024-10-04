@@ -12,6 +12,7 @@ import Models.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import java.util.List;
  *
  * @author thanh
  */
+@WebServlet
 public class CartController extends HttpServlet {
 
     /**
@@ -79,7 +81,6 @@ public class CartController extends HttpServlet {
        int quantity = Integer.parseInt(request.getParameter("quantity"));
        int cartId = Integer.parseInt(request.getParameter("cartId"));
         CartDAO cartDAO = new CartDAO();
-        
         boolean result = cartDAO.updateCartQuantity(cartId, quantity);
         //System.out.println(result);
        } else if(request.getParameter("type") != null && request.getParameter("type").equalsIgnoreCase("delete")) {
