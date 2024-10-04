@@ -65,7 +65,7 @@ public class OrderDAO extends DBContext {
             PreparedStatement od = connection.prepareStatement("DELETE FROM [Cart] WHERE AccountID = ?");
             od.setInt(1, accountId);
             od.executeUpdate();
-            return rowsAffected > 0; // Trả về true nếu có dòng được thêm
+            return rowsAffected > 0; 
         } catch (SQLException e) {
             //System.out.println("Error adding to cart: " + e.getMessage());
             e.printStackTrace();
