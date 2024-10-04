@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< Updated upstream
             <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Models/Image.java</file>
             <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ListAccountDao.java</file>
             <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Admin/ListProduct.jsp</file>
@@ -28,6 +29,18 @@
             <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/BrandDAO.java</file>
             <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/OrderDAO.java</file>
             <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ListProductAdminDao.java</file>
+=======
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ListAccountDao.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/LogoutControl.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/LoginControl.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/homePage.jsp</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Models/Account.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ProductDAO.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/RegisterControl.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/AccountDAO.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/DBContext.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Customer/Login.jsp</file>
+>>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>

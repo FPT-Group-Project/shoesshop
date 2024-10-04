@@ -56,12 +56,12 @@
 							<div id="colorlib-logo"><a href="home">Footwear</a></div>
 						</div>
 						<div class="col-sm-5 col-md-3">
-			            <form action="searchProduct" method="get" class="search-wrap">
-                                    <div class="form-group">
-                                        <input type="search" class="form-control search" name="searchQuery" placeholder="Search" value="${searchQuery}">
-                                        <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
-                                    </div>
-                                </form>
+			            <form action="#" class="search-wrap">
+			               <div class="form-group">
+			                  <input type="search" class="form-control search" placeholder="Search">
+			                  <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
+			               </div>
+			            </form>
 			         </div>
 		         </div>
 					<div class="row">
@@ -82,7 +82,6 @@
 								<li><a href="about.html">About</a></li>
 								<li><a href="contact.html">Contact</a></li>
 								<li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [${itemCount}]</a></li>
-
 							</ul>
 						</div>
 					</div>
@@ -182,7 +181,7 @@
 							</div>
 							<div class="one-eight text-center">
 								<div class="display-tc">
-                                                                    <input type="number" id="quantity" name="quantity" class="form-control input-number text-center" value="${cart.quantity}" min="1" max="100" onchange="changeQuantity(this)">
+                                                                    <input type="number" id="quantity" name="quantity" class="form-control input-number text-center" value="${cart.quantity}" min="1" max="${cart.stock.quantity}" onchange="changeQuantity(this, ${cart.stock.quantity})">
 								</div>
 							</div>
 							<div class="one-eight text-center">
@@ -201,9 +200,12 @@
 					</div>
 				</div>
                             <script>
-                                function changeQuantity(input) {
+                                function changeQuantity(input, max) {
                                     let parent = input.parentNode.parentNode.parentNode;
                                     let quantity = input.value <= 0 ? 1 : input.value;
+                                    if(quantity > max) {
+                                        quantity = max;
+                                    }
                                     let cartId = parent.children[0].value;
                                     let price = parent.querySelectorAll('span[class=price]')[0];
                                     let total = parent.querySelectorAll('span[class=price]')[1];
