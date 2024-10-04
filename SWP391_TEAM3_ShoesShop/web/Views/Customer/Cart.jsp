@@ -79,9 +79,9 @@
 									</ul>
 								</li>
 								<li><a href="women.html">Women</a></li>
-								<li><a href="about.html">About</a></li>
+								<li><a href="about.jsp">About</a></li>
 								<li><a href="contact.html">Contact</a></li>
-								<li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+								<li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [${itemCount}]</a></li>
 							</ul>
 						</div>
 					</div>
@@ -364,7 +364,7 @@ parent.parentNode.removeChild(parent);
 						<h4>Information</h4>
 						<p>
 							<ul class="colorlib-footer-links">
-								<li><a href="#">About us</a></li>
+                                                            <li><a href="about.jsp">About us</a></li>
 								<li><a href="#">Delivery Information</a></li>
 								<li><a href="#">Privacy Policy</a></li>
 								<li><a href="#">Support</a></li>

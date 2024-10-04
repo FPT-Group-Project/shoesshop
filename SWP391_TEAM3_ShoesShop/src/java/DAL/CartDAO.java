@@ -133,6 +133,25 @@ public class CartDAO extends DBContext {
         }
         return null; // Nếu không tìm thấy sản phẩm trong giỏ hàng
     }
+     public int countItemsByAccountId(int accountId) {
+        int itemCount = 0;
+        String sql = "SELECT COUNT(ProductID) AS itemCount FROM Cart WHERE AccountID = ?";
+        
+        try (
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            stmt.setInt(1, accountId);  // Gán AccountID từ tham số
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                itemCount = rs.getInt("itemCount");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itemCount;
+    }
  public static void main(String[] args) {
         // Khởi tạo đối tượng CartDAO
         CartDAO cartDAO = new CartDAO();

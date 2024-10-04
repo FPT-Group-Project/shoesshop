@@ -40,6 +40,7 @@ public class CartController extends HttpServlet {
         CartDAO cartDAO = new CartDAO();
         int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
         List<Cart> arr = cartDAO.getCartItemsByAccountId(accountId); 
+       
         //System.out.println(arr.size());
         request.setAttribute("carts", arr);
         request.getRequestDispatcher("Views/Customer/Cart.jsp").forward(request, response);

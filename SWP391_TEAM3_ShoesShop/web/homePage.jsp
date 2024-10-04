@@ -81,9 +81,9 @@
                                         </ul>
                                     </li>
                                     <li><a href="women.html">Women</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                    <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+                                    <li><a href="about">About</a></li>
+                                    <li><a href="contact">Contact</a></li>
+                                  <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart</a></li>
                                 </ul>
                             </div>
                         </div>
