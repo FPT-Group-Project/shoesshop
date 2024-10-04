@@ -5,7 +5,7 @@
 package ControllersAdmin;
 
 import DAL.ListAccountDao;
-import Models.AccountAdmin;
+import Models.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -66,21 +66,19 @@ public class AccoutListController extends HttpServlet {
 
         int roleID = (role == null || role.isEmpty()) ? 1 : Integer.parseInt(role);
         int page = (pageStr == null || pageStr.isEmpty()) ? 1 : Integer.parseInt(pageStr);
-        List<AccountAdmin> listA;
+        List<Account> listA;
         ListAccountDao accountDao = new ListAccountDao();
         int totalAcc=0;
         if (keyW != null && !keyW.isEmpty()) {
             listA = accountDao.getListAccounts(page, roleID, keyW);
             totalAcc = accountDao.countAccounts( roleID, keyW);
         } else {
-            listA = accountDao.getListAccounts(page, roleID);
+            listA = accountDao.getListAccounts(page, roleID); 
              totalAcc = accountDao.countAccounts(roleID);
         }
 
     
         int totalPages = (int) Math.ceil((double) totalAcc / 5);
-        request.setAttribute("role", role);
-        request.setAttribute("keyW", keyW);
 
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);

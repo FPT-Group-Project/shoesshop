@@ -8,22 +8,22 @@ public class ProductAdmin {
     private int productID;
     private String productName;
     private String description;
-   private double price;
+    private int quantity;
+    private double price;
     private Brand brandID;
     private String avatarP;
-        private int quantity;
 
-    public ProductAdmin(int productID, String productName, String description, double price, Brand brandID, String avatarP, int quantity) {
+    public ProductAdmin() {
+    }
+
+    public ProductAdmin(int productID, String productName, String description, int quantity, double price, Brand brandID, String avatarP) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
+        this.quantity = quantity;
         this.price = price;
         this.brandID = brandID;
         this.avatarP = avatarP;
-        this.quantity = quantity;
-    }
-
-    public ProductAdmin() {
     }
 
     public int getProductID() {
@@ -50,6 +50,14 @@ public class ProductAdmin {
         this.description = description;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -74,21 +82,11 @@ public class ProductAdmin {
         this.avatarP = avatarP;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     @Override
     public String toString() {
-        return "ProductAdmin{" + "productID=" + productID + ", productName=" + productName + ", description=" + description + ", price=" + price + ", brandID=" + brandID + ", avatarP=" + avatarP + ", quantity=" + quantity + '}';
+        return "ProductAdmin{" + "productID=" + productID + ", productName=" + productName + ", description=" + description + ", quantity=" + quantity + ", price=" + price + ", brandID=" + brandID + ", avatarP=" + avatarP + '}';
     }
 
-
-  
     
     
 }
