@@ -1,7 +1,7 @@
 <%-- 
-    Document   : order-complete.jsp
-    Created on : Sep 29, 2024, 3:48:14 PM
-    Author     : TGDD
+    Document   : contact
+    Created on : Oct 4, 2024, 2:18:33 AM
+    Author     : thanh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,6 +11,17 @@
 	<title>Footwear - Free Bootstrap 4 Template by Colorlib</title>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
 
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
@@ -68,7 +79,7 @@
 								<li><a href="home">Home</a></li>
 								<li class="has-dropdown">
 									<a href="men.html">Men</a>
-									<ul class="dropdown active">
+									<ul class="dropdown">
 										<li><a href="product-detail.html">Product Detail</a></li>
 										<li><a href="cart">Shopping Cart</a></li>
 										<li><a href="checkout.html">Checkout</a></li>
@@ -77,9 +88,8 @@
 									</ul>
 								</li>
 								<li><a href="women.html">Women</a></li>
-								<li><a href="blog.html">Blog</a></li>
 								<li><a href="about.html">About</a></li>
-								<li><a href="contact.html">Contact</a></li>
+								<li class="active"><a href="contact.html">Contact</a></li>
 								<li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
 							</ul>
 						</div>
@@ -114,42 +124,113 @@
 			<div class="container">
 				<div class="row">
 					<div class="col">
-						<p class="bread"><span><a href="home">Home</a></span> / <span>Purchase Complete</span></p>
+						<p class="bread"><span><a href="home">Home</a></span> / <span>Contact</span></p>
 					</div>
 				</div>
 			</div>
 		</div>
 
 
-		<div class="colorlib-product">
+		<div id="colorlib-contact">
 			<div class="container">
-				<div class="row row-pb-lg">
-					<div class="col-sm-10 offset-md-1">
-						<div class="process-wrap">
-							<div class="process text-center active">
-								<p><span>01</span></p>
-								<h3>Shopping Cart</h3>
+				<div class="row">
+					<div class="col-sm-12">
+						<h3>Contact Information</h3>
+						<div class="row contact-info-wrap">
+							<div class="col-md-3">
+								<p><span><i class="icon-location"></i></span> Khu Công nghệ cao Hòa Lạc, <br> Km29 Đại lộ Thăng Long Thạch Thất Hà Nội</p>
 							</div>
-							<div class="process text-center active">
-								<p><span>02</span></p>
-								<h3>Checkout</h3>
+							<div class="col-md-3">
+								<p><span><i class="icon-phone3"></i></span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
 							</div>
-							<div class="process text-center active">
-								<p><span>03</span></p>
-								<h3>Order Complete</h3>
+							<div class="col-md-3">
+								<p><span><i class="icon-paperplane"></i></span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+							</div>
+							<div class="col-md-3">
+								<p><span><i class="icon-globe"></i></span> <a href="#">yoursite.com</a></p>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-10 offset-sm-1 text-center">
-						<p class="icon-addcart"><span><i class="icon-check"></i></span></p>
-						<h2 class="mb-4">Thank you for purchasing, Your order is complete</h2>
-						<p>
-							<a href="home"class="btn btn-primary btn-outline-primary">Home</a>
-							<a href="shop.html"class="btn btn-primary btn-outline-primary"><i class="icon-shopping-cart"></i> Continue Shopping</a>
-						</p>
+					<div class="col-md-6">
+						<div class="contact-wrap">
+                                                    
+                                                  
+							<h3>Get In Touch</h3>
+                                                        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" >
+								<div class="row">
+									<div class="col-md-6">
+                                                                             <input type="hidden" name="access_key" value="5c31efcd-e92f-4bb6-8a0d-9678168c6e7d">
+										<div class="form-group">
+											<label for="fname">First Name</label>
+                                                                                        <input type="text" name="fname" id="fname" class="form-control" placeholder="Your firstname">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="lname">Last Name</label>
+											<input type="text" name="lname" id="lname" class="form-control" placeholder="Your lastname">
+										</div>
+									</div>
+									<div class="w-100"></div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label for="email">Email</label>
+                                                                                        <input type="text" name="email" id="email" class="form-control" placeholder="Your email address">
+										</div>
+									</div>
+									<div class="w-100"></div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label for="subject">Subject</label>
+                                                                                        <input type="text" name="Subject" id="subject" class="form-control" placeholder="Your subject of this message">
+										</div>
+									</div>
+									<div class="w-100"></div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label for="message">Message</label>
+											<textarea name="message"  id="message" cols="30" rows="10" class="form-control" placeholder="Say something about us"></textarea>
+										</div>
+									</div>
+									<div class="w-100"></div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<input type="submit" value="Send Message" class="btn btn-primary">
+										</div>
+									</div>
+								</div>
+							</form>		
+						</div>
+        
 					</div>
+					
+                                    
+                                    
+            <div class="colorlib-about">
+    <div class="container">
+        <div class="row row-pb-lg">
+            <div class="col-sm-6 mb-3">
+                <div class="map" style="width: 100%; height: 400px; position: relative;">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31112.31493430944!2d105.5227143!3d21.0124167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abc60e7d3f19%3A0x2be9d7d0b5abcbf4!2sTr%C6%B0%E1%BB%9Dng%20%C4%90%E1%BA%A1i%20h%E1%BB%8Dc%20FPT%20H%C3%A0%20N%E1%BB%99i!5e0!3m2!1sen!2sus!4v1696971022321!5m2!1sen!2sus" 
+                        width="500" 
+                        height="700" 
+                        style="border:0; position: absolute; top: -50px;"  <!-- Dịch lên trên bằng position -->
+                        allowfullscreen="" 
+                        loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                             
+                                    
+                                    
+                                    
+                                    
+                                    
 				</div>
 			</div>
 		</div>
@@ -256,6 +337,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="js/bootstrap-datepicker.js"></script>
 	<!-- Stellar Parallax -->
 	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Google Map -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+	<script src="js/google_map.js"></script>
 	<!-- Main -->
 	<script src="js/main.js"></script>
 

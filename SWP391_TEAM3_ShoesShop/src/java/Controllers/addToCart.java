@@ -88,12 +88,10 @@ public class addToCart extends HttpServlet {
         Cart cartItem = new Cart();
         cartItem.setProductID(productId);
         cartItem.setAccountID(accountId);
-        cartItem.setColorID(colorId);
-        cartItem.setSizeID(sizeId);
         cartItem.setQuantity(quantity);
 
         // Thêm sản phẩm vào giỏ hàng
-        boolean result = cartDAO.addToCart(cartItem);
+        boolean result = cartDAO.addToCart(cartItem, colorId, sizeId);
 
         // Gửi phản hồi về phía client
         //if (result) {

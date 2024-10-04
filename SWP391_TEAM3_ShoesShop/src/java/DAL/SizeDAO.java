@@ -35,8 +35,7 @@ public class SizeDAO extends DBContext{
                     int sizeId=rs.getInt("SizeID");
                     int productId=rs.getInt("ProductID");
                     int size=rs.getInt("Size");
-                    int quantity=rs.getInt("Quantity");
-                    Size s = new Size(sizeId, productId, size, quantity);
+                    Size s = new Size(sizeId, productId, size);
                     sizes.add(s);
                 }
             }
