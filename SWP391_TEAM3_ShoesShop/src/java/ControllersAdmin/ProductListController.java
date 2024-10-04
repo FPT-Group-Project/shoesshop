@@ -66,7 +66,6 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     int page = (pageStr == null || pageStr.isEmpty()) ? 1 : Integer.parseInt(pageStr);
     
     String brand = request.getParameter("brand");
-    // Có thể chuyển đổi brand thành ID nếu cần
     int brandid = (brand == null || brand.isEmpty()) ? 1 : Integer.parseInt(brand);
     
     String searchKeyword = request.getParameter("keyW");
@@ -86,6 +85,9 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
     int totalPages = (int) Math.ceil((double) totalProducts / 5);
     List<Brand> brandDisplay = listProductAdmin.getListBrand();
+    request.setAttribute("page", pageStr);
+    request.setAttribute("brand", brand);
+    request.setAttribute("keyW", searchKeyword);
 
     request.setAttribute("brandDisplay", brandDisplay);
     request.setAttribute("totalPages", totalPages);

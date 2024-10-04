@@ -175,7 +175,7 @@
                 <div class="sidepanel-inner d-flex flex-column">
                     <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                     <div class="app-branding">
-                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="../../assets/images/app-logo.svg" alt="logo"><span class="logo-text">PORTAL</span></a>
+                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="../../assets/images/app-logo.svg" alt="logo"><span class="logo-text">ADMIN PAGE</span></a>
 
                     </div><!--//app-branding-->  
                     <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
@@ -403,7 +403,7 @@
 
 
                                     <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="#">
+                                        <a class="btn app-btn-secondary" href="add">
 
                                             Add New
                                         </a>
@@ -414,12 +414,11 @@
                     </div><!--//row-->
 
 
-                    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-                        <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All</a>
-                        <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Paid</a>
-                        <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Pending</a>
-                        <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Cancelled</a>
-                    </nav>
+                   <c:if test="${not empty message}">
+                        <div class="alert alert-success" role="alert">
+                            ${message}
+                        </div>
+                    </c:if>
 
 
                     <div class="tab-content" id="orders-table-tab-content">
@@ -435,7 +434,6 @@
                                                     <th class="cell">FullName</th>
                                                     <th class="cell">Email</th>
                                                     <th class="cell">PhoneNumber</th>
-                                                    <th class="cell">Role</th>
                                                     <th class="cell">Action</th>
                                                 </tr>
                                             </thead>
@@ -449,8 +447,12 @@
                                                             <td>${account.fullName}</td>
                                                             <td>${account.email}</td> 
                                                             <td>${account.phoneNumber}</td> 
-                                                            <td>${account.roleID}</td>
-                                                            <td><a class="btn-sm app-btn-secondary" href="#">Delete</a></td> 
+                                                              <td> 
+                                                                  <button>  <a class="btn-sm app-btn-danger" href="DeleteAccountController?id=${account.accountID}" onclick="return confirm('Are you sure you want to delete this account?Delete');">Delete</a></button>
+                                                                    <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Detail</a></button>
+
+                                                              </td> 
+                                                        
                                                         </tr>
                                                     </c:forEach>
                                                 </c:if>
@@ -477,7 +479,7 @@
                                     <!-- Lặp qua các số trang -->
                                     <c:forEach var="i" begin="1" end="${totalPages}">
                                         <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                            <a class="page-link" href="?page=${i}">${i}</a>
+                                            <a class="page-link" href="?keyW=${keyW}&role=${role}&page=${i}">${i}</a>
                                         </li>
                                     </c:forEach>
 
