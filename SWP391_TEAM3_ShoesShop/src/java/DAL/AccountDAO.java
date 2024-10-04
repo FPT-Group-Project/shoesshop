@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Models.Account;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author vh69
@@ -73,5 +75,40 @@ public class AccountDAO extends DBContext {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    //  lấy danh sách tất cả account
+    public List<Account> getAllAccounts() {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT accountId, FullName, UserName, Email, PhoneNumber, RoleID FROM Account";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account();
+                account.setAccountID(rs.getInt("accountId"));
+                account.setFullName(rs.getString("FullName"));
+                account.setUserName(rs.getString("UserName"));
+                account.setEmail(rs.getString("Email"));
+                account.setPhoneNumber(rs.getString("PhoneNumber"));
+                account.setRoleID(rs.getInt("RoleID"));
+                accounts.add(account);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return accounts;
+    }
+
+    // cập nhật account
+    public void updateAccount(Account account) {
+        String sql = "UPDATE Account SET RoleID = ? WHERE accountId = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account.getRoleID());
+            st.setInt(2, account.getAccountID());
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

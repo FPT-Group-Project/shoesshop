@@ -66,23 +66,21 @@
             </nav>
             <h1 class="text-center">Add New Brand</h1>
             <form action="addBrand" method="post" class="form-group">
-                <!--Nhap thong tin brand-->
-                <div class="form-row">
-                    <label for="brandID">Brand ID:</label>
-                    <input type="number" id="brandID" name="brandID" class="form-control" required>
-                </div>
-
                 <div class="form-row">
                     <label for="brandName">Brand Name:</label>
                     <input type="text" id="brandName" name="brandName" class="form-control" required>
                 </div>
-
                 <div class="form-row text-center">
                     <input type="submit" value="Add Brand" class="btn btn-primary">
                 </div>
                 <% if (request.getAttribute("successMessage") != null) { %>
                 <div class="alert alert-success">
                     <%= request.getAttribute("successMessage") %>
+                </div>
+                <% } %>
+                <% if (request.getAttribute("errorMessage") != null) { %>
+                <div class="alert alert-danger">
+                    <%= request.getAttribute("errorMessage") %>
                 </div>
                 <% } %>
             </form>
