@@ -175,7 +175,7 @@
                 <div class="sidepanel-inner d-flex flex-column">
                     <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                     <div class="app-branding">
-                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="../../assets/images/app-logo.svg" alt="logo"><span class="logo-text">PORTAL</span></a>
+                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="../../assets/images/app-logo.svg" alt="logo"><span class="logo-text">ADMIN PAGE</span></a>
 
                     </div><!--//app-branding-->  
                     <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
@@ -216,7 +216,19 @@
                                         <circle cx="3.5" cy="10.5" r=".5"/>
                                         </svg>
                                     </span>
-                                    <span class="nav-link-text">Product List</span>
+                                    <span class="nav-link-text">List Product </span>
+                                </a><!--//nav-link-->
+                            </li>
+                            <li class="nav-item">
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <a class="nav-link" href="BrandController">
+                                    <span class="nav-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"></path>
+                                        <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-text">List Brand</span>
                                 </a><!--//nav-link-->
                             </li><!--//nav-item-->
                             <li class="nav-item has-submenu">
@@ -382,7 +394,7 @@
 
 
                                     <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="#">
+                                        <a class="btn app-btn-secondary" href="addProduct">
 
                                             Add New
                                         </a>
@@ -430,7 +442,7 @@
                                                                 <img src="ImageProductAvt/${product.avatarP}" alt="${product.productName}" style="width: 50px; height: 50px;" />
                                                             </td>
                                                             <td>
-                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a></button>
+                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Delete</a></button>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>

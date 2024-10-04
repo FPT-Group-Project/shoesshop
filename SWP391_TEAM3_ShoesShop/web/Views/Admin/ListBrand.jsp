@@ -175,7 +175,7 @@
                 <div class="sidepanel-inner d-flex flex-column">
                     <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                     <div class="app-branding">
-                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="../../assets/images/app-logo.svg" alt="logo"><span class="logo-text">PORTAL</span></a>
+                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="https://png.pngtree.com/png-clipart/20210227/ourmid/pngtree-mens-shoes-casual-running-shoes-everyday-clipart-png-image_2965548.jpg" alt="logo"><span class="logo-text">Admin Page</span></a>
 
                     </div><!--//app-branding-->  
                     <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
@@ -386,7 +386,7 @@
 
 
                                     <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="#">
+                                        <a class="btn app-btn-secondary" href="addBrand">
 
                                             Add New
                                         </a>
@@ -429,8 +429,8 @@
                                                             <td>${listBrand.brandName}</td>
 
                                                             <td>
-                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a></button>
-                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?');">Edit</a></button>
+                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteBrandController?id=${listBrand.brandID}" onclick="return confirm('Are you sure you want to delete this brand?');">Delete</a></button>
+                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteBrandController?id=${listBrand.brandID}" onclick="return confirm('Are you sure you want to delete this brand?');">Detail</a></button>
 
                                                             </td>
                                                         </tr>
@@ -631,3 +631,4 @@
     </body>
 </html> 
 
+ 
