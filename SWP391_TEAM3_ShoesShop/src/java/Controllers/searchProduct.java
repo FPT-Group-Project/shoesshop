@@ -60,15 +60,15 @@ public class searchProduct extends HttpServlet {
     throws ServletException, IOException {
         ProductDAO prd=new ProductDAO();
         String searchQuery=request.getParameter("searchQuery");
-        Integer m1=null,m2=null;
+        Double m1=null,m2=null;
         try{
             String min=request.getParameter("min");
             String max=request.getParameter("max");
             if(min!=null){
-                m1=Integer.parseInt(min);
+                m1=Double.parseDouble(min);
             }
             if(max!=null){
-                m2=Integer.parseInt(max);
+                m2=Double.parseDouble(max);
             }
         }
         catch(NumberFormatException e){

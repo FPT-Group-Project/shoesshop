@@ -307,6 +307,54 @@ public class ProductDAO extends DBContext{
         return list;
     }
     
+    //Return a list of products within the specified range
+    public List<Product> filterByPrice(List<Product> list, Double min, Double max){
+        List<Product> filtered=new ArrayList<>();
+            for(int i=0;i<list.size();i++){
+                if(min==null){
+                    //No bounds
+                    if(max==null){
+                        return list;
+                    }
+                    //Only ceil bound
+                    else{
+                        if(list.get(i).getPrice()<=max){
+                            filtered.add(list.get(i));
+                        }
+                    }
+                }
+                else{
+                    //Only floor bound
+                    if(max==null){
+                        if(list.get(i).getPrice()>=min){
+                            filtered.add(list.get(i));
+                        }
+                    }
+                    //Both bounds
+                    else{
+                        if(list.get(i).getPrice()>=min && list.get(i).getPrice()<=max){
+                            filtered.add(list.get(i));
+                        }
+                    }
+                }
+            }
+        return filtered;
+    }
+    
+    //Return a list of products of the specific brandId
+    public List<Product> filterByBrandId(List<Product> list, Integer brandId){
+        List<Product> filtered=new ArrayList<>();
+            if(brandId==null){
+                return list;
+            }
+            for(int i=0;i<list.size();i++){
+                if(list.get(i).getBrandId()==brandId){
+                    filtered.add(list.get(i));
+                }
+            }
+        return filtered;
+    }
+    
     //Check if an id (and by extension, a product) already exists in the list
     public boolean productIdExists(int productId, List<Product> list){
         for(int i=0;i<list.size();i++){
@@ -324,7 +372,7 @@ public class ProductDAO extends DBContext{
     public void printAllProducts(List<Product> list){
         for(int i=0;i<list.size();i++){
             Product p = list.get(i);
-            System.out.printf("%-3d | %-30s | %-70s | %-4d | %-8.2f | %-2d | %-20s%n",
+            System.out.printf("%-3d | %-40s | %-60s | %-4d | %-8.2f | %-2d | %-20s%n",
                     p.getProductId(),
                     p.getProductName(),
                     p.getDescription(),
@@ -352,9 +400,5 @@ public class ProductDAO extends DBContext{
             prd.printAllProducts(pageList.get(i));
             System.out.println();
         }
-    }
-
-    public List<Product> searchByName(String txtSearch) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
