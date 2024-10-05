@@ -60,6 +60,20 @@ public class searchProduct extends HttpServlet {
     throws ServletException, IOException {
         ProductDAO prd=new ProductDAO();
         String searchQuery=request.getParameter("searchQuery");
+        Integer m1=null,m2=null;
+        try{
+            String min=request.getParameter("min");
+            String max=request.getParameter("max");
+            if(min!=null){
+                m1=Integer.parseInt(min);
+            }
+            if(max!=null){
+                m2=Integer.parseInt(max);
+            }
+        }
+        catch(NumberFormatException e){
+            
+        }
         List<String> keywords=Arrays.asList((searchQuery.trim()).split("\\s+"));
         List<Product> searchResult=prd.searchProductByKeywords(keywords);
         List<List<Product>> productPageList=prd.getAllProductsPaginated(searchResult, 12);
