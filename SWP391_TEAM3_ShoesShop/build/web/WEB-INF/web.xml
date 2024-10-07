@@ -103,5 +103,5 @@
     <servlet-mapping>
         <servlet-name>LogoutControl</servlet-name>
         <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>    
 </web-app>

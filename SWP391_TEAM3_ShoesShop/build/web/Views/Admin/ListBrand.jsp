@@ -28,6 +28,8 @@
                 align-items: center; /* Căn giữa theo chiều dọc (nếu cần) */
                 height: 100vh; /* Đặt chiều cao của div cha nếu cần */
             }
+     
+
         </style>
     </head> 
 
@@ -175,7 +177,7 @@
                 <div class="sidepanel-inner d-flex flex-column">
                     <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                     <div class="app-branding">
-                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="https://png.pngtree.com/png-clipart/20210227/ourmid/pngtree-mens-shoes-casual-running-shoes-everyday-clipart-png-image_2965548.jpg" alt="logo"><span class="logo-text">Admin Page</span></a>
+                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="../../assets/images/app-logo.svg" alt="logo"><span class="logo-text">PORTAL</span></a>
 
                     </div><!--//app-branding-->  
                     <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
@@ -206,7 +208,7 @@
                             </li><!--//nav-item-->
                             <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link active" href="ProductListController">
+                                <a class="nav-link " href="ProductListController">
                                     <span class="nav-icon">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
@@ -220,13 +222,19 @@
                                 </a><!--//nav-link-->
                             </li><!--//nav-item-->
                             
-                             <li class="nav-item">
+                               <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link" href="BrandController">
+                                <a class="nav-link active" href="BrandController">
                                     <span class="nav-icon">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+
                                         <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/>
                                         <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/>
+
+
+                                        <circle cx="3.5" cy="5.5" r=".5"/>
+                                        <circle cx="3.5" cy="8" r=".5"/>
+                                        <circle cx="3.5" cy="10.5" r=".5"/>
                                         </svg>
                                     </span>
                                     <span class="nav-link-text">List Brand</span>
@@ -386,7 +394,7 @@
 
 
                                     <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="addBrand">
+                                        <a class="btn app-btn-secondary" href="#">
 
                                             Add New
                                         </a>
@@ -429,13 +437,14 @@
                                                             <td>${listBrand.brandName}</td>
 
                                                             <td>
-                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteBrandController?id=${listBrand.brandID}" onclick="return confirm('Are you sure you want to delete this brand?');">Delete</a></button>
-                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteBrandController?id=${listBrand.brandID}" onclick="return confirm('Are you sure you want to delete this brand?');">Detail</a></button>
+                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a></button>
+                                                                <button>  <a class="btn-sm app-btn-danger" href="EditBrandController?id=${listBrand.brandID}" >Edit</a></button>
 
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
                                                 </c:if>
+                                                        
                                                 <c:if test="${empty listBrands}">
                                                     <tr>
                                                         <td colspan="8" class="cell">No Brand found.</td>
@@ -443,6 +452,7 @@
                                                 </c:if>
                                             </tbody>
                                         </table>
+                                        
 
 
                                     </div><!--//table-responsive-->
@@ -631,4 +641,3 @@
     </body>
 </html> 
 
- 

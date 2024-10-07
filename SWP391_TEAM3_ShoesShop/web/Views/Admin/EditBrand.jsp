@@ -1,40 +1,51 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="Models.ProductAdmin" %> 
 <!DOCTYPE html>
 <html lang="en"> 
-    <head>
-        <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
+<head>
+    <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+    
+    <!-- FontAwesome JS-->
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    
+    <!-- App CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 
-        <!-- Meta -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-        <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
-        <link rel="shortcut icon" href="../../favicon.ico"> 
+    <style>
+        html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
 
-        <!-- FontAwesome JS -->
-        <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+.app-footer {
+    margin-top: auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+}
 
-        <!-- App CSS -->  
-        <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
-        <style>
-            .d-flex {
-                display: flex;
-                justify-content: center; /* Căn giữa theo chiều ngang */
-                align-items: center; /* Căn giữa theo chiều dọc (nếu cần) */
-                height: 100vh; /* Đặt chiều cao của div cha nếu cần */
-            }
-     
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
 
-        </style>
-    </head> 
+.app-footer .copyright {
+    color: #6c757d;
+}
 
+    </style>
+</head> 
 
-    <body class="app">   	
+<body class="app">   	
         <header class="app-header fixed-top">	   	            
             <div class="app-header-inner">  
                 <div class="container-fluid py-2">
@@ -52,7 +63,7 @@
                             <div class="app-search-box col">
                                 <form class="app-search-form" method="get" action="your_servlet_url_here">
                                     <input type="text" placeholder="Search..." name="keyW" value="${param.search}" class="form-control search-input">
-                                    <!-- Khi người dùng tìm kiếm, trang mặc định sẽ là 1 -->
+                                    <!-- Khi ng??i d�ng t�m ki?m, trang m?c ??nh s? l� 1 -->
                                     <input type="hidden" name="page" value="1">
                                     <button type="submit" class="btn search-btn btn-primary" value="Search">
                                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -177,7 +188,7 @@
                 <div class="sidepanel-inner d-flex flex-column">
                     <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                     <div class="app-branding">
-                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="../../assets/images/app-logo.svg" alt="logo"><span class="logo-text">PORTAL</span></a>
+                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="../../assets/images/app-logo.svg" alt="logo"><span class="logo-text">ADMIN PAGE</span></a>
 
                     </div><!--//app-branding-->  
                     <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
@@ -218,11 +229,12 @@
                                         <circle cx="3.5" cy="10.5" r=".5"/>
                                         </svg>
                                     </span>
-                                    <span class="nav-link-text">Product List</span>
+                                    <span class="nav-link-text">List Product </span>
                                 </a><!--//nav-link-->
-                            </li><!--//nav-item-->
+                            </li>
+
                             
-                               <li class="nav-item">
+                            <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                 <a class="nav-link active" href="BrandController">
                                     <span class="nav-icon">
@@ -362,282 +374,71 @@
                 </div><!--//sidepanel-inner-->
             </div><!--//app-sidepanel-->
         </header><!--//app-header-->
+    
+    <div class="app-wrapper">
+	    
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">			    
+			    <h1 class="app-page-title">Edit Brand</h1>
+			    <hr class="mb-4">
+                <div class="row g-4 settings-section">
+	                
+	                <div class="col-12 col-md-8">
+		                <div class="app-card app-card-settings shadow-sm p-4">
+						    
+						    <div class="app-card-body">
+    <% String mess = (String) request.getAttribute("mess");
+    if (mess != null) { %>
+        <div class="alert alert-info mt-3"><%= mess %></div>
+    <% } %>
 
-        <div class="app-wrapper">
+    <% String brandN = (String) request.getAttribute("nameB"); %>
+    <form class="settings-form" action="EditBrandController" method="Post">
+        <div class="mb-3">
+            <label for="setting-input-1" class="form-label">Old Brand Name<span class="ms-2" data-bs-container="body" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="This is brand's old name unedited.">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z"/>
+                    <circle cx="8" cy="4.5" r="1"/>
+                </svg></span></label>
+            <input type="text" class="form-control" id="setting-input-1" value="<%= brandN %>" required readonly>
+            
+        </div>
+        <div class="mb-3">
+            <label for="setting-input-2" class="form-label">New Brand Name</label>
+            <input type="text" class="form-control" id="setting-input-2" value="" name="newBrandName" required>
+            <input type="hidden" id="setting-input-2" value="<%= request.getParameter("id") %>" name="id">
+        </div>
 
-            <div class="app-content pt-3 p-md-3 p-lg-4">
-                <div class="container-xl">
+        <button type="submit" class="btn app-btn-primary" onclick="return confirm('Are you sure you want to change this brand name?')">Save Changes</button>
+    </form>
+</div>
+<!--//app-card-body-->
+						    
+						</div><!--//app-card-->
+	                </div>
+                </div><!--//row-->
+               
+		    </div><!--//container-fluid-->
+	    </div><!--//app-content-->
+	  <footer class="app-footer" style="position: fixed; bottom: 0; width: 100%; background-color: #f8f9fa; padding: 20px; text-align: center;">
+    <div class="container text-center py-3">
+        <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+        <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+    </div>
+</footer>
 
-                    <div class="row g-3 mb-4 align-items-center justify-content-between">
-                        <div class="col-auto">
-                            <h1 class="app-page-title mb-0">List Brands</h1>
-                        </div>
-                        <div class="col-auto">
-                            <div class="page-utilities">
-                                <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-                                    <div class="col-auto" style="margin: 0 auto;display: flex;margin-right: 50px;">
-                                        <form class="table-search-form row gx-1 align-items-center" method="get" action="BrandController" style="margin: 0 auto;">
-                                            <div class="col-auto">
-                                                <input type="text" placeholder="Search..." name="keyW" value="${param.keyW}" class="form-control search-orders">
-                                            </div>
+	    
+    </div><!--//app-wrapper-->    					
 
+ 
+    <!-- Javascript -->          
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    
+    <!-- Page Specific JS -->
+    <script src="assets/js/app.js"></script> 
 
-                                            <input type="hidden" name="page" value="1">		
-                                            <div class="col-auto">
-                                                <button type="submit" class="btn search-btn btn-primary" value="Search">
-                                                    Search <i class="fa-solid fa-magnifying-glass"></i>
-                                                </button>					
-                                            </div>
-                                        </form>
-                                    </div><!--//col-->
-                                    <!--//col-->
-
-
-                                    <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="#">
-
-                                            Add New
-                                        </a>
-                                    </div>
-                                </div><!--//row-->
-                            </div><!--//table-utilities-->
-                        </div><!--//col-auto-->
-                    </div><!--//row-->
-
-                    <%-- Kiểm tra thông báo  --%>
-                    <c:if test="${not empty message}">
-                        <div class="alert alert-success" role="alert">
-                            ${message}
-                        </div>
-                    </c:if>
-
-
-
-                    <div class="tab-content" id="orders-table-tab-content">
-                        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
-                            <div class="app-card app-card-orders-table shadow-sm mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table app-table-hover mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Brand ID</th>
-                                                    <th class="cell"> Name</th>
-                                                    <th class="cell"> Action</th>
-
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:if test="${not empty listBrands}">
-                                                    <c:forEach var="listBrand" items="${listBrands}">
-                                                        <tr>
-                                                            <td>${listBrand.brandID}</td>
-
-                                                            <td>${listBrand.brandName}</td>
-
-                                                            <td>
-                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a></button>
-                                                                <button>  <a class="btn-sm app-btn-danger" href="EditBrandController?id=${listBrand.brandID}" >Edit</a></button>
-
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </c:if>
-                                                        
-                                                <c:if test="${empty listBrands}">
-                                                    <tr>
-                                                        <td colspan="8" class="cell">No Brand found.</td>
-                                                    </tr>
-                                                </c:if>
-                                            </tbody>
-                                        </table>
-                                        
-
-
-                                    </div><!--//table-responsive-->
-
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                            <nav class="app-pagination">
-                                <ul class="pagination justify-content-center">
-                                    <!-- Nút Previous -->
-                                    <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
-                                        <a class="page-link" href="?page=${currentPage - 1}" tabindex="-1" aria-disabled="true">Previous</a>
-                                    </li>
-
-                                    <!-- Lặp qua các số trang -->
-                                    <c:forEach var="i" begin="1" end="${totalPages}">
-                                        <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                            <a class="page-link" href="?page=${i}">${i}</a>
-                                        </li>
-                                    </c:forEach>
-
-                                    <!-- Nút Next -->
-                                    <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
-                                        <a class="page-link" href="?page=${currentPage + 1}">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <!--//app-pagination-->
-
-                        </div><!--//tab-pane-->
-
-                        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">#15346</td>
-                                                    <td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-                                                    <td class="cell">John Sanders</td>
-                                                    <td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$259.35</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="cell">#15344</td>
-                                                    <td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-                                                    <td class="cell">Teresa Holland</td>
-                                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$123.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="cell">#15343</td>
-                                                    <td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-                                                    <td class="cell">Jayden Massey</td>
-                                                    <td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$199.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-
-                                                <tr>
-                                                    <td class="cell">#15341</td>
-                                                    <td class="cell"><span class="truncate">Morbi vulputate lacinia neque et sollicitudin</span></td>
-                                                    <td class="cell">Raymond Atkins</td>
-                                                    <td class="cell"><span class="cell-data">11 Oct</span><span class="note">11:18 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$678.26</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-
-                        <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">#15345</td>
-                                                    <td class="cell"><span class="truncate">Consectetur adipiscing elit</span></td>
-                                                    <td class="cell">Dylan Ambrose</td>
-                                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">03:16 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-warning">Pending</span></td>
-                                                    <td class="cell">$96.20</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-                        <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <td class="cell">#15342</td>
-                                                    <td class="cell"><span class="truncate">Justo feugiat neque</span></td>
-                                                    <td class="cell">Reina Brooks</td>
-                                                    <td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-danger">Cancelled</span></td>
-                                                    <td class="cell">$59.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-                    </div><!--//tab-content-->
-
-
-
-                </div><!--//container-fluid-->
-            </div><!--//app-content-->
-
-            <footer class="app-footer">
-                <div class="container text-center py-3">
-                    <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-                    <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-
-                </div>
-            </footer><!--//app-footer-->
-
-        </div><!--//app-wrapper-->    					
-
-
-        <!-- Javascript -->          
-        <script src="assets/plugins/popper.min.js"></script>
-        <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
-        <script src="assets/js/app.js"></script> 
-
-    </body>
+</body>
 </html> 
 
