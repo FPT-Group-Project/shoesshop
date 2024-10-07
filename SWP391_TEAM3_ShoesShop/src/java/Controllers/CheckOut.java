@@ -40,7 +40,8 @@ public class CheckOut extends HttpServlet {
             throws ServletException, IOException {
         CartDAO cartDAO = new CartDAO();
         //int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
-        int accountId = Integer.parseInt(request.getParameter("accountId")); //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+         HttpSession session = request.getSession();
+            Integer accountId = (Integer) session.getAttribute("accountId");
 //
 //        String email = "robert@example.com"; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH Email CỦA ACCOUNT
 //         
@@ -90,13 +91,21 @@ public class CheckOut extends HttpServlet {
         if(type.equalsIgnoreCase("order")) {
         CartDAO cartDAO = new CartDAO();
 //        int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
-        int accountId = Integer.parseInt(request.getParameter("accountId")); //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+        HttpSession session = request.getSession();
+            Integer accountId = (Integer) session.getAttribute("accountId");
+             if (accountId == null) {
+                out.println("{\"message\":\"You need to log in before start shopping\", \"status\":\"warning\"}");
+                return;
+            }
+
 
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         double total = Double.parseDouble(request.getParameter("total"));
         String address = request.getParameter("address");
         String payment = request.getParameter("payment");
+        
+
         List<Cart> carts = cartDAO.getCartItemsByAccountId(accountId);
         OrderDAO orderDAO = new OrderDAO();
         orderDAO.addOrder(accountId, carts, address, payment, total);

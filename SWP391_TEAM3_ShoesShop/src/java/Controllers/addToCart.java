@@ -79,7 +79,14 @@ public class addToCart extends HttpServlet {
         // Lấy thông tin từ request
        
         int productId = Integer.parseInt(request.getParameter("productId"));
-        int accountId = Integer.parseInt(request.getParameter("accountId")); //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+        HttpSession session = request.getSession();
+            Integer accountId = (Integer) session.getAttribute("accountId");
+
+            if (accountId == null) {
+                out.println("{\"message\":\"You need to log in before start shopping\", \"status\":\"warning\"}");
+                return;
+            }
+
         int colorId = Integer.parseInt(request.getParameter("colors"));
         int sizeId = Integer.parseInt(request.getParameter("sizes"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
