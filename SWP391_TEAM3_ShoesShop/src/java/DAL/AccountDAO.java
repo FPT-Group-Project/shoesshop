@@ -55,23 +55,34 @@ public class AccountDAO extends DBContext {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public Account checkAccountExist(String user, String email, String phone){
-        String sql="SELECT * FROM Account\n" +
-                   "WHERE UserName =? OR Email = ? OR PhoneNumber = ?";
-        try{
+    public Account checkAccountExist(String username) {
+        String sql = "select UserName from Account where UserName = ? ";
+        try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1,user);
-            st.setString(2,email);
-            st.setString(3,phone);
+            st.setString(1, username);
             ResultSet rs = st.executeQuery();
-            while(rs.next()){
-                return new Account(rs.getInt(1),
-                rs.getString(2),
-                rs.getString(3),
-                rs.getString(4),
-                rs.getString(5),
-                rs.getString(6),
-                rs.getInt(7));
+            while (rs.next()) {
+                Account account = new Account();
+                account.setUserName(rs.getString("Username"));
+                return account;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Account checkEmailExist(String email) {
+        String sql = "SELECT [Email]\n"
+                + "  FROM [dbo].[Account] where Email = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account();
+                account.setEmail(rs.getString("Email"));
+                return account;
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -12,7 +12,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  *
  * @author vh69
@@ -23,39 +24,23 @@ public class RegisterControl extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws ServletException if a servlet-specific erroror occurs
+     * @throws IOException if an I/O erroror occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
-        String re_pass = request.getParameter("repass");
-        String email = request.getParameter("email");
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        if(!pass.equals(re_pass)){
-            request.setAttribute("error", "Password and re-password must be the same!");
-            response.sendRedirect("login");
-        }else{
-            AccountDAO dao = new AccountDAO();
-            Account a = dao.checkAccountExist(user,email,phone);
-            if(a != null){
-                dao.signup(user, pass, name, email, phone);
-                request.setAttribute("success", "Registered successfully!");
-                request.getRequestDispatcher("login").forward(request,response);
-            } else if(!email.matches("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")){
-                request.setAttribute("error", "Invalid email format");
-                response.sendRedirect("login");
-            } else if(phone.matches("^[0-9]{10}$")){
-                request.setAttribute("error", "Invalid phone number");
-                response.sendRedirect("login");
-            }
-            else{
-                request.setAttribute("error", "Username, email or phone number already exists!");
-                response.sendRedirect("login");
-            }
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet LoginControl</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet LoginControl at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     } 
 
@@ -64,26 +49,79 @@ public class RegisterControl extends HttpServlet {
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws ServletException if a servlet-specific erroror occurs
+     * @throws IOException if an I/O erroror occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
     } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws ServletException if a servlet-specific erroror occurs
+     * @throws IOException if an I/O erroror occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+        String email = request.getParameter("email");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+
+        AccountDAO dao = new AccountDAO();
+        Account account = dao.checkEmailExist(email);
+        Account checkuser = dao.checkAccountExist(user);
+        //check format email 
+        String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Matcher matcher = pattern.matcher(email);
+        
+        //check sdt 
+         String regex = "^0\\d{9}$";
+         Pattern number = Pattern.compile(regex);
+        Matcher matcher2 = number.matcher(phone);
+        //check 
+
+        if (user.isEmpty() || email.isEmpty() || pass.isEmpty()) {
+            request.setAttribute("error", "you must enter username, password and email");
+            request.setAttribute("user", user);
+            request.setAttribute("name", name);
+            request.setAttribute("email", email);
+            request.setAttribute("pass", pass);
+            request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
+        } else if (checkuser != null) {
+            request.setAttribute("error", "Username already exists");
+            request.setAttribute("name", name);
+            request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
+        } else if (!matcher.matches()) {
+            request.setAttribute("error", "Invalid email format");
+            request.setAttribute("user", user);
+            request.setAttribute("name", name);
+            request.setAttribute("pass", pass);
+            request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
+        } else if (account != null) {
+            request.setAttribute("error", "Email already exists");
+            request.setAttribute("user", user);
+            request.setAttribute("name", name);
+            request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
+        } 
+        else if(!matcher2.matches()){ 
+            request.setAttribute("error", "Phone number must be 10 digits");
+            request.setAttribute("user", user);
+            request.setAttribute("name", name);
+            request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
+        }
+        else {
+            dao.signup(user, pass, name, email, phone);
+            request.getRequestDispatcher("Views/Customer/Login.jsp").forward(request, response);
+        }
+
     }
 
     /** 
