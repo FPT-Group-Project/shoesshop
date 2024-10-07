@@ -393,4 +393,24 @@ public class ProductDAO extends DBContext{
             System.out.println();
         }
     }
+    
+    public Integer getStock(int productId, int colorId, int sizeId){
+        String sql="select * from ProductStock\n"
+                 + "where ProductID=? and SizeID=? and ColorID=?";
+        try{
+            PreparedStatement pre=connection.prepareStatement(sql);
+            pre.setInt(1, productId);
+            pre.setInt(2, sizeId);
+            pre.setInt(3, colorId);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next()){
+                int stock=rs.getInt("Quantity");
+                return stock;
+            }
+        }
+        catch(SQLException e){
+            System.out.println("Can't get stock");
+        }
+        return null;
+    }    
 }
