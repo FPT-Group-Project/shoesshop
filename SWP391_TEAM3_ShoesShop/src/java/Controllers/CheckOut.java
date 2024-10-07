@@ -39,9 +39,14 @@ public class CheckOut extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CartDAO cartDAO = new CartDAO();
-        int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
-        String email = "robert@example.com"; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH Email CỦA ACCOUNT
-        String phone = "555444333"; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH Phone CỦA ACCOUNT
+        //int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+        int accountId = Integer.parseInt(request.getParameter("accountId")); //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+//
+//        String email = "robert@example.com"; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH Email CỦA ACCOUNT
+//         
+//        String phone = "555444333"; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH Phone CỦA ACCOUNT
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
         List<Cart> arr = cartDAO.getCartItemsByAccountId(accountId); 
         int total = 0;
         int shipping = 0; //NẾU CÓ SHIPPING THÌ THAY VÀO ĐÂY
@@ -84,7 +89,9 @@ public class CheckOut extends HttpServlet {
         String type = request.getParameter("type");
         if(type.equalsIgnoreCase("order")) {
         CartDAO cartDAO = new CartDAO();
-        int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+//        int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+        int accountId = Integer.parseInt(request.getParameter("accountId")); //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         double total = Double.parseDouble(request.getParameter("total"));
