@@ -68,6 +68,7 @@ public class home extends HttpServlet {
             pageNumber=1;
         }
         List<Product> pageContent=productPageList.get(pageNumber-1);
+        request.setAttribute("atPage", pageNumber);
         request.setAttribute("list", pageContent);
         request.setAttribute("pagesNumber", productPageList.size());
         request.getRequestDispatcher("Views/Customer/homePage.jsp").forward(request, response);

@@ -158,7 +158,7 @@
                         </div>
                         <div>
                             <c:forEach var="n" begin="1" end="${pagesNumber}">
-                                <a href="home?page=${n}">${n}</a>
+                                <a href="home?page=${n}" style="${n==atPage?'color:red':'color:white; background-color: black'}">${n}</a>
                             </c:forEach>
                         </div>
                     </form>
