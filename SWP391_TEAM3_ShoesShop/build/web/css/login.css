@@ -36,7 +36,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-
+#logreg-forms .form-signup input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+#logreg-forms .form-signup input[type="password"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+#logreg-forms .form-signup input[type="email"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
 #logreg-forms .social-login{
     width:390px;
     margin:0 auto;
@@ -71,7 +83,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 #logreg-forms .form-signup .social-btn{ width:210px; }
 
-#logreg-forms .form-signup input { margin-bottom: 2px;}
 
 .form-signup .social-login{
     width:210px !important;

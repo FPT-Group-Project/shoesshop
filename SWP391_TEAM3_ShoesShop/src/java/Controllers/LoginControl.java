@@ -88,20 +88,39 @@ public class LoginControl extends HttpServlet {
             request.setAttribute("error", "Wrong username or password!");
             request.getRequestDispatcher("Views/Customer/Login.jsp").forward(request, response);
         } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("acc", a);
-            session.setMaxInactiveInterval(60 * 60 * 24);
-            Cookie u = new Cookie("userC", username);
-            Cookie p = new Cookie("passC", password);
-            if (remember != null) {
-                p.setMaxAge(60 * 60 * 24);
-            } else {
-                p.setMaxAge(0);
+            if (a.getRoleID()==1){
+                HttpSession session = request.getSession();
+                session.setAttribute("acc", a);
+                session.setMaxInactiveInterval(60 * 60 * 24);
+                Cookie u = new Cookie("userC", username);
+                Cookie p = new Cookie("passC", password);
+                if (remember != null) {
+                    p.setMaxAge(60 * 60 * 24);
+                } else {
+                    p.setMaxAge(0);
+                }
+                u.setMaxAge(60 * 60 * 24 * 365);
+                response.addCookie(u);
+                response.addCookie(p);
+                response.sendRedirect("AccoutListController");
+
             }
-            u.setMaxAge(60 * 60 * 24 * 365);
-            response.addCookie(u);
-            response.addCookie(p);
-            response.sendRedirect("home");
+            else{
+                HttpSession session = request.getSession();
+                session.setAttribute("acc", a);
+                session.setMaxInactiveInterval(60 * 60 * 24);
+                Cookie u = new Cookie("userC", username);
+                Cookie p = new Cookie("passC", password);
+                if (remember != null) {
+                    p.setMaxAge(60 * 60 * 24);
+                } else {
+                    p.setMaxAge(0);
+                }
+                u.setMaxAge(60 * 60 * 24 * 365);
+                response.addCookie(u);
+                response.addCookie(p);
+                response.sendRedirect("home");
+            }
         }
     }
 
