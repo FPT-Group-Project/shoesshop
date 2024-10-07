@@ -41,9 +41,15 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
         CartDAO cartDAO = new CartDAO();
 //        
-        int accountId = Integer.parseInt(request.getParameter("accountId")); //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
-
+         HttpSession session = request.getSession();
+            Integer accountId = (Integer) session.getAttribute("accountId");
         List<Cart> arr = cartDAO.getCartItemsByAccountId(accountId); 
+         if (accountId == null) {
+            // Redirect to login page if user is not logged in
+            response.sendRedirect("login");
+            return;
+        }
+
         //System.out.println(arr.size());
          int itemCount = cartDAO.countItemsByAccountId(accountId);  
         
