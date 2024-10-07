@@ -40,7 +40,9 @@ public class CartController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CartDAO cartDAO = new CartDAO();
-        int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+//        
+        int accountId = Integer.parseInt(request.getParameter("accountId")); //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+
         List<Cart> arr = cartDAO.getCartItemsByAccountId(accountId); 
         //System.out.println(arr.size());
          int itemCount = cartDAO.countItemsByAccountId(accountId);  
