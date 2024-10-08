@@ -162,7 +162,7 @@
                                         <li><a class="dropdown-item" href="account.html">Account</a></li>
                                         <li><a class="dropdown-item" href="settings.html">Settings</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="login.html">Log Out</a></li>
+                                        <li><a class="dropdown-item" href="login">Log Out</a></li>
                                     </ul>
                                 </div><!--//app-user-dropdown--> 
                             </div><!--//app-utilities-->
@@ -403,7 +403,7 @@
 
 
                                     <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="add">
+                                        <a class="btn app-btn-secondary" href="manageAccount">
 
                                             Add New
                                         </a>

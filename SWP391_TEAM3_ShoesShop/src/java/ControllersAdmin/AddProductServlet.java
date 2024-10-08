@@ -88,7 +88,7 @@ public class AddProductServlet extends HttpServlet {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // lấy tên file
 
         // đường dẫn thư mục cho ảnh sản phẩm
-        String uploadPath = getServletContext().getRealPath("/images");
+        String uploadPath = getServletContext().getRealPath("/ImageProductAvt");
 
         // tạo thư mục nếu chưa tồn tại
         File uploadDir = new File(uploadPath);
@@ -109,7 +109,7 @@ public class AddProductServlet extends HttpServlet {
         }
 
         // lưu đường dẫn ảnh vào db 
-        String avatarP = "images/" + fileName;
+        String avatarP = "ImageProductAvt/" + fileName;
 
         // tạo đối tượng Product
         Product product = new Product();
@@ -121,7 +121,7 @@ public class AddProductServlet extends HttpServlet {
 
         // gọi DAO để thêm product vào db
         ProductDAO productDAO = new ProductDAO();
-        productDAO.insertProduct(product);
+        productDAO.addProduct(product);
 
         // đặt thông báo thành công vào request
         request.setAttribute("successMessage", "Product added successfully!");

@@ -53,7 +53,7 @@
                         <div class="row">
                             <div class="col-sm-12 text-left menu-1">
                                 <ul>
-                                    <li class="active"><a href="/AccoutListController">Back</a></li>
+                                    <li class="active"><a href="AccoutListController">Back</a></li>
 
 
 

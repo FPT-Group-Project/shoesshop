@@ -106,15 +106,15 @@ public class ProductDAO extends DBContext{
             return false;            
         }
         else{
-            String sql="insert into Product values(?, ?, ?, ?, ?, ?)";
+            String sql="insert into Product values( ?, ?, ?, ?, ?)";
             try{
                 PreparedStatement pre=connection.prepareStatement(sql);
-                pre.setInt(1, p.getProductId());
-                pre.setString(2, p.getProductName());
-                pre.setString(3, p.getDescription());
-                pre.setDouble(4, p.getPrice());
-                pre.setInt(5, p.getBrandId());
-                pre.setString(6, p.getAvatarP());
+                
+                pre.setString(1, p.getProductName());
+                pre.setString(2, p.getDescription());
+                pre.setDouble(3, p.getPrice());
+                pre.setInt(4, p.getBrandId());
+                pre.setString(5, p.getAvatarP());
                 pre.executeUpdate();
                 return true;
             }
