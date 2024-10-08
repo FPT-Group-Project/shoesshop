@@ -8,6 +8,7 @@ package Controllers;
 
 import DAL.CartDAO;
 import DAL.OrderDAO;
+import Models.Account;
 import Models.Cart;
 
 import java.io.IOException;
@@ -41,7 +42,8 @@ public class CheckOut extends HttpServlet {
         CartDAO cartDAO = new CartDAO();
         //int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
          HttpSession session = request.getSession();
-            Integer accountId = (Integer) session.getAttribute("accountId");
+            Account acc = (Account) session.getAttribute("acc");
+            Integer accountId = acc.getAccountID();
 //
 //        String email = "robert@example.com"; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH Email CỦA ACCOUNT
 //         

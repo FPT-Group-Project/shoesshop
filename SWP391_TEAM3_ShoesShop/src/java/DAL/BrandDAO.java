@@ -11,10 +11,10 @@ import java.util.List;
 public class BrandDAO extends DBContext {
     public void insertBrand(Brand brand) {
         //  truy vấn INSERT 
-        String sql = "INSERT INTO Brand (bName) VALUES (?)"; // Xóa brandID khỏi câu lệnh SQL
+        String sql = "INSERT INTO Brand (brandName) VALUES (?)"; 
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, brand.getBrandName()); // chỉ cần brandName
+            ps.setString(1, brand.getBrandName()); 
             
             ps.executeUpdate();
             // chạy query
