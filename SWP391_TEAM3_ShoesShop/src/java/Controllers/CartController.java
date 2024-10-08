@@ -7,6 +7,7 @@ package Controllers;
 
 
 import DAL.CartDAO;
+import Models.Account;
 import Models.Cart;
 
 import java.io.IOException;
@@ -42,7 +43,8 @@ public class CartController extends HttpServlet {
         CartDAO cartDAO = new CartDAO();
 //        
          HttpSession session = request.getSession();
-            Integer accountId = (Integer) session.getAttribute("accountId");
+         Account acc = (Account) session.getAttribute("acc");
+            Integer accountId = acc.getAccountID();
         List<Cart> arr = cartDAO.getCartItemsByAccountId(accountId); 
          if (accountId == null) {
             // Redirect to login page if user is not logged in

@@ -8,6 +8,7 @@ package Controllers;
 
 import DAL.CartDAO;
 import Models.Cart;
+import Models.Account;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -80,8 +81,8 @@ public class addToCart extends HttpServlet {
        
         int productId = Integer.parseInt(request.getParameter("productId"));
         HttpSession session = request.getSession();
-            Integer accountId = (Integer) session.getAttribute("accountId");
-
+            Account acc = (Account) session.getAttribute("acc");
+            Integer accountId = acc.getAccountID();
             if (accountId == null) {
                 out.println("{\"message\":\"You need to log in before start shopping\", \"status\":\"warning\"}");
                 return;
@@ -106,7 +107,7 @@ public class addToCart extends HttpServlet {
         //} else {
         //    response.getWriter().write("Lỗi khi thêm sản phẩm vào giỏ hàng.");
         //}
-        response.sendRedirect("cart");
+        response.sendRedirect("home");
     }
  
 }

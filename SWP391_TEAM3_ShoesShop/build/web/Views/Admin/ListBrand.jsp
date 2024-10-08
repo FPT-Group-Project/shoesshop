@@ -394,7 +394,7 @@
 
 
                                     <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="#">
+                                        <a class="btn app-btn-secondary" href="addBrand">
 
                                             Add New
                                         </a>
