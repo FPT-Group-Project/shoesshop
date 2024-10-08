@@ -48,8 +48,8 @@ public class CheckOut extends HttpServlet {
 //        String email = "robert@example.com"; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH Email CỦA ACCOUNT
 //         
 //        String phone = "555444333"; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH Phone CỦA ACCOUNT
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
+        String email = acc.getEmail();
+        String phone = acc.getPhoneNumber();
         List<Cart> arr = cartDAO.getCartItemsByAccountId(accountId); 
         int total = 0;
         int shipping = 0; //NẾU CÓ SHIPPING THÌ THAY VÀO ĐÂY
@@ -94,15 +94,16 @@ public class CheckOut extends HttpServlet {
         CartDAO cartDAO = new CartDAO();
 //        int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
         HttpSession session = request.getSession();
-            Integer accountId = (Integer) session.getAttribute("accountId");
+            Account acc = (Account) session.getAttribute("acc");
+            Integer accountId = acc.getAccountID();
              if (accountId == null) {
                 out.println("{\"message\":\"You need to log in before start shopping\", \"status\":\"warning\"}");
                 return;
             }
 
 
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
+        String email = acc.getEmail();
+        String phone = acc.getPhoneNumber();
         double total = Double.parseDouble(request.getParameter("total"));
         String address = request.getParameter("address");
         String payment = request.getParameter("payment");
