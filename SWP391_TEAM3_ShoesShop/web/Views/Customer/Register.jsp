@@ -21,7 +21,7 @@
     </head>
     <body>
         <div id="logreg-forms">
-           <form class="form-signup" action="register" method="post">
+           <form class="form-signin" action="register" method="post">
                 <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Register</h1>
                 <c:if test="${error!=null }">
                     <div class="alert alert-danger" role="alert">
