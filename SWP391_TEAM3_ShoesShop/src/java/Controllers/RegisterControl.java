@@ -77,6 +77,7 @@ public class RegisterControl extends HttpServlet {
         AccountDAO dao = new AccountDAO();
         Account account = dao.checkEmailExist(email);
         Account checkuser = dao.checkAccountExist(user);
+        Account phonenum = dao.checkPhoneExist(phone);
         //check format email 
         String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
@@ -87,15 +88,7 @@ public class RegisterControl extends HttpServlet {
          Pattern number = Pattern.compile(regex);
         Matcher matcher2 = number.matcher(phone);
         //check 
-
-        if (user.isEmpty() || email.isEmpty() || pass.isEmpty()) {
-            request.setAttribute("error", "you must enter username, password and email");
-            request.setAttribute("user", user);
-            request.setAttribute("name", name);
-            request.setAttribute("email", email);
-            request.setAttribute("pass", pass);
-            request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
-        } else if (checkuser != null) {
+        if (checkuser != null) {
             request.setAttribute("error", "Username already exists");
             request.setAttribute("name", name);
             request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
@@ -111,8 +104,14 @@ public class RegisterControl extends HttpServlet {
             request.setAttribute("name", name);
             request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
         } 
+        else if (phonenum != null) {
+            request.setAttribute("error", "Phone number already exists");
+            request.setAttribute("user", user);
+            request.setAttribute("name", name);
+            request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
+        } 
         else if(!matcher2.matches()){ 
-            request.setAttribute("error", "Phone number must be 10 digits");
+            request.setAttribute("error", "Wrong phone number format");
             request.setAttribute("user", user);
             request.setAttribute("name", name);
             request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);

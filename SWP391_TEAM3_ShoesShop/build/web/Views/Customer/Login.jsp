@@ -43,7 +43,7 @@
 
                 <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
                 <hr>
-                <button class="btn btn-info btn-block" type="button" id="btn-signup" onclick="window.location.href='/project1/register'">
+                <button class="btn btn-info btn-block" type="button" id="btn-signup" onclick="window.location.href='register'">
                     <i class="fas fa-user-plus"></i> Register
                 </button>
             </form>

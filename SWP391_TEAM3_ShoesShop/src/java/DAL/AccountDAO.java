@@ -88,6 +88,23 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+    public Account checkPhoneExist(String phone) {
+        String sql = "SELECT [PhoneNumber]\n"
+                + "  FROM [dbo].[Account] where PhoneNumber = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, phone);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account();
+                account.setEmail(rs.getString("PhoneNumber"));
+                return account;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     //  lấy danh sách tất cả account
     public List<Account> getAllAccounts() {
         List<Account> accounts = new ArrayList<>();
