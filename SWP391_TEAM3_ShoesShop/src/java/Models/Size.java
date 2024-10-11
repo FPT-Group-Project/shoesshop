@@ -10,12 +10,10 @@ package Models;
  */
 public class Size {
     private int sizeId;
-    private int productId;
     private int size;
     public Size(){}
-    public Size(int sizeId, int productId, int size) {
+    public Size(int sizeId, int size) {
         this.sizeId = sizeId;
-        this.productId = productId;
         this.size = size;
     }
 
@@ -25,14 +23,6 @@ public class Size {
 
     public void setSizeId(int sizeId) {
         this.sizeId = sizeId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     public int getSize() {

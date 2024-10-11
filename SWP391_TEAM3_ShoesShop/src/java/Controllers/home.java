@@ -45,7 +45,7 @@ public class home extends HttpServlet {
         }
     } 
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -63,6 +63,9 @@ public class home extends HttpServlet {
         int pageNumber;
         try{
             pageNumber=Integer.parseInt(page);
+            if(pageNumber<=0||pageNumber>=productPageList.size()){
+                throw new NumberFormatException();
+            }
         }
         catch(NumberFormatException e){
             pageNumber=1;

@@ -58,9 +58,8 @@
                             <div class="col-sm-5 col-md-3">
                                 <form action="search" method="GET" class="search-wrap">
                                     <div class="form-group">
-                                        <input oninput="searchByName(this)" name="txt" type="search" class="form-control search" placeholder="Search">
+                                        <input name="searchQuery" type="search" class="form-control search" placeholder="Search">
                                         <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
-                                        
                                     </div>
                                 </form>
                             </div>
@@ -136,7 +135,7 @@
                                 <div class="col-lg-3 mb-4 text-center" >
                                     <div class="product-entry border">
                                         <a href="productDetail?id=${p.getProductId()}" class="prod-img">
-                                            <img src="ImageProductAvt/${p.avatarP}" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                                            <img src="ImageProductAvt/${p.getAvatarP()}" class="img-fluid" alt="Free html5 bootstrap 4 template">
                                         </a>
                                         <div class="desc">
                                             <h2><a href="productDetail?id=${p.getProductId()}">${p.getProductName()}</a></h2>

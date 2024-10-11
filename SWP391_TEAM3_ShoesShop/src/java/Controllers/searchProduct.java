@@ -67,6 +67,9 @@ public class searchProduct extends HttpServlet {
         int pageNumber;
         try{
             pageNumber=Integer.parseInt(page);
+            if(pageNumber<=0||pageNumber>=productPageList.size()){
+                throw new NumberFormatException();
+            }
         }
         catch(NumberFormatException e){
             pageNumber=1;

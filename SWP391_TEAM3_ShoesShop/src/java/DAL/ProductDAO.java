@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -200,7 +199,8 @@ public class ProductDAO extends DBContext{
     
     public List<Models.Color> getProductColors(Product p){
         List<Models.Color> colors=new ArrayList<>();
-        String sql="select pc.* from Product p join Product_Color pc on p.ProductID=pc.ProductID\n"
+        String sql="select distinct p.ProductID,pc.* from Product_Color pc join ProductStock ps on pc.ColorID=ps.ColorID \n"
+                 + "join Product p on ps.ProductID=p.ProductID\n"
                  + "where p.ProductID=?";
         try{
             PreparedStatement pre=connection.prepareStatement(sql);
@@ -208,9 +208,8 @@ public class ProductDAO extends DBContext{
             ResultSet rs=pre.executeQuery();
             while(rs.next()){
                 int colorId=rs.getInt("ColorID");
-                int productId=rs.getInt("ProductID");
                 String color=rs.getString("Color");
-                Models.Color c = new Models.Color(colorId, productId, color);
+                Models.Color c = new Models.Color(colorId, color);
                 colors.add(c);
             }
         }
@@ -221,7 +220,8 @@ public class ProductDAO extends DBContext{
     }
     public List<Size> getProductSizes(Product p){
         List<Size> sizes=new ArrayList<>();
-        String sql="select ps.* from Product p join Product_Size ps on p.ProductID=ps.ProductID\n"
+        String sql="select distinct p.ProductID,pz.* from Product_Size pz join ProductStock ps on pz.SizeID=ps.SizeID \n"
+                 + "join Product p on ps.ProductID=p.ProductID\n"
                  + "where p.ProductID=?";
         try{
             PreparedStatement pre=connection.prepareStatement(sql);
@@ -229,9 +229,8 @@ public class ProductDAO extends DBContext{
             ResultSet rs=pre.executeQuery();
             while(rs.next()){
                 int sizeId=rs.getInt("SizeID");
-                int productId=rs.getInt("ProductID");
                 int size=rs.getInt("Size");
-                Size s = new Size(sizeId, productId, size);
+                Size s = new Size(sizeId, size);
                 sizes.add(s);
             }
         }
@@ -268,13 +267,14 @@ public class ProductDAO extends DBContext{
         List<Product> list=new ArrayList<>();
         //Construct the sql query
         StringBuilder sb = new StringBuilder("select p.* from Product p\n"
-                + "left join Brand c on p.BrandID=c.BrandID \n"
-                + "left join Product_Color pc on p.ProductID=pc.ProductID\n"
-                + "left join Product_Size ps on p.ProductID=ps.ProductID\n"
+                + "join Brand b on p.BrandID=b.BrandID \n"
+                + "join ProductStock ps on p.ProductID=ps.ProductID\n"
+                + "join Product_Color pc on ps.ColorID=pc.ColorID\n"
+                + "join Product_Size pz on ps.SizeID=pz.SizeID\n"
                 + "where\n");
         //Make a slot for each keyword
         for(int i=0;i<keywords.size();i++){
-            sb.append("concat(p.ProductName, ' ', p.Description, ' ', pc.Color, ' ', ps.Size) LIKE ?");
+            sb.append("concat(p.ProductName, ' ', p.Description, ' ', b.BrandName, ' ', pc.Color, ' ', pz.Size) LIKE ?");
             if(i!=keywords.size()-1){
                 sb.append(" or \n");
             }
@@ -309,44 +309,6 @@ public class ProductDAO extends DBContext{
         }
         return list;
     }
-     Connection conn = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
-
- public List<Product> searchByName(String txtSearch) {
-    List<Product> list = new ArrayList<>();
-    String query = "SELECT * FROM Product WHERE [ProductName] LIKE ?";
-    
-    try {
-        conn = new DBContext().connection; // Open connection with SQL
-        ps = conn.prepareStatement(query);
-        ps.setString(1, "%" + txtSearch + "%");
-        rs = ps.executeQuery();
-        
-        while (rs.next()) {
-            // Assuming the Product constructor matches the fields in the Product table
-            list.add(new Product(
-                rs.getInt("ProductID"), // Field for Product ID
-                rs.getString("ProductName"), // Field for Product Name
-                rs.getString("Description"), // Field for Description
-                rs.getDouble("Price"), // Field for Price
-                rs.getInt("BrandID"), // Field for Brand ID
-                rs.getString("AvatarP") // Field for Avatar Path
-            ));
-        }
-    } catch (SQLException e) {
-        e.printStackTrace(); // Print stack trace for debugging
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (conn != null) conn.close(); // Close resources
-        } catch (SQLException e) {
-            e.printStackTrace(); // Print stack trace for debugging
-        }
-    }
-    return list;
-}
 
     //Check if an id (and by extension, a product) already exists in the list
     public boolean productIdExists(int productId, List<Product> list){
@@ -357,11 +319,7 @@ public class ProductDAO extends DBContext{
         }
         return false;
     }
-    
-    public void sortProductsById(List<Product> list){
-        list.sort(Comparator.comparingInt(Product::getProductId));
-    }
-    
+ 
     public void printAllProducts(List<Product> list){
         for(int i=0;i<list.size();i++){
             Product p = list.get(i);

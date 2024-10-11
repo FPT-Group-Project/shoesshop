@@ -56,9 +56,9 @@
                                 <div id="colorlib-logo"><a href="home">Footwear</a></div>
                             </div>
                             <div class="col-sm-5 col-md-3">
-                                <form action="#" class="search-wrap">
+                                <form action="search" method="GET" class="search-wrap">
                                     <div class="form-group">
-                                        <input type="search" class="form-control search" placeholder="Search">
+                                        <input name="searchQuery" type="search" class="form-control search" placeholder="Search">
                                         <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
                                     </div>
                                 </form>
@@ -132,15 +132,14 @@
                                 <div class="row row-pb-lg product-detail-wrap">
                                     <div class="col-sm-8">
                                         <div class="owl-carousel">
-
                                             <div class="item">
                                                 <div class="product-entry border">
                                                     <a href="#" class="prod-img">
-                                                        <img src="images/item-1.jpg" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                                                        <img src="ImageProductAvt/${p.getAvatarP()}" class="img-fluid" alt="Free html5 bootstrap 4 template">
                                                     </a>
                                                 </div>
                                             </div>
-
+                                            <input type="text" id="productId" value="${p.getProductId()}" style="display:none">
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -158,7 +157,7 @@
                                                 background-color: #797979
                                             }
                                             input.custom-product-property-radio-input:checked + .custom-product-property-radio-label {
-                                                background-color: #797979;
+                                                background-color: #90ccbc;
                                             }
                                         </style>
                                         <div class="product-desc">
@@ -175,7 +174,7 @@
                                                     <ul>
                                                         <c:forEach items="${sizes}" var="size">
                                                             <li>
-                                                                <input class="custom-product-property-radio-input" id="${size.getSize()}" type="radio" name="sizes" value="${size.getSizeId()}" hidden>
+                                                                <input class="custom-product-property-radio-input" id="${size.getSize()}" type="radio" name="sizes" value="${size.getSizeId()}" hidden onclick="getProductStock()">
                                                                 <label class="custom-product-property-radio-label" for="${size.getSize()}">${size.getSize()}</label>
                                                             </li>
                                                         </c:forEach>
@@ -186,53 +185,94 @@
                                                     <ul>
                                                         <c:forEach items="${colors}" var="color">
                                                             <li>
-                                                                <input class="custom-product-property-radio-input" id="${color.getColor()}" type="radio" name="colors" value="${color.getColorId()}" hidden>
+                                                                <input class="custom-product-property-radio-input" id="${color.getColor()}" type="radio" name="colors" value="${color.getColorId()}" hidden onclick="getProductStock()">
                                                                 <label class="custom-product-property-radio-label" for="${color.getColor()}">${color.getColor()}</label>
                                                             </li>
                                                         </c:forEach>
                                                     </ul>
                                                 </div>
                                             </div>
-                                             <input type="hidden" name="productId" value="${p.getProductId()}"/>
-                                             
+                                            <input type="hidden" name="productId" value="${p.getProductId()}"/>
+
                                             <div class="input-group mb-4">
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="quantity-left-minus btn" onclick="changeProductQuantity(-1)" data-type="minus" data-field="">
+                                                    <button type="button" class="quantity-left-minus btn property-check" onclick="changeProductQuantity(-1)" data-type="minus" data-field="" disabled>
                                                         <i class="icon-minus2"></i>
                                                     </button>
                                                 </span>
-                                                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1">
+                                                <input type="text" id="quantity" name="quantity" class="form-control input-number property-check" value="0" min="0" max="1" onblur="checkExceedingQuantity()" disabled>
                                                 <span class="input-group-btn ml-1">
-                                                    <button type="button" class="quantity-right-plus btn" onclick="changeProductQuantity(1)" data-type="plus" data-field="">
+                                                    <button type="button" class="quantity-right-plus btn property-check" onclick="changeProductQuantity(1)" data-type="plus" data-field="" disabled>
                                                         <i class="icon-plus2"></i>
                                                     </button>
                                                 </span>
                                                 <script>
-                                                    var stocks = new Array();
-                                                        <c:forEach items="${ProductStock}" var="stock">
-                                                            stocks.push({'quantity': ${stock.quantity}, 'colorId': ${stock.colorID}, 'sizeID': ${stock.sizeID}});
-                                                        </c:forEach>
-                                                    function changeProductQuantity(n){
-                                                        const quantity=document.getElementById("quantity");
-                                                        const current=Number(quantity.value), min=Number(quantity.min);
-                                                        let max = 0;
-                                                        let size = document.querySelector('input[name=sizes]:checked');
-                                                        let color = document.querySelector('input[name=colors]:checked');
-                                                        if(size && color) {
-                                                            for (var i in stocks) {
-                                                                var stock = stocks[i];
-                                                                if(stock.colorId == parseInt(color.value) && stock.sizeID == parseInt(size.value)) {
-                                                                    max = stock.quantity;
-                                                                    break;
+                                                    function getProductStock() {
+                                                        //Disable the buttons
+                                                        const qe = document.querySelectorAll('.property-check');
+                                                        const quantity = document.getElementById("quantity");
+                                                        qe.forEach(element => {
+                                                            element.disabled = true;
+                                                        });
+                                                        quantity.value = 0;
+                                                        //Check if both of color and size is selected
+                                                        const productId = document.getElementById("productId").value;
+                                                        const colorId = document.querySelector('[name="colors"]:checked')?.value;
+                                                        const sizeId = document.querySelector('[name="sizes"]:checked')?.value;
+                                                        if (!colorId || !sizeId) {
+                                                            return;
+                                                        }
+                                                        //xhr setup
+                                                        var xhr = new XMLHttpRequest();
+                                                        const params = 'productId=' + encodeURIComponent(productId)
+                                                                + '&colorId=' + encodeURIComponent(colorId)
+                                                                + '&sizeId=' + encodeURIComponent(sizeId);
+                                                        xhr.open('post', 'productDetail');
+                                                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                                        xhr.onreadystatechange = function () {
+                                                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                                                const stock = Number(xhr.responseText);
+                                                                console.log(stock);
+                                                                if (!isNaN(stock) && stock > 0) {
+                                                                    quantity.max = Math.max(stock, 1);
+                                                                    quantity.value = 1;
+                                                                    //Enable the buttons
+                                                                    qe.forEach(element => {
+                                                                        element.disabled = false;
+                                                                    });
                                                                 }
                                                             }
+                                                        };
+                                                        xhr.send(params);
+                                                    }
+                                                    function changeProductQuantity(n) {
+                                                        const quantity = document.getElementById("quantity");
+                                                        const current = Number(quantity.value), min = Number(quantity.min), max = Number(quantity.max);
+                                                        const changed = current + n;
+                                                        if (changed > min && changed <= max) {
+                                                            quantity.value = changed;
+                                                            console.log(n);
                                                         }
-                                                        const changed=current+n;
-                                                        if(changed>=min && changed<=max){
-                                                            quantity.value=changed;
+                                                        if (changed > max) {
+                                                            quantity.value = max;
+                                                            console.log(0);
                                                         }
-                                                        if(changed>max){
-                                                            quantity.value=max;
+                                                    }
+                                                    function checkExceedingQuantity() {
+                                                        const quantity = document.getElementById("quantity");
+                                                        if (!Number.isInteger(Number(quantity.value))||Number(quantity.value)<=0) {
+                                                            quantity.value = 1;
+                                                        }
+                                                        if (Number(quantity.max) < Number(quantity.value)) {
+                                                            quantity.value = quantity.max;
+                                                        }
+                                                        if (Number(quantity.min) > Number(quantity.value)) {
+                                                            quantity.value = quantity.min;
+                                                        }
+                                                    }
+                                                    function submitByEnterFalse(event) {
+                                                        if (event.keyCode === 13) {
+                                                            event.preventDefault();
                                                         }
                                                     }
                                                 </script>
@@ -240,162 +280,126 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12 text-center">
-                                                    <p class="addtocart"><button type="submit" class="btn btn-primary btn-addtocart" style="display: flex; align-items: center"><i class="icon-shopping-cart"></i> Add to Cart</button></p>
+                                                    <p class="addtocart"><button disabled type="submit" class="btn btn-primary btn-addtocart property-check" style="display: flex; align-items: center"><i class="icon-shopping-cart"></i> Add to Cart</button></p>
                                                 </div>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </c:otherwise>
-                        </c:choose>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                 </form>
-   
-</form>
 
-            
-            <!--footer-->
-            <footer id="colorlib-footer" role="contentinfo">
-                <div class="container">
-                    <div class="row row-pb-md">
-                        <div class="col footer-col colorlib-widget">
-                            <h4>About Footwear</h4>
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-                            <p>
-                            <ul class="colorlib-social-icons">
-                                <li><a href="#"><i class="icon-twitter"></i></a></li>
-                                <li><a href="#"><i class="icon-facebook"></i></a></li>
-                                <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                                <li><a href="#"><i class="icon-dribbble"></i></a></li>
-                            </ul>
-                            </p>
-                        </div>
-                        <div class="col footer-col colorlib-widget">
-                            <h4>Customer Care</h4>
-                            <p>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">Returns/Exchange</a></li>
-                                <li><a href="#">Gift Voucher</a></li>
-                                <li><a href="#">Wishlist</a></li>
-                                <li><a href="#">Special</a></li>
-                                <li><a href="#">Customer Services</a></li>
-                                <li><a href="#">Site maps</a></li>
-                            </ul>
-                            </p>
-                        </div>
-                        <div class="col footer-col colorlib-widget">
-                            <h4>Information</h4>
-                            <p>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Support</a></li>
-                                <li><a href="#">Order Tracking</a></li>
-                            </ul>
-                            </p>
-                        </div>
+                </form>
 
-                        <div class="col footer-col">
-                            <h4>News</h4>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="#">Press</a></li>
-                                <li><a href="#">Exhibitions</a></li>
-                            </ul>
-                        </div>
 
-                        <div class="col footer-col">
-                            <h4>Contact Information</h4>
-                            <ul class="colorlib-footer-links">
-                                <li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-                                <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-                                <li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
-                                <li><a href="#">yoursite.com</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="copy">
-                    <div class="row">
-                        <div class="col-sm-12 text-center">
-                            <p>
-                                <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
-                                <span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
-                            </p>
+                <!--footer-->
+                <footer id="colorlib-footer" role="contentinfo">
+                    <div class="container">
+                        <div class="row row-pb-md">
+                            <div class="col footer-col colorlib-widget">
+                                <h4>About Footwear</h4>
+                                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+                                <p>
+                                <ul class="colorlib-social-icons">
+                                    <li><a href="#"><i class="icon-twitter"></i></a></li>
+                                    <li><a href="#"><i class="icon-facebook"></i></a></li>
+                                    <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                                    <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                                </ul>
+                                </p>
+                            </div>
+                            <div class="col footer-col colorlib-widget">
+                                <h4>Customer Care</h4>
+                                <p>
+                                <ul class="colorlib-footer-links">
+                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="#">Returns/Exchange</a></li>
+                                    <li><a href="#">Gift Voucher</a></li>
+                                    <li><a href="#">Wishlist</a></li>
+                                    <li><a href="#">Special</a></li>
+                                    <li><a href="#">Customer Services</a></li>
+                                    <li><a href="#">Site maps</a></li>
+                                </ul>
+                                </p>
+                            </div>
+                            <div class="col footer-col colorlib-widget">
+                                <h4>Information</h4>
+                                <p>
+                                <ul class="colorlib-footer-links">
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">Delivery Information</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Support</a></li>
+                                    <li><a href="#">Order Tracking</a></li>
+                                </ul>
+                                </p>
+                            </div>
+
+                            <div class="col footer-col">
+                                <h4>News</h4>
+                                <ul class="colorlib-footer-links">
+                                    <li><a href="blog.html">Blog</a></li>
+                                    <li><a href="#">Press</a></li>
+                                    <li><a href="#">Exhibitions</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col footer-col">
+                                <h4>Contact Information</h4>
+                                <ul class="colorlib-footer-links">
+                                    <li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+                                    <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+                                    <li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+                                    <li><a href="#">yoursite.com</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </footer>
-        </div>
+                    <div class="copy">
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <p>
+                                    <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
+                                    <span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
 
-        <div class="gototop js-top">
-            <a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
-        </div>
+            <div class="gototop js-top">
+                <a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+            </div>
 
-        <!-- jQuery -->
-        <script src="js/jquery.min.js"></script>
-        <!-- popper -->
-        <script src="js/popper.min.js"></script>
-        <!-- bootstrap 4.1 -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- jQuery easing -->
-        <script src="js/jquery.easing.1.3.js"></script>
-        <!-- Waypoints -->
-        <script src="js/jquery.waypoints.min.js"></script>
-        <!-- Flexslider -->
-        <script src="js/jquery.flexslider-min.js"></script>
-        <!-- Owl carousel -->
-        <script src="js/owl.carousel.min.js"></script>
-        <!-- Magnific Popup -->
-        <script src="js/jquery.magnific-popup.min.js"></script>
-        <script src="js/magnific-popup-options.js"></script>
-        <!-- Date Picker -->
-        <script src="js/bootstrap-datepicker.js"></script>
-        <!-- Stellar Parallax -->
-        <script src="js/jquery.stellar.min.js"></script>
-        <!-- Main -->
-        <script src="js/main.js"></script>
-
-        <script>
-            $(document).ready(function () {
-
-                var quantitiy = 0;
-                $('.quantity-right-plus').click(function (e) {
-
-                    // Stop acting like a button
-                    e.preventDefault();
-                    // Get the field name
-                    var quantity = parseInt($('#quantity').val());
-
-                    // If is not undefined
-
-                    $('#quantity').val(quantity + 1);
-
-
-                    // Increment
-
-                });
-
-                $('.quantity-left-minus').click(function (e) {
-                    // Stop acting like a button
-                    e.preventDefault();
-                    // Get the field name
-                    var quantity = parseInt($('#quantity').val());
-
-                    // If is not undefined
-
-                    // Increment
-                    if (quantity > 0) {
-                        $('#quantity').val(quantity - 1);
-                    }
-                });
-
-            });
-        </script>
-
-
+            <!-- jQuery -->
+            <script src="js/jquery.min.js"></script>
+            <!-- popper -->
+            <script src="js/popper.min.js"></script>
+            <!-- bootstrap 4.1 -->
+            <script src="js/bootstrap.min.js"></script>
+            <!-- jQuery easing -->
+            <script src="js/jquery.easing.1.3.js"></script>
+            <!-- Waypoints -->
+            <script src="js/jquery.waypoints.min.js"></script>
+            <!-- Flexslider -->
+            <script src="js/jquery.flexslider-min.js"></script>
+            <!-- Owl carousel -->
+            <script src="js/owl.carousel.min.js"></script>
+            <!-- Magnific Popup -->
+            <script src="js/jquery.magnific-popup.min.js"></script>
+            <script src="js/magnific-popup-options.js"></script>
+            <!-- Date Picker -->
+            <script src="js/bootstrap-datepicker.js"></script>
+            <!-- Stellar Parallax -->
+            <script src="js/jquery.stellar.min.js"></script>
+            <!-- Main -->
+            <script src="js/main.js"></script>
     </body>
 </html>
+
