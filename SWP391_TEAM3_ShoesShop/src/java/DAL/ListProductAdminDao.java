@@ -10,18 +10,93 @@ import java.util.List;
 
 public class ListProductAdminDao extends DBContext {
     // xóa producct qua id
-public void deleteProductById(int productID) {
-    String sql = "DELETE FROM [dbo].[Product] WHERE [ProductID] = ?";
+public boolean deleteProductById(int productID) {
+    // Các câu lệnh SQL để xóa bản ghi trong các bảng liên quan
+    String deleteFromProductImage = "DELETE FROM [dbo].[Product_Image] WHERE [ProductID] = ?";
+    String deleteFromProductStock = "DELETE FROM [dbo].[ProductStock] WHERE [ProductID] = ?";
+    String deleteFromOrderDetail = "DELETE FROM [dbo].[OrderDetail] WHERE [ProductID] = ?";
+    String deleteFromFeedback = "DELETE FROM [dbo].[Feedback] WHERE [ProductID] = ?";
+    String deleteFromCertificateNumber = "DELETE FROM [dbo].[CertificateNumber] WHERE [ProductID] = ?";
+    String deleteFromCart = "DELETE FROM [dbo].[Cart] WHERE [ProductID] = ?";
+    String deleteFromWarranty = "DELETE FROM [dbo].[Warranty] WHERE [ProductID] = ?";
+    String deleteFromProduct = "DELETE FROM [dbo].[Product] WHERE [ProductID] = ?";
+
     try {
-        PreparedStatement stmt = connection.prepareStatement(sql);
-            
-           stmt.setInt(1, productID);
-           ResultSet rs = stmt.executeQuery();
-        
+        connection.setAutoCommit(false); // Bắt đầu giao dịch
+
+        // Bước 1: Xóa các bản ghi trong bảng Product_Image trước
+        try (PreparedStatement stmt = connection.prepareStatement(deleteFromProductImage)) {
+            stmt.setInt(1, productID);
+            stmt.executeUpdate();
+        }
+
+        // Bước 2: Xóa các bản ghi trong bảng ProductStock
+        try (PreparedStatement stmt = connection.prepareStatement(deleteFromProductStock)) {
+            stmt.setInt(1, productID);
+            stmt.executeUpdate();
+        }
+
+        // Bước 3: Xóa các bản ghi trong bảng OrderDetail
+        try (PreparedStatement stmt = connection.prepareStatement(deleteFromOrderDetail)) {
+            stmt.setInt(1, productID);
+            stmt.executeUpdate();
+        }
+
+        // Bước 4: Xóa các bản ghi trong bảng Feedback
+        try (PreparedStatement stmt = connection.prepareStatement(deleteFromFeedback)) {
+            stmt.setInt(1, productID);
+            stmt.executeUpdate();
+        }
+
+        // Bước 5: Xóa các bản ghi trong bảng CertificateNumber
+        try (PreparedStatement stmt = connection.prepareStatement(deleteFromCertificateNumber)) {
+            stmt.setInt(1, productID);
+            stmt.executeUpdate();
+        }
+
+        // Bước 6: Xóa các bản ghi trong bảng Cart
+        try (PreparedStatement stmt = connection.prepareStatement(deleteFromCart)) {
+            stmt.setInt(1, productID);
+            stmt.executeUpdate();
+        }
+
+        // Bước 7: Xóa các bản ghi trong bảng Warranty
+        try (PreparedStatement stmt = connection.prepareStatement(deleteFromWarranty)) {
+            stmt.setInt(1, productID);
+            stmt.executeUpdate();
+        }
+
+        // Bước 8: Cuối cùng xóa bản ghi trong bảng Product
+        try (PreparedStatement stmt = connection.prepareStatement(deleteFromProduct)) {
+            stmt.setInt(1, productID);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Product has been successfully deleted.");
+                connection.commit(); // Xác nhận giao dịch
+                return true;
+            } else {
+                System.out.println("No product found with the given ID.");
+            }
+        }
+
+        connection.commit(); // Xác nhận giao dịch
     } catch (SQLException e) {
-        e.printStackTrace();
+        e.printStackTrace(); // Xử lý lỗi
+        try {
+            connection.rollback(); // Hoàn tác giao dịch nếu có lỗi
+        } catch (SQLException rollbackEx) {
+            rollbackEx.printStackTrace();
+        }
+    } finally {
+        try {
+            connection.setAutoCommit(true); // Đặt lại chế độ tự động cam kết
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
+    return false; // Trả về false nếu không xóa thành công
 }
+
 public void deleteBrandById(int brandID) {
     String sql = "DELETE FROM [dbo].[Brand] WHERE [BrandID] = ?";
     try {
@@ -369,25 +444,29 @@ public List<ProductAdmin> getProductListForAdmin1(int page, Integer brandID) {
 }
 
 
-    public static void main(String[] args) {
-    ListProductAdminDao viewListProductAdmin = new ListProductAdminDao();
+      public static void main(String[] args) {
+        // Khởi tạo đối tượng DAO để quản lý sản phẩm
+        ListProductAdminDao productAdminDao = new ListProductAdminDao();
 
-   
-    int page = 1;
-    
-    List<ProductAdmin> productsPage2 = viewListProductAdmin.getProductListForAdmin(page, 1);
-    List< Brand> listB= viewListProductAdmin.getListBrand();
-     int co =  viewListProductAdmin.countProductListForAdmin(1, "");
-               System.out.println("sL CATE 1 "+co);
-    if (productsPage2.isEmpty()) {
-        System.out.println("No products found on page " + page + ".");
-    } else {
-             
-        for (ProductAdmin product : productsPage2) {
-            System.out.println(product.toString());
+        // Xác định ID sản phẩm cần xóa
+        int productIDToDelete = 3; // Thay đổi ID theo sản phẩm bạn muốn xóa
+
+        try {
+            // Gọi phương thức deleteProductById để xóa sản phẩm
+            boolean isDeleted = productAdminDao.deleteProductById(productIDToDelete);
+
+            // Kiểm tra kết quả và in ra thông báo
+            if (isDeleted) {
+                System.out.println("Sản phẩm với ID " + productIDToDelete + " đã được xóa thành công.");
+            } else {
+                System.out.println("Không tìm thấy sản phẩm với ID " + productIDToDelete + ".");
+            }
+        } catch (Exception e) {
+            // Xử lý ngoại lệ
+            System.err.println("Đã xảy ra lỗi khi xóa sản phẩm: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-}
 
 
 }
