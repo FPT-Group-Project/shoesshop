@@ -33,7 +33,7 @@ public class AccountDAO extends DBContext {
                 rs.getString(4),
                 rs.getString(5),
                 rs.getString(6),
-                rs.getString(7));
+                rs.getInt(7));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);

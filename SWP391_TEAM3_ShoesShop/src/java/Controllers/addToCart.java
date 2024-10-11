@@ -8,6 +8,7 @@ package Controllers;
 
 import DAL.CartDAO;
 import Models.Cart;
+import Models.Account;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -79,7 +80,14 @@ public class addToCart extends HttpServlet {
         // Lấy thông tin từ request
        
         int productId = Integer.parseInt(request.getParameter("productId"));
-        int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+        HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("acc");
+            Integer accountId = acc.getAccountID();
+            if (accountId == null) {
+                out.println("{\"message\":\"You need to log in before start shopping\", \"status\":\"warning\"}");
+                return;
+            }
+
         int colorId = Integer.parseInt(request.getParameter("colors"));
         int sizeId = Integer.parseInt(request.getParameter("sizes"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -99,7 +107,7 @@ public class addToCart extends HttpServlet {
         //} else {
         //    response.getWriter().write("Lỗi khi thêm sản phẩm vào giỏ hàng.");
         //}
-        response.sendRedirect("cart");
+        response.sendRedirect("home");
     }
  
 }

@@ -3,26 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/web/WEB-INF/web.xml</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ListAccountDao.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Admin/ListProduct.jsp</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Admin/ListBrand.jsp</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/BrandController.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/DeleteBrandController.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/AddProductServlet.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Admin/EditBrand.jsp</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/CartDAO.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Admin/ListAccount.jsp</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ProductDAO.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/EditBrandController.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/DeleteProductController.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ListBrandDao.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/DBContext.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Models/Brand.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/DeleteAccountController.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/BrandDAO.java</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Admin/addBrand.jsp</file>
-            <file>file:/G:/GitHub/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ListProductAdminDao.java</file>
+            <file>file:/C:/Users/thanh/OneDrive/Máy%20tính/New/SWP391_TEAM3_ShoesShop/src/java/Controllers/CheckOut.java</file>
+            <file>file:/C:/Users/thanh/OneDrive/Máy%20tính/New/SWP391_TEAM3_ShoesShop/src/java/Controllers/addToCart.java</file>
+            <file>file:/C:/Users/thanh/OneDrive/Máy%20tính/New/SWP391_TEAM3_ShoesShop/src/java/Controllers/CartController.java</file>
+            <file>file:/C:/Users/thanh/OneDrive/Máy%20tính/New/SWP391_TEAM3_ShoesShop/src/java/Controllers/LoginControl.java</file>
         </group>
     </open-files>
 </project-private>

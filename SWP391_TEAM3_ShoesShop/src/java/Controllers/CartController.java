@@ -7,6 +7,7 @@ package Controllers;
 
 
 import DAL.CartDAO;
+import Models.Account;
 import Models.Cart;
 
 import java.io.IOException;
@@ -40,8 +41,17 @@ public class CartController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CartDAO cartDAO = new CartDAO();
-        int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+//        
+         HttpSession session = request.getSession();
+         Account acc = (Account) session.getAttribute("acc");
+            Integer accountId = acc.getAccountID();
         List<Cart> arr = cartDAO.getCartItemsByAccountId(accountId); 
+         if (accountId == null) {
+            // Redirect to login page if user is not logged in
+            response.sendRedirect("login");
+            return;
+        }
+
         //System.out.println(arr.size());
          int itemCount = cartDAO.countItemsByAccountId(accountId);  
         

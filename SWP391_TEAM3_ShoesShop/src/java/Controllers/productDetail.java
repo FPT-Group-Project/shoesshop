@@ -91,7 +91,25 @@ public class productDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        ProductDAO prd = new ProductDAO();
+        Integer stock=null;
+        PrintWriter o=response.getWriter();
+        response.setContentType("text/plain");
+        try{
+            int productId=Integer.parseInt(request.getParameter("productId"));
+            int colorId=Integer.parseInt(request.getParameter("colorId"));
+            int sizeId=Integer.parseInt(request.getParameter("sizeId"));
+            stock=prd.getStock(productId, colorId, sizeId);
+        }
+        catch(NumberFormatException e){
+            
+        }
+        if(stock==null){
+            o.write("");
+        }
+        else{
+            o.write(stock.toString());
+        }
     }
 
     /** 
