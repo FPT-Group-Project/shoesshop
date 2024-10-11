@@ -52,25 +52,31 @@ public class DeleteProductController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
     String productIdStr = request.getParameter("id");
-        int productID = Integer.parseInt(productIdStr);
 
-        ListProductAdminDao listProductAdmin = new ListProductAdminDao();
-        listProductAdmin.deleteProductById(productID);
+    if (productIdStr != null && !productIdStr.isEmpty()) {
+        
+            int productID = Integer.parseInt(productIdStr);
 
-        request.setAttribute("message", "The product has been successfully deleted.");
+            ListProductAdminDao listProductAdmin = new ListProductAdminDao();
+            boolean isDeleted = listProductAdmin.deleteProductById(productID);
+            
+            if (isDeleted) {
+                request.setAttribute("message", "The product has been successfully deleted.");
+            } else {
+                request.setAttribute("message", "Failed to delete the product.");
+            }
+        
+    } else {
+        request.setAttribute("message", "Product ID is missing.");
+    }
 
-        request.getRequestDispatcher("ProductListController").forward(request, response);    } 
+    // Forward to ProductListController after processing
+    request.getRequestDispatcher("ProductListController").forward(request, response);
+}
 
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
