@@ -10,12 +10,10 @@ package Models;
  */
 public class Color {
     private int colorId;
-    private int productId;
     private String color;
     public Color(){}
-    public Color(int colorId, int productId, String color) {
+    public Color(int colorId, String color) {
         this.colorId = colorId;
-        this.productId = productId;
         this.color = color;
     }
 
@@ -25,14 +23,6 @@ public class Color {
 
     public void setColorId(int colorId) {
         this.colorId = colorId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     public String getColor() {
