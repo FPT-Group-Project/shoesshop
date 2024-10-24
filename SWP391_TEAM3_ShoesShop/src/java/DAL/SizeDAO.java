@@ -17,40 +17,44 @@ import java.util.Map;
  *
  * @author Admin
  */
-public class SizeDAO extends DBContext{
+public class SizeDAO extends DBContext {
+
     //Return a list of sizes for each product
-    public List<ProductSize> getAllSizesByProduct(){
-        List<ProductSize> list=new ArrayList<>();
-        ProductDAO prd=new ProductDAO();
+    public List<ProductSize> getAllSizesByProduct() {
+        List<ProductSize> list = new ArrayList<>();
+        ProductDAO prd = new ProductDAO();
         List<Integer> productIdList = prd.getAllProductIds();
-        for(int i=0;i<productIdList.size();i++){
-            List<Size> sizes=new ArrayList<>();
-            String sql="select * from Product_Size\n"
-                     + "where ProductID=?";
-            try{
-                PreparedStatement pre=connection.prepareStatement(sql);
+        for (int i = 0; i < productIdList.size(); i++) {
+            List<Size> sizes = new ArrayList<>();
+            String sql = "select * from Product_Size\n"
+                    + "where ProductID=?";
+            try {
+                PreparedStatement pre = connection.prepareStatement(sql);
                 pre.setInt(1, productIdList.get(i));
-                ResultSet rs=pre.executeQuery();
-                while(rs.next()){
-                    int sizeId=rs.getInt("SizeID");
-                    int productId=rs.getInt("ProductID");
-                    int size=rs.getInt("Size");
-                    Size s = new Size(sizeId, productId, size);
+                ResultSet rs = pre.executeQuery();
+                while (rs.next()) {
+                    int sizeId = rs.getInt("SizeID");
+                    int productId = rs.getInt("ProductID");
+                    int size = rs.getInt("Size");
+                    Size s = new Size(sizeId, size);
                     sizes.add(s);
                 }
-            }
-            catch(SQLException e){
-                System.out.println("Can't get size of productId: "+productIdList.get(i));
+            } catch (SQLException e) {
+                System.out.println("Can't get size of productId: " + productIdList.get(i));
             }
             list.add(new ProductSize(sizes, productIdList.get(i)));
         }
         return list;
     }
-    
-    public class ProductSize{
+
+    public class ProductSize {
+
         private List<Size> sizes;
         private int productId;
-        public ProductSize(){}
+
+        public ProductSize() {
+        }
+
         public ProductSize(List<Size> sizes, int productId) {
             this.sizes = sizes;
             this.productId = productId;
@@ -71,7 +75,7 @@ public class SizeDAO extends DBContext{
         public void setProductId(int productId) {
             this.productId = productId;
         }
-        
+
         @Override
         public String toString() {
             StringBuilder sizes = new StringBuilder();
@@ -84,7 +88,7 @@ public class SizeDAO extends DBContext{
             return sizes.toString();
         }
     }
-    
+
     //Return hashmap instead
     /*
     public Map<Integer, List<Size>> getAllSizesByProductMap(){
@@ -115,10 +119,9 @@ public class SizeDAO extends DBContext{
         }
         return sizeMap;
     }
-    */
-    
-    public void printAllSizesByProduct(List<ProductSize> list){
-       for(int i=0;i<list.size();i++){
+     */
+    public void printAllSizesByProduct(List<ProductSize> list) {
+        for (int i = 0; i < list.size(); i++) {
             ProductSize pc = list.get(i);
             System.out.printf("%-3d | %s%n",
                     pc.getProductId(),
@@ -127,9 +130,28 @@ public class SizeDAO extends DBContext{
         }
         System.out.println();
     }
-    
-    public static void main(String[] args){
-        SizeDAO cld=new SizeDAO();
+
+    public static void main(String[] args) {
+        SizeDAO cld = new SizeDAO();
         cld.printAllSizesByProduct(cld.getAllSizesByProduct());
+    }
+    // Lấy tất cả các kích thước có trong bảng Size
+
+    public List<Size> getAllSizes() {
+        List<Size> sizes = new ArrayList<>();
+        String sql = "SELECT * FROM Product_Size"; // Giả định bảng Size trong cơ sở dữ liệu
+
+        try (PreparedStatement ps = connection.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int sizeId = rs.getInt("SizeID");
+                int sizeValue = rs.getInt("Size");
+                sizes.add(new Size(sizeId, sizeValue));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return sizes;
     }
 }

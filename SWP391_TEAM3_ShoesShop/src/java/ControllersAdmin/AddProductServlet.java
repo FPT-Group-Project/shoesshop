@@ -1,6 +1,7 @@
 package ControllersAdmin;
 
 import DAL.BrandDAO;
+import DAL.DBContext;
 import java.io.File;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -12,7 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.nio.file.Paths;
 import Models.Product;
+import Models.ProductStock;
 import DAL.ProductDAO;
+import DAL.ProductStockDAO;
 import Models.Account;
 import Models.Brand;
 import jakarta.servlet.http.HttpSession;
@@ -25,7 +28,7 @@ public class AddProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            // Kiểm tra quyền truy cập
+        // Kiểm tra quyền truy cập
 //    HttpSession session = request.getSession(false);
 //    if (session == null || session.getAttribute("account") == null) {
 //        response.sendRedirect("login.jsp"); // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
@@ -53,7 +56,7 @@ public class AddProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            // kiểm tra role
+        // kiểm tra role
 //    HttpSession session = request.getSession(false);
 //    if (session == null || session.getAttribute("account") == null) {
 //        response.sendRedirect("login.jsp"); // Chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
@@ -119,14 +122,37 @@ public class AddProductServlet extends HttpServlet {
         product.setBrandId(brandId);
         product.setAvatarP(avatarP);
 
-        // gọi DAO để thêm product vào db
+        // Gọi DAO để thêm product vào db và lấy productID
         ProductDAO productDAO = new ProductDAO();
-        productDAO.addProduct(product);
+        int newProductId = productDAO.addProduct(product); // Lấy ProductID mới
 
-        // đặt thông báo thành công vào request
-        request.setAttribute("successMessage", "Product added successfully!");
+// Kiểm tra xem ProductID có hợp lệ không
+        if (newProductId > 0) {
+            ProductStockDAO productStockDAO = new ProductStockDAO(new DBContext());
 
-        // chuyển tiếp về trang addProduct.jsp
+            // Vòng lặp để chèn các SizeID và ColorID
+            for (int sizeID = 1; sizeID <= 14; sizeID++) {
+                for (int colorID = 1; colorID <= 18; colorID++) {
+                    // Tạo đối tượng ProductStock
+                    ProductStock productStock = new ProductStock();
+                    productStock.setProductID(newProductId); // Sử dụng ProductID mới
+                    productStock.setSizeID(sizeID);
+                    productStock.setColorID(colorID);
+                    productStock.setQuantity(0); // Số lượng khởi tạo là 0
+
+                    // Chèn vào bảng ProductStock
+                    productStockDAO.insertProductStock(productStock);
+                }
+            }
+
+            // Đặt thông báo thành công vào request
+            request.setAttribute("successMessage", "Product added successfully!");
+        } else {
+            request.setAttribute("errorMessage", "Failed to add product.");
+        }
+
+// Chuyển tiếp về trang addProduct.jsp
         request.getRequestDispatcher("/Views/Admin/addProduct.jsp").forward(request, response);
+
     }
 }

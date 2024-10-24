@@ -140,4 +140,28 @@ public class AccountDAO extends DBContext {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+public Account getAccountByID(int accountID) {
+    Account account = null;
+    String sql = "SELECT accountId, FullName, UserName, Email, PhoneNumber, RoleID FROM Account WHERE accountId = ?";
+    try {
+        PreparedStatement st = connection.prepareStatement(sql);
+        st.setInt(1, accountID);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            account = new Account();
+            account.setAccountID(rs.getInt("accountId"));
+            account.setFullName(rs.getString("FullName"));
+            account.setUserName(rs.getString("UserName"));
+            account.setEmail(rs.getString("Email"));
+            account.setPhoneNumber(rs.getString("PhoneNumber"));
+            account.setRoleID(rs.getInt("RoleID"));
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return account;
+}
+
+
 }
