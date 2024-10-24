@@ -7,6 +7,7 @@ package DAL;
 import Models.Image;
 import Models.Product;
 import Models.Size;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -99,30 +100,40 @@ public class ProductDAO extends DBContext{
     }
     
     //Add a product into the DB
-    public boolean addProduct(Product p){
-        if(getProductById(p.getProductId())!=null){
-            System.out.println("Product exists");
-            return false;            
-        }
-        else{
-            String sql="insert into Product values( ?, ?, ?, ?, ?)";
-            try{
-                PreparedStatement pre=connection.prepareStatement(sql);
-                
-                pre.setString(1, p.getProductName());
-                pre.setString(2, p.getDescription());
-                pre.setDouble(3, p.getPrice());
-                pre.setInt(4, p.getBrandId());
-                pre.setString(5, p.getAvatarP());
-                pre.executeUpdate();
-                return true;
+    public int addProduct(Product p) {
+    // Kiểm tra xem sản phẩm đã tồn tại chưa
+    if (getProductById(p.getProductId()) != null) {
+        System.out.println("Product exists");
+        return -1; // Trả về -1 nếu sản phẩm đã tồn tại
+    } else {
+        // Câu lệnh SQL để thêm sản phẩm
+        String sql = "INSERT INTO Product (ProductName, Description, Price, BrandID, AvatarP) VALUES (?, ?, ?, ?, ?)";
+        
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); // Chỉ định trả về khóa tự động
+
+            pre.setString(1, p.getProductName());
+            pre.setString(2, p.getDescription());
+            pre.setDouble(3, p.getPrice());
+            pre.setInt(4, p.getBrandId());
+            pre.setString(5, p.getAvatarP());
+            pre.executeUpdate();
+
+            // Lấy khóa tự động vừa tạo
+            ResultSet generatedKeys = pre.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1); // Trả về productID mới
+            } else {
+                System.out.println("No ID obtained");
+                return -1; // Trả về -1 nếu không có ID
             }
-            catch(SQLException e){
-                System.out.println("Can't add product");
-                return false;
-            }
+        } catch (SQLException e) {
+            System.out.println("Can't add product: " + e.getMessage());
+            return -1; // Trả về -1 nếu có lỗi xảy ra
         }
     }
+}
+
     
     //Update a product in the DB
     public boolean updateProduct(Product p){
