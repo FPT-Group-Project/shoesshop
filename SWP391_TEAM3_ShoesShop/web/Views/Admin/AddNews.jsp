@@ -1,38 +1,56 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="Models.ProductAdmin" %> 
+<%@ page import="Models.News" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en"> 
-    <head>
-        <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
+<head>
+    <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+    
+    <!-- FontAwesome JS-->
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    
+    <!-- App CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 
-        <!-- Meta -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-        <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
-        <link rel="shortcut icon" href="../../favicon.ico"> 
+    <style>
+        html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
 
-        <!-- FontAwesome JS -->
-        <script defer src="../../assets/plugins/fontawesome/js/all.min.js"></script>
+.app-footer {
+    margin-top: auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+}
 
-        <!-- App CSS -->  
-        <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
-        <style>
-            .d-flex {
-                display: flex;
-                justify-content: center; /* Căn giữa theo chiều ngang */
-                align-items: center; /* Căn giữa theo chiều dọc (nếu cần) */
-                height: 100vh; /* Đặt chiều cao của div cha nếu cần */
-            }
-        </style>
-    </head> 
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
 
+.app-footer .copyright {
+    color: #6c757d;
+}
 
-    <body class="app">   	
+    </style>
+</head> 
+
+<body class="app">   	
         <header class="app-header fixed-top">	   	            
             <div class="app-header-inner">  
                 <div class="container-fluid py-2">
@@ -50,7 +68,7 @@
                             <div class="app-search-box col">
                                 <form class="app-search-form" method="get" action="your_servlet_url_here">
                                     <input type="text" placeholder="Search..." name="keyW" value="${param.search}" class="form-control search-input">
-                                    <!-- Khi người dùng tìm kiếm, trang mặc định sẽ là 1 -->
+                                    <!-- Khi ng??i dùng tìm ki?m, trang m?c ??nh s? là 1 -->
                                     <input type="hidden" name="page" value="1">
                                     <button type="submit" class="btn search-btn btn-primary" value="Search">
                                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -162,7 +180,7 @@
                                         <li><a class="dropdown-item" href="account.html">Account</a></li>
                                         <li><a class="dropdown-item" href="settings.html">Settings</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="login">Log Out</a></li>
+                                        <li><a class="dropdown-item" href="login.html">Log Out</a></li>
                                     </ul>
                                 </div><!--//app-user-dropdown--> 
                             </div><!--//app-utilities-->
@@ -192,10 +210,38 @@
                                     <span class="nav-link-text">Overview</span>
                                 </a><!--//nav-link-->
                             </li><!--//nav-item-->
-
                             <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link active" href="AccoutListController">
+                                <a class="nav-link" href="AccoutListController">
+                                    <span class="nav-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/>
+                                        <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-text">List Accounts</span>
+                                </a><!--//nav-link-->
+                            </li><!--//nav-item-->
+                            <li class="nav-item">
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <a class="nav-link " href="ProductListController">
+                                    <span class="nav-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                        <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
+                                        <circle cx="3.5" cy="5.5" r=".5"/>
+                                        <circle cx="3.5" cy="8" r=".5"/>
+                                        <circle cx="3.5" cy="10.5" r=".5"/>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-text">List Product </span>
+                                </a><!--//nav-link-->
+                            </li>
+
+                            
+                            <li class="nav-item">
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <a class="nav-link active" href="BrandController">
                                     <span class="nav-icon">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 
@@ -206,36 +252,6 @@
                                         <circle cx="3.5" cy="5.5" r=".5"/>
                                         <circle cx="3.5" cy="8" r=".5"/>
                                         <circle cx="3.5" cy="10.5" r=".5"/>
-                                        </svg>
-                                    </span>
-                                    <span class="nav-link-text">List Account</span>
-                                </a><!--//nav-link-->
-                            </li><!--//nav-item-->
-
-                            <li class="nav-item">
-                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link" href="ProductListController">
-                                    <span class="nav-icon">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                        <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
-
-                                        <circle cx="3.5" cy="5.5" r=".5"/>
-                                        <circle cx="3.5" cy="8" r=".5"/>
-                                        <circle cx="3.5" cy="10.5" r=".5"/>
-                                        </svg>
-                                    </span>
-                                    <span class="nav-link-text">List Product</span>
-                                </a><!--//nav-link-->
-                            </li><!--//nav-item-->
-
-                            <li class="nav-item">
-                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link" href="BrandController">
-                                    <span class="nav-icon">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/>
-                                        <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/>
                                         </svg>
                                     </span>
                                     <span class="nav-link-text">List Brand</span>
@@ -267,18 +283,6 @@
                                     </ul>
                                 </div>
                             </li><!--//nav-item-->
-                            <li class="nav-item">
-                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link " href="ManageNews">
-                                    <span class="nav-icon">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
-                                        <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-                                        </svg>
-                                    </span>
-                                    <span class="nav-link-text">List News</span>
-                                </a><!--//nav-link-->
-                            </li>
                             <li class="nav-item has-submenu">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                 <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
@@ -375,291 +379,90 @@
                 </div><!--//sidepanel-inner-->
             </div><!--//app-sidepanel-->
         </header><!--//app-header-->
+    
+    <div class="app-wrapper">
+	    
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">			    
+			    <h1 class="app-page-title">Add News</h1>
+			    <hr class="mb-4">
+                <div class="row ">
+	                
+	                <div class=" col-md-8">
+		                <div class="app-card app-card-settings shadow-sm p-4">
+						    
+						    <div class="app-card-body">
+    <% String message = (String) request.getAttribute("message");
+    if (message != null) { %>
+        <div class="alert alert-info mt-3"><%= message %></div>
+    <% } %>
 
-        <div class="app-wrapper">
+   <form class="settings-form" action="AddNews" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="${newDetail.newsID}"> <!-- Thêm trường ID -->
 
-            <div class="app-content pt-3 p-md-3 p-lg-4">
-                <div class="container-xl">
-
-                    <div class="row g-3 mb-4 align-items-center justify-content-between">
-                        <div class="col-auto">
-                            <h1 class="app-page-title mb-0">Orders</h1>
-                        </div>
-                        <div class="col-auto">
-                            <div class="page-utilities">
-                                <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-                                    <div class="col-auto" style="margin: 0 auto;display: flex;margin-right: 50px;">
-                                        <form class="table-search-form row gx-1 align-items-center" method="get" action="AccoutListController" style="margin: 0 auto;">
-                                            <div class="col-auto">
-                                                <input type="text" placeholder="Search..." name="keyW" value="${param.keyW}" class="form-control search-orders">
-                                            </div>
-                                            <div class="col-auto">
-                                                <select name="role" class="">
-                                                    <option value="1" ${param.role == '1' ? 'selected' : ''}>Role admin</option>
-                                                    <option value="2" ${param.role == '2' ? 'selected' : ''}>Role staff</option>
-                                                    <option value="3" ${param.role == '3' ? 'selected' : ''}>Role customer</option>
-                                                    <option value="4" ${param.role == '3' ? 'selected' : ''}>Role Guest</option>
-
-                                                </select>
-                                            </div>
-                                            <input type="hidden" name="page" value="1">		
-                                            <div class="col-auto">
-                                                <button type="submit" class="btn search-btn btn-primary" value="Search">
-                                                    Submit <i class="fa-solid fa-magnifying-glass"></i>
-                                                </button>					
-                                            </div>
-                                        </form>
-
-                                    </div><!--//col-->
-                                    <!--//col-->
-
-
-                                    <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="manageAccount">
-
-                                            Add New
-                                        </a>
-                                    </div>
-                                </div><!--//row-->
-                            </div><!--//table-utilities-->
-                        </div><!--//col-auto-->
-                    </div><!--//row-->
-
-
-                   <c:if test="${not empty message}">
-                        <div class="alert alert-success" role="alert">
-                            ${message}
-                        </div>
-                    </c:if>
-
-
-                    <div class="tab-content" id="orders-table-tab-content">
-                        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
-                            <div class="app-card app-card-orders-table shadow-sm mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table app-table-hover mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">AccountID</th>
-                                                    <th class="cell">UserName</th>
-                                                    <th class="cell">FullName</th>
-                                                    <th class="cell">Email</th>
-                                                    <th class="cell">PhoneNumber</th>
-                                                    <th class="cell">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- Kiểm tra xem danh sách tài khoản có trống không -->
-                                                <c:if test="${not empty accList}">
-                                                    <c:forEach var="account" items="${accList}">
-                                                        <tr>
-                                                            <td>${account.accountID}</td>
-                                                            <td><span class="truncate">${account.userName}</span></td>
-                                                            <td>${account.fullName}</td>
-                                                            <td>${account.email}</td> 
-                                                            <td>${account.phoneNumber}</td> 
-                                                              <td> 
-                                                                  <button>  <a class="btn-sm app-btn-danger" href="DeleteAccountController?id=${account.accountID}" onclick="return confirm('Are you sure you want to delete this account?Delete');">Delete</a></button>
-                                                                    <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Detail</a></button>
-
-                                                              </td> 
-                                                        
-                                                        </tr>
-                                                    </c:forEach>
-                                                </c:if>
-                                                <!-- Nếu danh sách trống, hiển thị thông báo -->
-                                                <c:if test="${empty accList}">
-                                                    <tr>
-                                                        <td colspan="7" class="cell">No accounts found.</td>
-                                                    </tr>
-                                                </c:if>
-                                            </tbody>
-                                        </table>
-
-                                    </div><!--//table-responsive-->
-
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                            <nav class="app-pagination">
-                                <ul class="pagination justify-content-center">
-                                    <!-- Nút Previous -->
-                                    <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
-                                        <a class="page-link" href="?page=${currentPage - 1}" tabindex="-1" aria-disabled="true">Previous</a>
-                                    </li>
-
-                                    <!-- Lặp qua các số trang -->
-                                    <c:forEach var="i" begin="1" end="${totalPages}">
-                                        <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                            <a class="page-link" href="?keyW=${keyW}&role=${role}&page=${i}">${i}</a>
-                                        </li>
-                                    </c:forEach>
-
-                                    <!-- Nút Next -->
-                                    <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
-                                        <a class="page-link" href="?page=${currentPage + 1}">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <!--//app-pagination-->
-
-                        </div><!--//tab-pane-->
-
-                        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">#15346</td>
-                                                    <td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-                                                    <td class="cell">John Sanders</td>
-                                                    <td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$259.35</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="cell">#15344</td>
-                                                    <td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-                                                    <td class="cell">Teresa Holland</td>
-                                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$123.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="cell">#15343</td>
-                                                    <td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-                                                    <td class="cell">Jayden Massey</td>
-                                                    <td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$199.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-
-                                                <tr>
-                                                    <td class="cell">#15341</td>
-                                                    <td class="cell"><span class="truncate">Morbi vulputate lacinia neque et sollicitudin</span></td>
-                                                    <td class="cell">Raymond Atkins</td>
-                                                    <td class="cell"><span class="cell-data">11 Oct</span><span class="note">11:18 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$678.26</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-
-                        <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">#15345</td>
-                                                    <td class="cell"><span class="truncate">Consectetur adipiscing elit</span></td>
-                                                    <td class="cell">Dylan Ambrose</td>
-                                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">03:16 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-warning">Pending</span></td>
-                                                    <td class="cell">$96.20</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-                        <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <td class="cell">#15342</td>
-                                                    <td class="cell"><span class="truncate">Justo feugiat neque</span></td>
-                                                    <td class="cell">Reina Brooks</td>
-                                                    <td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-danger">Cancelled</span></td>
-                                                    <td class="cell">$59.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-                    </div><!--//tab-content-->
+    <div class="mb-3">
+        <label for="setting-input-title" class="form-label">Title Name</label>
+        <input type="text" class="form-control" id="setting-input-title" name="title" value="${newDetail.title}" required>
+    </div>
+    
+    <div class="mb-3">
+        <label for="setting-input-content" class="form-label">Content</label>
+        <textarea class="form-control" id="setting-input-content" name="content" rows="4">${contentString}</textarea>
+    </div>
+    
+    <div class="mb-3">
+        <label for="setting-input-author" class="form-label">Author:</label>
+        <input type="text" class="form-control" id="setting-input-author" name="author" value="${newDetail.author}" required>
+    </div>
+    
+    <div class="mb-3">
+        <label for="setting-input-video" class="form-label">Link video(https://www.youtube.com/embed/):</label>
+        <input type="text" class="form-control" id="setting-input-video" name="videoLink" value="${newDetail.videoLink}" required>
+    </div>
+    
+    <div class="mb-3">
+        <label for="setting-input-product" class="form-label">Link product:</label>
+        <input type="text" class="form-control" id="setting-input-product" name="productLink" value="${newDetail.productLink}" required>
+    </div>
+    
+    <div class="mb-3">
+        <label for="fileInput" class="form-label">Select photo upload</label>
+        <input type="file" class="form-control" id="fileInput" name="file" required>
+    </div>
+    
+    <button type="submit" class="btn app-btn-primary" onclick="return confirm('Are you sure you want to change this news?')">Save Changes</button>
+</form>
 
 
 
-                </div><!--//container-fluid-->
-            </div><!--//app-content-->
+</div>
+<!--//app-card-body-->
+						    
+						</div><!--//app-card-->
+	                </div>
+            
+                </div><!--//row-->
+               
+		    </div><!--//container-fluid-->
+	    </div><!--//app-content-->
+	  <footer class="app-footer" style="position: fixed; bottom: 0; width: 100%; background-color: #f8f9fa; padding: 20px; text-align: center;">
+    <div class="container text-center py-3">
+        <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+        <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+    </div>
+</footer>
 
-            <footer class="app-footer">
-                <div class="container text-center py-3">
-                    <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-                    <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+	    
+    </div><!--//app-wrapper-->    					
 
-                </div>
-            </footer><!--//app-footer-->
+ 
+    <!-- Javascript -->          
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    
+    <!-- Page Specific JS -->
+    <script src="assets/js/app.js"></script> 
 
-        </div><!--//app-wrapper-->    					
-
-
-        <!-- Javascript -->          
-        <script src="assets/plugins/popper.min.js"></script>
-        <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
-        <script src="assets/js/app.js"></script> 
-
-    </body>
+</body>
 </html> 
 

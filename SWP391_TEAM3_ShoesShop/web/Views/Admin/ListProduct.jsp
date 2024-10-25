@@ -438,15 +438,14 @@
                                                             <td><span class="truncate">${product.productName}</span></td>
                                                             <td>${product.quantity}</td>
                                                             <td>$${product.price}</td>
-                                                            <td>${product.brandID.brandName}</td>                                                           <td>
-                                                                <img src="ImageProductAvt/${product.avatarP}" alt="${product.productName}" style="width: 50px; height: 50px;" />
-                                                            </td>
+                                                            <td>${product.brandID.brandName}</td>  
+                                                     
+                                                            <td>
+    <img src="${pageContext.request.contextPath}/ImageProductAvt/${product.avatarP}" alt="${product.productName}" style="width: 50px; height: 50px;" />
+</td>
+
                                                             <td>
                                                                 <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Delete</a></button>
-                                                                <form action="manageStock" method="get" style="display:inline;">
-                                                                    <input type="hidden" name="productID" value="${product.productID}">
-                                                                    <input type="submit" value="Update Stock">
-                                                                </form>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
