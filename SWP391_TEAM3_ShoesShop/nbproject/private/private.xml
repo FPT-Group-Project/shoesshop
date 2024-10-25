@@ -3,10 +3,29 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/F/5/SWP/New%20folder/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/searchProduct.java</file>
-            <file>file:/E:/F/5/SWP/New%20folder/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Customer/mainContent.jsp</file>
-            <file>file:/E:/F/5/SWP/New%20folder/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/displayAllProducts.java</file>
-            <file>file:/E:/F/5/SWP/New%20folder/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Customer/homePage.jsp</file>
+
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/searchProduct.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Customer/mainContent.jsp</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/displayAllProducts.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Customer/homePage.jsp</file>
+
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/ConfirmPass.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Customer/homePage.jsp</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Customer/Profile.jsp</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/home.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/LoginControl.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/AccountDAO.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Customer/newpassword.jsp</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/ConfirmResetCode.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Customer/Login.jsp</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/ForgotPassword.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/UserProfile.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/Views/Customer/forgot.jsp</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/RegisterControl.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Models/Email.java</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/vh69/Downloads/ShoesShop1/shoesshop/SWP391_TEAM3_ShoesShop/web/css/style.css</file>
+
         </group>
     </open-files>
 </project-private>

@@ -83,7 +83,7 @@ public class ConfirmResetCode extends HttpServlet {
             request.setAttribute("check", check);
             request.getRequestDispatcher("Views/Customer/newpassword.jsp").forward(request, response);
         } else {
-            check = "true";
+            check = "false";
             message = "Sorry, reset code incorrect";
             session.setAttribute("code", code);
             request.setAttribute("email", email);
