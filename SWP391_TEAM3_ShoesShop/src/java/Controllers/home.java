@@ -5,7 +5,9 @@
 
 package Controllers;
 
+import DAL.NewsDao;
 import DAL.ProductDAO;
+import Models.News;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,24 +59,11 @@ public class home extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         ProductDAO prd=new ProductDAO();
-        List<Product> productList=prd.getAllProducts();
-        List<List<Product>> productPageList=prd.getAllProductsPaginated(productList, 12);
-        String page=request.getParameter("page");
-        int pageNumber;
-        try{
-            pageNumber=Integer.parseInt(page);
-            if(pageNumber<=0||pageNumber>=productPageList.size()){
-                throw new NumberFormatException();
-            }
-        }
-        catch(NumberFormatException e){
-            pageNumber=1;
-        }
-        List<Product> pageContent=productPageList.get(pageNumber-1);
-        request.setAttribute("atPage", pageNumber);
-        request.setAttribute("list", pageContent);
-        request.setAttribute("pagesNumber", productPageList.size());
-        request.getRequestDispatcher("Views/Customer/homePage.jsp").forward(request, response);
+        List<Product> newestProducts=prd.getNewestProducts(4);
+        List<Product> bestSellerProducts=prd.getBestSellerProducts(4);
+        request.setAttribute("newest", newestProducts);
+        request.setAttribute("bestSeller", bestSellerProducts);
+        request.getRequestDispatcher("Views/Customer/mainContent.jsp").forward(request, response);
         
     } 
 

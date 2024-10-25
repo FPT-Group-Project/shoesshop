@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -43,6 +44,7 @@
         <!-- Theme style  -->
         <link rel="stylesheet" href="css/style.css">
 
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
 
@@ -64,7 +66,7 @@
                                 </form>
                             </div>
                         </div>
-                     
+
                         <div class="row">
                             <div class="col-sm-12 text-left menu-1">
                                 <ul>
@@ -79,7 +81,7 @@
                                             <li><a href="add-to-wishlist.html">Wishlist</a></li>
                                         </ul>
                                     </li>
-                                     <li><a href="orderHistory">Order History</a></li>
+                                    <li><a href="women.html">Women</a></li>
                                     <li><a href="about.html">About</a></li>
                                     <li><a href="contact">Contact</a></li>
                                     <c:if test="${sessionScope.acc==null}">
@@ -135,13 +137,14 @@
                     </div>
                 </div>
             </div>
-            
-            
-            
+
+
+
 
             <div class="colorlib-product">
                 <div class="container">
-                    <form action="products" method="get">
+                    <form action="search" method="get">
+                        <input type="hidden" name="searchQuery" value="${searchQuery}">
                         <div class="row" >
                             <div class="col col-sm-2">
                                 <hr/>
@@ -320,110 +323,110 @@
                     </form>
                 </div>
             </div>
+        </div>
 
-            <div class="colorlib-partner">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-8 offset-sm-2 text-center colorlib-heading colorlib-heading-sm">
-                            <h2>Trusted Partners</h2>
-                        </div>
+        <div class="colorlib-partner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 offset-sm-2 text-center colorlib-heading colorlib-heading-sm">
+                        <h2>Trusted Partners</h2>
                     </div>
-                    <div class="row">
-                        <div class="col partner-col text-center">
-                            <img src="images/brand-1.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
-                        </div>
-                        <div class="col partner-col text-center">
-                            <img src="images/brand-2.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
-                        </div>
-                        <div class="col partner-col text-center">
-                            <img src="images/brand-3.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
-                        </div>
-                        <div class="col partner-col text-center">
-                            <img src="images/brand-4.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
-                        </div>
-                        <div class="col partner-col text-center">
-                            <img src="images/brand-5.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col partner-col text-center">
+                        <img src="images/brand-1.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                    </div>
+                    <div class="col partner-col text-center">
+                        <img src="images/brand-2.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                    </div>
+                    <div class="col partner-col text-center">
+                        <img src="images/brand-3.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                    </div>
+                    <div class="col partner-col text-center">
+                        <img src="images/brand-4.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
+                    </div>
+                    <div class="col partner-col text-center">
+                        <img src="images/brand-5.jpg" class="img-fluid" alt="Free html4 bootstrap 4 template">
                     </div>
                 </div>
             </div>
-            <!--footer-->
-            <footer id="colorlib-footer" role="contentinfo">
-                <div class="container">
-                    <div class="row row-pb-md">
-                        <div class="col footer-col colorlib-widget">
-                            <h4>About Footwear</h4>
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-                            <p>
-                            <ul class="colorlib-social-icons">
-                                <li><a href="#"><i class="icon-twitter"></i></a></li>
-                                <li><a href="#"><i class="icon-facebook"></i></a></li>
-                                <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                                <li><a href="#"><i class="icon-dribbble"></i></a></li>
-                            </ul>
-                            </p>
-                        </div>
-                        <div class="col footer-col colorlib-widget">
-                            <h4>Customer Care</h4>
-                            <p>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">Returns/Exchange</a></li>
-                                <li><a href="#">Gift Voucher</a></li>
-                                <li><a href="#">Wishlist</a></li>
-                                <li><a href="#">Special</a></li>
-                                <li><a href="#">Customer Services</a></li>
-                                <li><a href="#">Site maps</a></li>
-                            </ul>
-                            </p>
-                        </div>
-                        <div class="col footer-col colorlib-widget">
-                            <h4>Information</h4>
-                            <p>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Support</a></li>
-                                <li><a href="#">Order Tracking</a></li>
-                            </ul>
-                            </p>
-                        </div>
-
-                        <div class="col footer-col">
-                            <h4>News</h4>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="#">Press</a></li>
-                                <li><a href="#">Exhibitions</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col footer-col">
-                            <h4>Contact Information</h4>
-                            <ul class="colorlib-footer-links">
-                                <li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-                                <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-                                <li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
-                                <li><a href="#">yoursite.com</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="copy">
-                    <div class="row">
-                        <div class="col-sm-12 text-center">
-                            <p>
-                                <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
-                                <span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
+        <!--footer-->
+        <footer id="colorlib-footer" role="contentinfo">
+            <div class="container">
+                <div class="row row-pb-md">
+                    <div class="col footer-col colorlib-widget">
+                        <h4>About Footwear</h4>
+                        <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+                        <p>
+                        <ul class="colorlib-social-icons">
+                            <li><a href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a href="#"><i class="icon-facebook"></i></a></li>
+                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                            <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                        </ul>
+                        </p>
+                    </div>
+                    <div class="col footer-col colorlib-widget">
+                        <h4>Customer Care</h4>
+                        <p>
+                        <ul class="colorlib-footer-links">
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Returns/Exchange</a></li>
+                            <li><a href="#">Gift Voucher</a></li>
+                            <li><a href="#">Wishlist</a></li>
+                            <li><a href="#">Special</a></li>
+                            <li><a href="#">Customer Services</a></li>
+                            <li><a href="#">Site maps</a></li>
+                        </ul>
+                        </p>
+                    </div>
+                    <div class="col footer-col colorlib-widget">
+                        <h4>Information</h4>
+                        <p>
+                        <ul class="colorlib-footer-links">
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Delivery Information</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">Order Tracking</a></li>
+                        </ul>
+                        </p>
+                    </div>
+
+                    <div class="col footer-col">
+                        <h4>News</h4>
+                        <ul class="colorlib-footer-links">
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="#">Exhibitions</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col footer-col">
+                        <h4>Contact Information</h4>
+                        <ul class="colorlib-footer-links">
+                            <li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+                            <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+                            <li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+                            <li><a href="#">yoursite.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copy">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p>
+                            <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
+                            <span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
         <div class="gototop js-top">
             <a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
