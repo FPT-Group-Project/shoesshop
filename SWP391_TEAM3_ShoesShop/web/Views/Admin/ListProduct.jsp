@@ -446,6 +446,10 @@
 
                                                             <td>
                                                                 <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Delete</a></button>
+                                                            <form action="manageStock" method="get" style="display:inline;">
+                                                                    <input type="hidden" name="productID" value="${product.productID}">
+                                                                    <input type="submit" value="Update Stock">
+                                                                </form>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
