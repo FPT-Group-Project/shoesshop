@@ -1,11 +1,19 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Models;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public class Order {
-    private int orderID;
+/**
+ *
+ * @author thanh
+ */
+public class Order2 {
+     private int orderID;
     private int accountID;
     private String address;
     private int historyCouponsID;
@@ -14,11 +22,21 @@ public class Order {
     private Date arrivalDate;
     private int statusID;
     private String paymentStatus;
-     
-    public Order() {
+    private List<OrderDetail2> orderDetails; // Thêm thuộc tính này
+
+    
+    public List<OrderDetail2> getOrderDetails() {
+        return orderDetails;
     }
 
-    public Order(int orderID, int accountID, String address, int historyCouponsID, BigDecimal totalPrice, Date orderDate, Date arrivalDate, int statusID, String paymentStatus) {
+    public void setOrderDetails(List<OrderDetail2> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    public Order2() {
+    }
+
+    public Order2(int orderID, int accountID, String address, int historyCouponsID, BigDecimal totalPrice, Date orderDate, Date arrivalDate, int statusID, String paymentStatus) {
         this.orderID = orderID;
         this.accountID = accountID;
         this.address = address;
@@ -101,6 +119,5 @@ public class Order {
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
-
     
 }

@@ -3,24 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/CartDAO.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/OrderStatusUpdateServlet.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Models/ProductStock.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/OrderListServlet.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/OrderDAO.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/UpdateStockServlet.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/OrderDetailDAO.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Models/Size.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Models/OrderDetail.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ColorDAO.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/StockManageServlet.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ProductStockDAO.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/AddProductServlet.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/ControllersAdmin/OrderDetailServlet.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/AccountDAO.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/ProductDAO.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/DAL/SizeDAO.java</file>
-            <file>file:/D:/Github/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Models/Order.java</file>
+            <file>file:/D:/SWP/shoesshop/SWP391_TEAM3_ShoesShop/src/java/Controllers/OrderDetailServlet2.java</file>
         </group>
     </open-files>
 </project-private>
