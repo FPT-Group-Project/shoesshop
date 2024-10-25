@@ -198,7 +198,7 @@
                             <button class="btn btn-secondary profile-button" type="button" onclick="closePasswordModal()">Cancel</button>
                         </div>
                         <div class="mt-5 text-center">
-                            <a href="forgotpass">Forget Password?</a>
+                            <a href="forgot">Forget Password?</a>
                         </div>
                     </form>
                 </div>
