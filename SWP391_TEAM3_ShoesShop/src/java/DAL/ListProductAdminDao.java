@@ -16,9 +16,7 @@ public boolean deleteProductById(int productID) {
     String deleteFromProductStock = "DELETE FROM [dbo].[ProductStock] WHERE [ProductID] = ?";
     String deleteFromOrderDetail = "DELETE FROM [dbo].[OrderDetail] WHERE [ProductID] = ?";
     String deleteFromFeedback = "DELETE FROM [dbo].[Feedback] WHERE [ProductID] = ?";
-    String deleteFromCertificateNumber = "DELETE FROM [dbo].[CertificateNumber] WHERE [ProductID] = ?";
     String deleteFromCart = "DELETE FROM [dbo].[Cart] WHERE [ProductID] = ?";
-    String deleteFromWarranty = "DELETE FROM [dbo].[Warranty] WHERE [ProductID] = ?";
     String deleteFromProduct = "DELETE FROM [dbo].[Product] WHERE [ProductID] = ?";
 
     try {
@@ -48,11 +46,7 @@ public boolean deleteProductById(int productID) {
             stmt.executeUpdate();
         }
 
-        // Bước 5: Xóa các bản ghi trong bảng CertificateNumber
-        try (PreparedStatement stmt = connection.prepareStatement(deleteFromCertificateNumber)) {
-            stmt.setInt(1, productID);
-            stmt.executeUpdate();
-        }
+       
 
         // Bước 6: Xóa các bản ghi trong bảng Cart
         try (PreparedStatement stmt = connection.prepareStatement(deleteFromCart)) {
@@ -60,14 +54,9 @@ public boolean deleteProductById(int productID) {
             stmt.executeUpdate();
         }
 
-        // Bước 7: Xóa các bản ghi trong bảng Warranty
-        try (PreparedStatement stmt = connection.prepareStatement(deleteFromWarranty)) {
-            stmt.setInt(1, productID);
-            stmt.executeUpdate();
-        }
+       
 
-        // Bước 8: Cuối cùng xóa bản ghi trong bảng Product
-        try (PreparedStatement stmt = connection.prepareStatement(deleteFromProduct)) {
+          try (PreparedStatement stmt = connection.prepareStatement(deleteFromProduct)) {
             stmt.setInt(1, productID);
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {

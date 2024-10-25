@@ -2,10 +2,10 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="Models.ProductAdmin" %> 
+<%@ page import="Models.News" %> 
 <!DOCTYPE html>
 <html lang="en"> 
-    <head>
+<!--    <head>ManageNews-->
         <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
 
         <!-- Meta -->
@@ -28,6 +28,18 @@
                 align-items: center; /* Căn giữa theo chiều dọc (nếu cần) */
                 height: 100vh; /* Đặt chiều cao của div cha nếu cần */
             }
+            .app-pagination {
+    position: fixed;
+    bottom: 0;
+    left: 30px;
+    width: 100%; /* Chiều rộng đầy đủ */
+    background-color: white; /* Đặt nền tùy ý */
+    text-align: center; /* Căn giữa nội dung */
+    padding: 10px 0; /* Khoảng cách trên và dưới */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Tạo bóng nếu cần */
+    z-index: 1000; /* Đảm bảo nó nằm trên các phần tử khác */
+}
+
         </style>
     </head> 
 
@@ -195,7 +207,7 @@
 
                             <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link active" href="AccoutListController">
+                                <a class="nav-link " href="AccoutListController">
                                     <span class="nav-icon">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 
@@ -267,9 +279,10 @@
                                     </ul>
                                 </div>
                             </li><!--//nav-item-->
-                            <li class="nav-item">
+                            
+                            <li class="nav-item active">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link " href="ManageNews">
+                                <a class="nav-link active" href="ManageNews">
                                     <span class="nav-icon">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
@@ -383,24 +396,18 @@
 
                     <div class="row g-3 mb-4 align-items-center justify-content-between">
                         <div class="col-auto">
-                            <h1 class="app-page-title mb-0">Orders</h1>
+                            <h1 class="app-page-title mb-0">Manage News</h1>
                         </div>
                         <div class="col-auto">
                             <div class="page-utilities">
                                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                                     <div class="col-auto" style="margin: 0 auto;display: flex;margin-right: 50px;">
-                                        <form class="table-search-form row gx-1 align-items-center" method="get" action="AccoutListController" style="margin: 0 auto;">
+                                        <form class="table-search-form row gx-1 align-items-center" method="get" action="ManageNews" style="margin: 0 auto;">
                                             <div class="col-auto">
                                                 <input type="text" placeholder="Search..." name="keyW" value="${param.keyW}" class="form-control search-orders">
                                             </div>
                                             <div class="col-auto">
-                                                <select name="role" class="">
-                                                    <option value="1" ${param.role == '1' ? 'selected' : ''}>Role admin</option>
-                                                    <option value="2" ${param.role == '2' ? 'selected' : ''}>Role staff</option>
-                                                    <option value="3" ${param.role == '3' ? 'selected' : ''}>Role customer</option>
-                                                    <option value="4" ${param.role == '3' ? 'selected' : ''}>Role Guest</option>
-
-                                                </select>
+                                                
                                             </div>
                                             <input type="hidden" name="page" value="1">		
                                             <div class="col-auto">
@@ -415,7 +422,7 @@
 
 
                                     <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="manageAccount">
+                                        <a class="btn app-btn-secondary" href="AddNews">
 
                                             Add New
                                         </a>
@@ -451,17 +458,16 @@
                                             </thead>
                                             <tbody>
                                                 <!-- Kiểm tra xem danh sách tài khoản có trống không -->
-                                                <c:if test="${not empty accList}">
-                                                    <c:forEach var="account" items="${accList}">
+                                                <c:if test="${not empty newsList}">
+                                                    <c:forEach var="newsList" items="${newsList}">
                                                         <tr>
-                                                            <td>${account.accountID}</td>
-                                                            <td><span class="truncate">${account.userName}</span></td>
-                                                            <td>${account.fullName}</td>
-                                                            <td>${account.email}</td> 
-                                                            <td>${account.phoneNumber}</td> 
+                                                            <td>${newsList.newsID}</td>
+                                                            <td><span class="truncate">${newsList.title}</span></td>
+                                                            <td>${newsList.uploadDate}</td>
+                                                            <td>${newsList.author}</td> 
                                                               <td> 
-                                                                  <button>  <a class="btn-sm app-btn-danger" href="DeleteAccountController?id=${account.accountID}" onclick="return confirm('Are you sure you want to delete this account?Delete');">Delete</a></button>
-                                                                    <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Detail</a></button>
+                                                                  <button>  <a class="btn-sm app-btn-danger" href="DeletesNews?id=${newsList.newsID}" onclick="return confirm('Are you sure you want to delete this News?');">Delete</a></button>
+                                                                    <button>  <a class="btn-sm app-btn-danger" href="EditNewsController?id=${newsList.newsID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Edit</a></button>
 
                                                               </td> 
                                                         
@@ -469,9 +475,9 @@
                                                     </c:forEach>
                                                 </c:if>
                                                 <!-- Nếu danh sách trống, hiển thị thông báo -->
-                                                <c:if test="${empty accList}">
+                                                <c:if test="${empty newsList}">
                                                     <tr>
-                                                        <td colspan="7" class="cell">No accounts found.</td>
+                                                        <td colspan="7" class="cell">No news found.</td>
                                                     </tr>
                                                 </c:if>
                                             </tbody>
@@ -491,7 +497,7 @@
                                     <!-- Lặp qua các số trang -->
                                     <c:forEach var="i" begin="1" end="${totalPages}">
                                         <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                            <a class="page-link" href="?keyW=${keyW}&role=${role}&page=${i}">${i}</a>
+                                            <a class="page-link" href="?keyW=${param.keyW}&page=${i}">${i}</a>
                                         </li>
                                     </c:forEach>
 
@@ -505,138 +511,8 @@
 
                         </div><!--//tab-pane-->
 
-                        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
 
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">#15346</td>
-                                                    <td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-                                                    <td class="cell">John Sanders</td>
-                                                    <td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$259.35</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="cell">#15344</td>
-                                                    <td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-                                                    <td class="cell">Teresa Holland</td>
-                                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$123.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="cell">#15343</td>
-                                                    <td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-                                                    <td class="cell">Jayden Massey</td>
-                                                    <td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$199.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-
-                                                <tr>
-                                                    <td class="cell">#15341</td>
-                                                    <td class="cell"><span class="truncate">Morbi vulputate lacinia neque et sollicitudin</span></td>
-                                                    <td class="cell">Raymond Atkins</td>
-                                                    <td class="cell"><span class="cell-data">11 Oct</span><span class="note">11:18 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$678.26</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-
-                        <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">#15345</td>
-                                                    <td class="cell"><span class="truncate">Consectetur adipiscing elit</span></td>
-                                                    <td class="cell">Dylan Ambrose</td>
-                                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">03:16 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-warning">Pending</span></td>
-                                                    <td class="cell">$96.20</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-                        <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <td class="cell">#15342</td>
-                                                    <td class="cell"><span class="truncate">Justo feugiat neque</span></td>
-                                                    <td class="cell">Reina Brooks</td>
-                                                    <td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-danger">Cancelled</span></td>
-                                                    <td class="cell">$59.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
+                        
                     </div><!--//tab-content-->
 
 
@@ -644,13 +520,7 @@
                 </div><!--//container-fluid-->
             </div><!--//app-content-->
 
-            <footer class="app-footer">
-                <div class="container text-center py-3">
-                    <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-                    <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-
-                </div>
-            </footer><!--//app-footer-->
+         
 
         </div><!--//app-wrapper-->    					
 
