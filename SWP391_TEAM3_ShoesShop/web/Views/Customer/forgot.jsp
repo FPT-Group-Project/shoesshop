@@ -48,10 +48,7 @@ src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                 <a href="login"><i class="fas fa-angle-left"></i> Back</a>
                 </c:if>
             </form>
-                <c:if test="${requestScope.check != null && requestScope.check == 'true'}">
-                    <form class="form-signin" action="confirmresetcode" method="post">
-                        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Confirm Reset Code</h1>
-                        <c:if test="${requestScope.check != null}">
+                  <c:if test="${requestScope.check != null}">
                             <c:if test="${requestScope.check == 'true' && !(requestScope.message == 'Sorry, reset code incorrect')}">
                                 <p style="color: green">${requestScope.mess}</p>
                             </c:if>
@@ -62,6 +59,9 @@ src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                                 <p style="color: red">${requestScope.error}</p>
                             </c:if>
                         </c:if>
+                <c:if test="${requestScope.check != null && requestScope.check == 'true'}">
+                    <form class="form-signin" action="confirmresetcode" method="post">
+                        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">Confirm Reset Code</h1>
                         <input name="email" value="${requestScope.email}" type="hidden">
                         <input type="text" class="form-control" name="resetcode" placeholder="xxxxxx" required="" value="${requestScope.code}">
                         <c:if test="${requestScope.check != null && requestScope.check == 'true'}">
