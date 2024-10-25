@@ -16,15 +16,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  *
  * @author Admin
  */
-
-public class searchProduct extends HttpServlet {
+public class displayAllProducts extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -41,10 +39,10 @@ public class searchProduct extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet searchProduct</title>");  
+            out.println("<title>Servlet displayAllProducts</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet searchProduct at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet displayAllProducts at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,15 +59,13 @@ public class searchProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ProductDAO prd=new ProductDAO();
-        String searchQuery=request.getParameter("searchQuery");
-        List<String> keywords=Arrays.asList((searchQuery.trim()).split("\\s+"));
         String[] checkedBrandValues=request.getParameterValues("brands");
         String fromValue=request.getParameter("from");
         String toValue=request.getParameter("to");
         String page=request.getParameter("page");
         int pageNumber;
-        List<Product> productList=prd.searchProductByKeywords(keywords);
+        ProductDAO prd=new ProductDAO();
+        List<Product> productList=prd.getAllProducts();
         BrandDAO brd=new BrandDAO();
         List<Brand> brandList=brd.getAllBrands();
         //Filter if at least 1 parameter is filled
@@ -104,6 +100,7 @@ public class searchProduct extends HttpServlet {
             request.setAttribute("from", from);
             request.setAttribute("to", to);
         }
+        //Divide products into pages
         if(!productList.isEmpty()){
             List<List<Product>> productPageList=prd.getAllProductsPaginated(productList, 12);
             //Set screen to page
@@ -122,11 +119,10 @@ public class searchProduct extends HttpServlet {
             request.setAttribute("pagesNumber", productPageList.size());
             request.setAttribute("atPage", pageNumber);
         }
-        request.setAttribute("searchQuery", searchQuery);
-        request.setAttribute("brands", brandList);  
-        request.getRequestDispatcher("Views/Customer/searchResult.jsp").forward(request, response);
-    } 
-
+        request.setAttribute("brands", brandList);
+        request.getRequestDispatcher("Views/Customer/homePage.jsp").forward(request, response);
+    }
+    
     /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request

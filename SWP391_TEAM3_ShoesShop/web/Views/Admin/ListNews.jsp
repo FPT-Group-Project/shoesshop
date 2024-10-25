@@ -448,11 +448,10 @@
                                         <table class="table app-table-hover mb-0 text-left">
                                             <thead>
                                                 <tr>
-                                                    <th class="cell">AccountID</th>
-                                                    <th class="cell">UserName</th>
-                                                    <th class="cell">FullName</th>
-                                                    <th class="cell">Email</th>
-                                                    <th class="cell">PhoneNumber</th>
+                                                    <th class="cell">NewsID</th>
+                                                    <th class="cell">Title</th>
+                                                    <th class="cell">Date Upload</th>
+                                                    <th class="cell">Author</th>
                                                     <th class="cell">Action</th>
                                                 </tr>
                                             </thead>

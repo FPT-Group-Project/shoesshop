@@ -24,6 +24,10 @@
         <servlet-name>OrderComplete</servlet-name>
         <servlet-class>Controllers.OrderComplete</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>displayAllProducts</servlet-name>
+        <servlet-class>Controllers.displayAllProducts</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>home</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -48,7 +52,7 @@
         <servlet-name>OrderComplete</servlet-name>
         <url-pattern>/order-complete</url-pattern>
     </servlet-mapping>
-      <servlet>
+    <servlet>
         <servlet-name>DeleteProductController</servlet-name>
         <servlet-class>ControllersAdmin.DeleteProductController</servlet-class>
     </servlet>
@@ -95,7 +99,7 @@
     <servlet-mapping>
         <servlet-name>LogoutControl</servlet-name>
         <url-pattern>/logout</url-pattern>
-    </servlet-mapping>  
+    </servlet-mapping>
     <servlet>
         <servlet-name>ForgotPassword</servlet-name>
         <servlet-class>Controllers.ForgotPassword</servlet-class>
@@ -111,7 +115,7 @@
     <servlet>
         <servlet-name>ConfirmPass</servlet-name>
         <servlet-class>Controllers.ConfirmPass</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgot</url-pattern>
@@ -127,5 +131,9 @@
     <servlet-mapping>
         <servlet-name>ConfirmPass</servlet-name>
         <url-pattern>/confirmpass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>displayAllProducts</servlet-name>
+        <url-pattern>/products</url-pattern>
     </servlet-mapping>
 </web-app>
