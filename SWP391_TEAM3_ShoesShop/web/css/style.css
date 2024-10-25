@@ -7435,6 +7435,8 @@ h1, h2, h3, h4, h5,
       float: right; }
     .colorlib-nav ul li.login {
       float: right; }
+    .colorlib-nav ul li.profile {
+      float: right; }
     .colorlib-nav ul li a {
       position: relative;
       padding: 10px 12px;

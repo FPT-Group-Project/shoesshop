@@ -82,6 +82,19 @@
                                      <li><a href="orderHistory">Order History</a></li>
                                     <li><a href="about.html">About</a></li>
                                     <li><a href="contact">Contact</a></li>
+                                    <c:if test="${sessionScope.acc==null}">
+                                       <li class="login">
+                                           <a href="login">Login</a>
+                                       </li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.acc!=null}">
+                                       <li class="logout">
+                                           <a href="logout">Logout</a>
+                                       </li>
+                                       <li class="profile">
+                                           <a href="profile?id=${acc.getAccountID()}">Profile</a>
+                                       </li>
+                                    </c:if>
                                     <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
                                 </ul>
                             </div>
