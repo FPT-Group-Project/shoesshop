@@ -183,6 +183,7 @@
                                 <input type="password" class="form-control" name="oldpass" >
                             </div>
                             <p id="passwordMismatchOld" style="color: red; display: none;">Password incorrect. Please re-enter!</p>
+                            <p id="passwordMismatchNew" style="color: red; display: none;">New password must not be the same as the old one. Please re-enter!</p>
                             <div class="col-md-12">
                                 <label class="labels">Enter new Password</label>
                                 <input type="password" class="form-control" name="newpass">
@@ -238,10 +239,17 @@
                 var reEnteredPassword = document.getElementsByName('repass')[0].value;
                 if (oldpass === passAcc) {
                         if (newPassword === reEnteredPassword) {
-                            var result = confirm("Are you sure you want to update password?");
-                            if (result) {
-                                document.getElementById("formUpdate").submit();
-                                return true;
+                            if (newPassword === oldpass) {
+                                var passwordMismatchNew = document.getElementById("passwordMismatchNew");
+                                passwordMismatchNew.style.display = "block";
+                                return false;
+                            }
+                            else {
+                                var result = confirm("Are you sure you want to update password?");
+                                if (result) {
+                                    document.getElementById("formUpdate").submit();
+                                    return true;
+                               }
                             }
                         } else {
                             var passwordMismatchMessage = document.getElementById("passwordMismatch");
