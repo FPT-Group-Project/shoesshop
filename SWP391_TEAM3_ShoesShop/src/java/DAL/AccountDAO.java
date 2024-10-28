@@ -71,7 +71,7 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
-    public Account checkEmailExist(String email) {
+    public String checkEmailExist(String email) {
         String sql = "SELECT [Email]\n"
                 + "  FROM [dbo].[Account] where Email = ?";
         try {
@@ -79,9 +79,7 @@ public class AccountDAO extends DBContext {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Account account = new Account();
-                account.setEmail(rs.getString("Email"));
-                return account;
+                return email;
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -162,6 +160,92 @@ public Account getAccountByID(int accountID) {
     }
     return account;
 }
+public Account getAccountById(int id) {
+        String sql = "select * from Account where AccountID = ?";
+        Account account = new Account();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                account.setAccountID(id);
+                account.setUserName(rs.getString("UserName"));
+                account.setPassWord(rs.getString("Password"));
+                account.setFullName(rs.getString("FullName"));
+                account.setEmail(rs.getString("Email"));
+                account.setPhoneNumber(rs.getString("PhoneNumber"));
+            }
+
+            return account;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    public String getUserNameByEmail(String email) {
+        String sql = "SELECT UserName FROM Account WHERE Email = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString(1);
+                return name;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    public int editProfile(Account account) {
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [UserName] = ?\n"
+                + "      ,[FullName] = ?\n"
+                + "      ,[Email] = ?\n"
+                + "      ,[PhoneNumber] = ?\n"
+                + " WHERE AccountID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, account.getUserName());
+            ps.setString(2, account.getFullName());
+            ps.setString(3, account.getEmail());
+            ps.setString(4, account.getPhoneNumber());
+            ps.setInt(5, account.getAccountID());
+            int checkUpdate = ps.executeUpdate();
+            return checkUpdate;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    public int changePass(String newpass, int aid) {
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [Password] = ?\n"
+                + " WHERE AccountID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, newpass);
+            ps.setInt(2, aid);
+            int checkUpdate = ps.executeUpdate();
+            return checkUpdate;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+    public void updatePassByUserName(String pass, String username) {
+        String sql = "update Account set Password = ? where UserName= ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, pass);
+            st.setString(2, username);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 
 
 }

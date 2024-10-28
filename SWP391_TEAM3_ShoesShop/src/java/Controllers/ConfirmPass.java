@@ -4,24 +4,19 @@
  */
 
 package Controllers;
-
-import DAL.NewsDao;
-import DAL.ProductDAO;
-import Models.News;
-import Models.Product;
+import DAL.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author vh69
  */
-public class home extends HttpServlet {
+public class ConfirmPass extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,16 +33,16 @@ public class home extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet home</title>");  
+            out.println("<title>Servlet ConfirmPass</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet home at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ConfirmPass at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     } 
 
-    // <editor-fold desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -58,13 +53,7 @@ public class home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ProductDAO prd=new ProductDAO();
-        List<Product> newestProducts=prd.getNewestProducts(4);
-        List<Product> bestSellerProducts=prd.getBestSellerProducts(4);
-        request.setAttribute("newest", newestProducts);
-        request.setAttribute("bestSeller", bestSellerProducts);
-        request.getRequestDispatcher("Views/Customer/mainContent.jsp").forward(request, response);
-        
+        request.getRequestDispatcher("Views/Customer/newpassword.jsp").forward(request, response);
     } 
 
     /** 
@@ -77,7 +66,17 @@ public class home extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String newpass = request.getParameter("password");
+        String cfnewpass = request.getParameter("cfpassword");
+        String username = request.getParameter("userName");
+        String msg = "";
+        AccountDAO dao = new AccountDAO();
+        if (cfnewpass.equals(newpass)) {
+            dao.updatePassByUserName(newpass, username);
+            msg = "Change password successfully!";
+            request.setAttribute("success", msg);
+            request.getRequestDispatcher("Views/Customer/Login.jsp").forward(request, response);
+        }
     }
 
     /** 

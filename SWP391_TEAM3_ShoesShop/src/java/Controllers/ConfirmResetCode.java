@@ -4,24 +4,20 @@
  */
 
 package Controllers;
-
-import DAL.NewsDao;
-import DAL.ProductDAO;
-import Models.News;
-import Models.Product;
+import DAL.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author Admin
+ * @author vh69
  */
-public class home extends HttpServlet {
+public class ConfirmResetCode extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,16 +34,16 @@ public class home extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet home</title>");  
+            out.println("<title>Servlet ConfirmResetCode</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet home at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ConfirmResetCode at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     } 
 
-    // <editor-fold desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -58,12 +54,6 @@ public class home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ProductDAO prd=new ProductDAO();
-        List<Product> newestProducts=prd.getNewestProducts(4);
-        List<Product> bestSellerProducts=prd.getBestSellerProducts(4);
-        request.setAttribute("newest", newestProducts);
-        request.setAttribute("bestSeller", bestSellerProducts);
-        request.getRequestDispatcher("Views/Customer/mainContent.jsp").forward(request, response);
         
     } 
 
@@ -77,7 +67,30 @@ public class home extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        AccountDAO ud = new AccountDAO();
+        String resetCode = request.getParameter("resetcode");
+        String code = (String) session.getAttribute("code");
+        String email = request.getParameter("email");
+        String message = (String) request.getAttribute("message");
+        String check = (String) request.getAttribute("check");
+        if (code.equalsIgnoreCase(resetCode)) {
+            check = "true";
+            String userName = ud.getUserNameByEmail(email);
+
+            request.removeAttribute("code");
+            request.setAttribute("uName", userName);
+            request.setAttribute("check", check);
+            request.getRequestDispatcher("Views/Customer/newpassword.jsp").forward(request, response);
+        } else {
+            check = "false";
+            message = "Sorry, reset code incorrect";
+            session.setAttribute("code", code);
+            request.setAttribute("email", email);
+            request.setAttribute("check", check);
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("Views/Customer/forgot.jsp").forward(request, response);
+        }
     }
 
     /** 

@@ -70,18 +70,31 @@
                                 <ul>
                                     <li class="active"><a href="home">Home</a></li>
                                     <li class="has-dropdown">
-                                        <a href="men.html">Men</a>
+                                        <a href="home">Men</a>
                                         <ul class="dropdown">
-                                            <li><a href="product-detail.html">Product Detail</a></li>
+                                           
                                             <li><a href="cart">Shopping Cart</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li>
-                                            <li><a href="order-complete.html">Order Complete</a></li>
+                                           
+                                            <li><a href="orderHistory">Order History</a></li>
                                             <li><a href="add-to-wishlist.html">Wishlist</a></li>
                                         </ul>
                                     </li>
                                      <li><a href="orderHistory">Order History</a></li>
                                     <li><a href="about.html">About</a></li>
                                     <li><a href="contact">Contact</a></li>
+                                    <c:if test="${sessionScope.acc==null}">
+                                       <li class="login">
+                                           <a href="login">Login</a>
+                                       </li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.acc!=null}">
+                                       <li class="logout">
+                                           <a href="logout">Logout</a>
+                                       </li>
+                                       <li class="profile">
+                                           <a href="profile?id=${acc.getAccountID()}">Profile</a>
+                                       </li>
+                                    </c:if>
                                     <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
                                 </ul>
                             </div>
@@ -127,36 +140,184 @@
             
 
             <div class="colorlib-product">
-                <div class="container"> 
-                        
-                    <form action="home" method="get">
-                        <div class="row row-pb-md">
-                            <c:forEach items="${list}" var="p">
-                                <div class="col-lg-3 mb-4 text-center" >
-                                    <div class="product-entry border">
-                                        <a href="productDetail?id=${p.getProductId()}" class="prod-img">
-                                            <img src="ImageProductAvt/${p.getAvatarP()}" class="img-fluid" alt="Free html5 bootstrap 4 template">
-                                        </a>
-                                        <div class="desc">
-                                            <h2><a href="productDetail?id=${p.getProductId()}">${p.getProductName()}</a></h2>
-                                            <span class="price">$${p.getPrice()}</span>
-                                        </div>
-                                    </div>
+                <div class="container">
+                    <form action="products" method="get">
+                        <div class="row" >
+                            <div class="col col-sm-2">
+                                <hr/>
+                                <h3>Brands:</h3>
+                                <ul>
+                                    <c:forEach items='${brands}' var='b'>
+                                        <li>
+                                            <input type="checkbox" name="brands" value="${b.getBrandID()}" id="brand${b.getBrandID()}">
+                                            <label for="${b.getBrandID()}">${b.getBrandName()}</label>
+                                        </li>
+                                    </c:forEach>
+                                    <input type="hidden" value="${checkedBrands}" id="checkedBrands">
+                                </ul>
+                                <hr/>
+                                <h3>Price:</h3>
+                                <div style="display: flex; justify-content: center; gap: 10%">
+                                    <input type="text" name="from" id="from" placeholder="From" value="${from}" style="width: 40%; text-align: center;" onkeydown="if (event.key === 'Enter')
+                                                event.preventDefault();"/>
+
+                                    <input type="text" name="to" id="to" placeholder="To" value="${to}" style="width: 40%; text-align: center;" onkeydown="if (event.key === 'Enter')
+                                                event.preventDefault();"/>
                                 </div>
-                            </c:forEach>
-                        </div>
-                        <div>
-                            <c:forEach var="n" begin="1" end="${pagesNumber}">
-                                <a href="home?page=${n}">${n}</a>
-                            </c:forEach>
+                                <hr/>
+                                <div style="display: flex; justify-content: center">
+                                    <button type="submit" style="width: 100%; background-color: #90ccbc; color:white;">Filter</button>
+                                </div>
+
+                                <hr/>
+
+                                <script>
+                                    function submitByEnterFalse(event) {
+                                        if (event.keyCode === 13) {
+                                            event.preventDefault();
+                                        }
+                                    }
+                                    window.onload = function () {
+                                        const brands = document.querySelectorAll('input[name="brands"]');
+                                        <c:forEach items="${checkedBrands}" var="cb">
+                                            brands.forEach(b => {
+                                                if(Number(b.value)===Number(${cb})){
+                                                    b.checked=true;
+                                                }
+                                            });
+                                        </c:forEach>
+                                    };
+                                </script>
+                            </div>
+
+                            <div class="col">
+                                <div class="row row-pb-md">
+                                    <c:forEach items="${list}" var="p">
+                                        <div class="col-lg-3 mb-4 text-center" >
+                                            <div class="product-entry border">
+                                                <a href="productDetail?id=${p.getProductId()}" class="prod-img">
+                                                    <img src="ImageProductAvt/${p.getAvatarP()}" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                                                </a>
+                                                <div class="desc">
+                                                    <h2><a href="productDetail?id=${p.getProductId()}">${p.getProductName()}</a></h2>
+                                                    <span class="price">$${p.getPrice()}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                                <c:choose>
+                                    <c:when test="${list!=null}">
+                                        <div class="pagination_container">  
+                                            <ul class="pagination">
+                                                <button name="page" value="${atPage-1}" type="submit" ${atPage<=1?'disabled':''}><li class="pagination__btn"><span class="material-icons">chevron_left</span></li></button>
+                                                        <c:forEach var="n" begin="1" end="${pagesNumber}">
+                                                    <button name="page" value="${n}"><li  class="pagination__numbers" ${n==atPage?'active':''}>${n}</li></button>
+                                                        </c:forEach>
+                                                <button name="page" value="${atPage+1}" ${atPage>=pagesNumber?'disabled':''}><li class="pagination__btn"><span class="material-icons">chevron_right</span></li></button>
+                                            </ul>
+                                        </div>
+                                    </c:when>
+                                </c:choose>
+                                <style>
+                                    a.disabled{
+                                        pointer-events: none;
+                                        cursor: default;
+                                    }
+                                    a.disabled .material-icons{
+                                        color: #ffffff;
+                                    }
+                                    *,
+                                    *::before,
+                                    *::after {
+                                        margin: 0;
+                                        padding: 0;
+                                        box-sizing: inherit;
+                                    }
+
+                                    html {
+                                        box-sizing: border-box;
+                                        font-size: 62.5%;
+                                        overflow-y: scroll;
+                                        font-family: "Poppins", sans-serif;
+                                        letter-spacing: 0.6px;
+                                        line-height: 1.4;
+                                        -webkit-user-select: none;
+                                        backface-visibility: hidden;
+                                        -webkit-font-smoothing: subpixel-antialiased;
+                                    }
+
+                                    .pagination_container {
+                                        display: flex;
+                                        flex-direction: column;
+                                        justify-content: center;
+                                        align-items: center;
+                                        text-align: center;
+                                        color: #2d4848;
+                                    }
+
+                                    ul {
+                                        list-style-type: none;
+                                    }
+
+                                    .pagination {
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        height: 5rem;
+                                        margin: 3rem;
+                                        border-radius: 0.6rem;
+                                        background: #ffffff;
+                                        box-shadow: 0 0.8rem 2rem rgba(90, 97, 129, 0.05);
+                                    }
+
+                                    .pagination__numbers,
+                                    .pagination__btn,
+                                    .pagination__dots {
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        margin: 0.8rem;
+                                        font-size: 1.4rem;
+                                        cursor: pointer;
+                                    }
+
+                                    .pagination__dots {
+                                        width: 2.6rem;
+                                        height: 2.6rem;
+                                        color: #90ccbc;
+                                        cursor: initial;
+                                    }
+
+                                    .pagination__numbers {
+                                        width: 2.6rem;
+                                        height: 2.6rem;
+                                        border-radius: 0.4rem;
+                                    }
+
+                                    .pagination__numbers:hover {
+                                        color: #90ccbc;
+                                    }
+
+                                    .pagination__numbers.active {
+                                        color: #ffffff;
+                                        background: #90ccbc;
+                                        font-weight: 600;
+                                        border: 1px solid #90ccbc;
+                                    }
+
+                                    .pagination__btn {
+                                        color: #90ccbc;
+                                        pointer-events: none;
+                                    }
+
+                                    .pagination__btn.active:hover {
+                                        color: #90ccbc;
+                                    }
+                                </style>
+                            </div>
                         </div>
                     </form>
-
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <p><a href="#" class="btn btn-primary btn-lg">Shop All Products</a></p>
-                        </div>
-                    </div>
                 </div>
             </div>
 

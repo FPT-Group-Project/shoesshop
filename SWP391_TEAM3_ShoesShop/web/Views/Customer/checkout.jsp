@@ -148,18 +148,10 @@
 		              	<div class="row">
 			               <div class="col-md-12">
 			                  <div class="form-group">
-			                  	<label for="country">Select Country</label>
+			                  	
 			                     <div class="form-field">
 			                     	<i class="icon icon-arrow-down3"></i>
-			                        <select name="country" id="country" class="form-control">
-				                      	<option disabled selected>Select country</option>
-				                        <option value="Alaska">Alaska</option>
-				                        <option value="China">China</option>
-				                        <option value="Japan">Japan</option>
-				                        <option value="Korea">Korea</option>
-				                        <option value="Philippines">Philippines</option>
-				                        <option value="Vietnam">Vietnam</option>
-			                        </select>
+			                      
 			                     </div>
 			                  </div>
 			               </div>
@@ -178,10 +170,7 @@
 								</div>
 
 								<div class="col-md-12">
-									<div class="form-group">
-										<label for="companyname">Company Name</label>
-			                    	<input type="text" id="companyname" class="form-control" placeholder="Company Name">
-			                  </div>
+									
 			               </div>
 
 			               <div class="col-md-12">
@@ -193,22 +182,15 @@
 			            
 			               <div class="col-md-12">
 									<div class="form-group">
-										<label for="companyname">Town/City</label>
-			                    	<input type="text" id="towncity" class="form-control" placeholder="Town or City">
+										
 			                  </div>
 			               </div>
 			            
 								<div class="col-md-6">
-									<div class="form-group">
-										<label for="stateprovince">State/Province</label>
-										<input type="text" id="stateprovince" class="form-control" placeholder="State Province">
-									</div>
+									
 								</div>
 								<div class="col-md-6">
-									<div class="form-group">
-										<label for="lname">Zip/Postal Code</label>
-										<input type="text" id="zippostalcode" class="form-control" placeholder="Zip / Postal">
-									</div>
+									
 								</div>
 							
 								<div class="col-md-6">
@@ -226,10 +208,7 @@
 
 								<div class="col-md-12">
 									<div class="form-group">
-										<div class="radio">
-										  <label><input type="radio" name="optradio"> Create an Account? </label>
-										  <label><input type="radio" name="optradio"> Ship to different address</label>
-										</div>
+										
 									</div>
 								</div>
 		               </div>
@@ -293,21 +272,7 @@
                                                                             function placeOrder(event) {
                                                                                 event.preventDefault();
                                                                                 let check = false;
-                                                                                    if(document.getElementById('country').selectedIndex == 0) {
-                                                                                        let cerr = document.getElementById('country-error');
-                                                                                        if(cerr != null) {
-                                                                                            cerr.parentNode.removeChild(cerr);
-                                                                                        }
-                                                                                        let temp = document.createElement("div");
-                                                                                        temp.innerHTML = '<span style="color: #ff0004;" id="country-error">Please fill this field!</span>'
-                                                                                        document.getElementById('country').parentNode.appendChild(temp.firstChild);
-                                                                                        check = true;
-                                                                                    } else {
-                                                                                        let cerr = document.getElementById('country-error');
-                                                                                        if(cerr != null) {
-                                                                                            cerr.parentNode.removeChild(cerr);
-                                                                                        }
-                                                                                    }
+                                                                                    
                                                                                     if(document.getElementById('fname').value.length <= 0) {
                                                                                         let cerr = document.getElementById('fname-error');
                                                                                         if(cerr != null) {
@@ -338,21 +303,7 @@
                                                                                             cerr.parentNode.removeChild(cerr);
                                                                                         }
                                                                                     }
-                                                                                    if(document.getElementById('companyname').value.length <= 0) {
-                                                                                        let cerr = document.getElementById('companyname-error');
-                                                                                        if(cerr != null) {
-                                                                                            cerr.parentNode.removeChild(cerr);
-                                                                                        }
-                                                                                        let temp = document.createElement("div");
-                                                                                        temp.innerHTML = '<span style="color: #ff0004;" id="companyname-error">Please fill this field!</span>'
-                                                                                        document.getElementById('companyname').parentNode.appendChild(temp.firstChild);
-                                                                                        check = true;
-                                                                                    } else {
-                                                                                        let cerr = document.getElementById('companyname-error');
-                                                                                        if(cerr != null) {
-                                                                                            cerr.parentNode.removeChild(cerr);
-                                                                                        }
-                                                                                    }
+                                                                                   
                                                                                     if(document.getElementById('address').value.length <= 0) {
                                                                                         let cerr = document.getElementById('address-error');
                                                                                         if(cerr != null) {
@@ -368,51 +319,8 @@
                                                                                             cerr.parentNode.removeChild(cerr);
                                                                                         }
                                                                                     }
-                                                                                    if(document.getElementById('zippostalcode').value.length <= 0) {
-                                                                                        let cerr = document.getElementById('zippostalcode-error');
-                                                                                        if(cerr != null) {
-                                                                                            cerr.parentNode.removeChild(cerr);
-                                                                                        }
-                                                                                        let temp = document.createElement("div");
-                                                                                        temp.innerHTML = '<span style="color: #ff0004;" id="zippostalcode-error">Please fill this field!</span>'
-                                                                                        document.getElementById('zippostalcode').parentNode.appendChild(temp.firstChild);
-                                                                                        check = true;
-                                                                                    } else {
-                                                                                        let cerr = document.getElementById('zippostalcode-error');
-                                                                                        if(cerr != null) {
-                                                                                            cerr.parentNode.removeChild(cerr);
-                                                                                        }
-                                                                                    }
-                                                                                    if(document.getElementById('towncity').value.length <= 0) {
-                                                                                        let cerr = document.getElementById('towncity-error');
-                                                                                        if(cerr != null) {
-                                                                                            cerr.parentNode.removeChild(cerr);
-                                                                                        }
-                                                                                        let temp = document.createElement("div");
-                                                                                        temp.innerHTML = '<span style="color: #ff0004;" id="towncity-error">Please fill this field!</span>'
-                                                                                        document.getElementById('towncity').parentNode.appendChild(temp.firstChild);
-                                                                                        check = true;
-                                                                                    } else {
-                                                                                        let cerr = document.getElementById('towncity-error');
-                                                                                        if(cerr != null) {
-                                                                                            cerr.parentNode.removeChild(cerr);
-                                                                                        }
-                                                                                    }
-                                                                                    if(document.getElementById('stateprovince').value.length <= 0) {
-                                                                                        let cerr = document.getElementById('stateprovince-error');
-                                                                                        if(cerr != null) {
-                                                                                            cerr.parentNode.removeChild(cerr);
-                                                                                        }
-                                                                                        let temp = document.createElement("div");
-                                                                                        temp.innerHTML = '<span style="color: #ff0004;" id="stateprovince-error">Please fill this field!</span>'
-                                                                                        document.getElementById('stateprovince').parentNode.appendChild(temp.firstChild);
-                                                                                        check = true;
-                                                                                    } else {
-                                                                                        let cerr = document.getElementById('stateprovince-error');
-                                                                                        if(cerr != null) {
-                                                                                            cerr.parentNode.removeChild(cerr);
-                                                                                        }
-                                                                                    }
+                                                                                    
+                                                                                   
                                                                                     if(!document.getElementById('rule').checked) {
                                                                                         let cerr = document.getElementById('rule-error');
                                                                                         if(cerr != null) {

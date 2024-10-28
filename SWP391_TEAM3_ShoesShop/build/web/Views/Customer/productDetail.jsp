@@ -141,29 +141,29 @@
         </style>
         <style>
             .stars {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-}
+                display: flex;
+                flex-direction: row-reverse;
+                justify-content: flex-end;
+            }
 
-.stars input[type="radio"] {
-    display: none;
-}
+            .stars input[type="radio"] {
+                display: none;
+            }
 
-.stars label {
-    font-size: 30px;
-    color: #ccc;
-    cursor: pointer;
-}
+            .stars label {
+                font-size: 30px;
+                color: #ccc;
+                cursor: pointer;
+            }
 
-.stars input[type="radio"]:checked ~ label {
-    color: gold;
-}
+            .stars input[type="radio"]:checked ~ label {
+                color: gold;
+            }
 
-.stars label:hover,
-.stars label:hover ~ label {
-    color: gold;
-}
+            .stars label:hover,
+            .stars label:hover ~ label {
+                color: gold;
+            }
 
             .pagination {
                 display: flex; /* Sử dụng flexbox để căn giữa */
@@ -445,208 +445,249 @@
 
     <div>
 
-
-
-
-        <h2>Feedback Form</h2>
-
-        <div class="feedback-container">
-        <form action="SubmitFeedbackServlet?productId=${param.id}" method="post" class="feedback-form" onsubmit="return validateForm()">
-    <input type="hidden" id="accountId" name="accountId" value="${sessionScope.accountId}">
-    
-    <div class="form-group rating-group">
-        <label for="rating">Rating:</label><br>
-        <div class="stars">
-            <input type="radio" id="star5" name="rating" value="5" />
-            <label for="star5" title="Excellent">&#9733;</label>
-            <input type="radio" id="star4" name="rating" value="4" />
-            <label for="star4" title="Very Good">&#9733;</label>
-            <input type="radio" id="star3" name="rating" value="3" />
-            <label for="star3" title="Good">&#9733;</label>
-            <input type="radio" id="star2" name="rating" value="2" />
-            <label for="star2" title="Fair">&#9733;</label>
-            <input type="radio" id="star1" name="rating" value="1" />
-            <label for="star1" title="Poor">&#9733;</label>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label for="comment">Comment:</label>
-        <textarea id="comment" name="comment" rows="4" cols="50" placeholder="Write your feedback here..."></textarea>
-    </div>
-    
-    <div class="form-group">
-        <input type="submit" value="Submit Feedback" class="submit-button">
-    </div>
-</form>
-
-<script>
-function validateForm() {
-    // Kiểm tra nếu không có đánh giá được chọn
-    const ratingElements = document.getElementsByName('rating');
-    let ratingSelected = false;
-    for (let i = 0; i < ratingElements.length; i++) {
-        if (ratingElements[i].checked) {
-            ratingSelected = true;
-            break;
-        }
-    }
-
-    // Lấy nội dung bình luận
-    const comment = document.getElementById('comment').value.trim();
-
-    // Hiển thị cảnh báo nếu không có đánh giá và không có bình luận
-    if (!ratingSelected && !comment) {
-        alert("Please select a rating and enter a comment.");
-        return false; // Ngăn gửi form
-    } else if (!ratingSelected) {
-        alert("Please select a rating.");
-        return false; // Ngăn gửi form
-    } else if (!comment) {
-        alert("Please enter a comment.");
-        return false; // Ngăn gửi form
-    }
-
-    return true; // Cho phép gửi form
+                                <style>/* Container for filter section */
+.filter-rating {
+    background-color: #f4f4f4; /* Màu nền xám sáng */
+    padding: 20px; /* Khoảng cách bên trong */
+    border-radius: 8px; /* Bo góc nhẹ */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Đổ bóng nhẹ */
+    margin-bottom: 20px; /* Khoảng cách phía dưới */
+    display: flex; /* Sử dụng flexbox để căn chỉnh */
+    flex-wrap: wrap; /* Cho phép các nút xuống dòng */
 }
-</script>
+
+.filter-rating h4 {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    margin: 0 0 15px; /* Khoảng cách cho tiêu đề */
+    font-size: 24px; /* Kích thước chữ tiêu đề */
+    color: #333; /* Màu chữ tối */
+    text-align: left; /* Căn trái cho tiêu đề */
+}
+
+.filter-rating button {
+    background-color: #007bff; /* Màu xanh dương cho nút */
+    color: #ffffff; /* Màu chữ trắng */
+    border: none; /* Không có viền */
+    border-radius: 5px; /* Bo góc cho nút */
+    padding: 10px 15px; /* Khoảng cách bên trong nút */
+    margin: 5px; /* Khoảng cách giữa các nút */
+    cursor: pointer; /* Con trỏ chuột khi di chuột lên nút */
+    font-size: 16px; /* Kích thước chữ cho nút */
+    transition: background-color 0.3s, transform 0.2s; /* Hiệu ứng chuyển màu nền và biến đổi */
+}
+
+.filter-rating button:hover {
+    background-color: #0056b3; /* Màu nền khi hover */
+    transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
+}
+
+.filter-rating button:active {
+    transform: scale(0.95); /* Hiệu ứng thu nhỏ khi nhấn */
+}
+
+</style>
 
 
-            <a href="FeedbackList?productId=1"></a>
+<h2>Feedback Form</h2>
+
+<div class="feedback-container">
+    <form action="SubmitFeedbackServlet?productId=${param.id}" method="post" class="feedback-form" onsubmit="return validateForm()">
+        <input type="hidden" id="accountId" name="accountId" value="${sessionScope.accountId}">
+
+        <div class="form-group rating-group">
+            <label for="rating">Rating:</label><br>
+            <div class="stars">
+                <input type="radio" id="star5" name="rating" value="5" required />
+                <label for="star5" title="Excellent">&#9733;</label>
+                <input type="radio" id="star4" name="rating" value="4" required />
+                <label for="star4" title="Very Good">&#9733;</label>
+                <input type="radio" id="star3" name="rating" value="3" required />
+                <label for="star3" title="Good">&#9733;</label>
+                <input type="radio" id="star2" name="rating" value="2" required />
+                <label for="star2" title="Fair">&#9733;</label>
+                <input type="radio" id="star1" name="rating" value="1" required />
+                <label for="star1" title="Poor">&#9733;</label>
+            </div>
         </div>
-        <div class="feedback-list-container">   
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-md-12 pills">
-                            <div class="bd-example bd-example-tabs">
-                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <div class="form-group">
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" rows="4" cols="50" placeholder="Write your feedback here..." required></textarea>
+        </div>
 
+        <div class="form-group">
+            <input type="submit" value="Submit Feedback" class="submit-button">
+        </div>
+    </form>
 
-                                    <li class="nav-item ">
-                                        <a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-expanded="true">Review</a>
-                                    </li>
-                                </ul>
-
-                                <div class="tab-content" id="pills-tabContent">
-
-
-                                    <div class="tab-pane border fade show active" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <h3 class="head">${totalComments}  Reviews</h3>
-                                                // 
-                                                <c:if test="${not empty feedbackList}">
-                                                    <c:forEach var="feedback" items="${feedbackList}">
-                                                        <div class="review">
-                                                            <div class="user-img" style="background-image: url(https://th.bing.com/th/id/OIP.dRraM8FPURhQzbIoyQbgOwHaEK?pid=ImgDet&w=474&h=266&rs=1)"></div>
-                                                            <div class="desc">
-                                                                <h4>
-                                                                    <span class="text-left">
-
-                                                                        <strong></strong> ${ feedback.getUsername() }</br>
-
-                                                                    </span>
-
-
-                                                                    <span class="text-right"> ${ feedback.getFeedbackDate() }</span>
-                                                                </h4>
-                                                                <p class="star">
-                                                                    <span>
-                                                                        <c:forEach var="i" begin="1" end="${feedback.getRating()}">
-                                                                            <i class="icon-star-full"></i>
-                                                                        </c:forEach>
-                                                                        <c:forEach var="i" begin="1" end="${5 - feedback.getRating()}">
-                                                                            <i class="icon-star-empty"></i>
-                                                                        </c:forEach>
-                                                                    </span>
-                                                                </p>
-                                                                <p> ${ feedback.getComment() }</p>
-                                                            </div>
-                                                        </div>
-                                                    </c:forEach>
-                                                </c:if>
-                                                <c:if test="${empty feedbackList}">
-                                                    <p>Không có phản hồi nào.</p>
-                                                </c:if>
-
-
-                                            </div>
-                                            <div class="col-md-4">
-<div class="rating-wrap">
-    <h3 class="head">Give a Review</h3>
-    <div class="wrap">
-        <!-- 5-star review -->
-        <p class="star">
-            <span>
-                <c:forEach var="i" begin="1" end="5">
-                    <i class="icon-star-full"></i>
-                </c:forEach>
-                <!-- Tính phần trăm review 5 sao và làm tròn đến 2 chữ số thập phân -->
-                (<fmt:formatNumber value="${totalRating5 * 100.0 / (totalRating1 + totalRating2 + totalRating3 + totalRating4 + totalRating5)}" minFractionDigits="2" maxFractionDigits="2"/>%)
-            </span>
-            <span>${totalRating5} Reviews</span>
-        </p>
-
-        <!-- 4-star review -->
-        <p class="star">
-            <span>
-                <c:forEach var="i" begin="1" end="4">
-                    <i class="icon-star-full"></i>
-                </c:forEach>
-                <i class="icon-star-empty"></i>
-                <!-- Tính phần trăm review 4 sao và làm tròn đến 2 chữ số thập phân -->
-                (<fmt:formatNumber value="${totalRating4 * 100.0 / (totalRating1 + totalRating2 + totalRating3 + totalRating4 + totalRating5)}" minFractionDigits="2" maxFractionDigits="2"/>%)
-            </span>
-            <span>${totalRating4} Reviews</span>
-        </p>
-
-        <!-- 3-star review -->
-        <p class="star">
-            <span>
-                <c:forEach var="i" begin="1" end="3">
-                    <i class="icon-star-full"></i>
-                </c:forEach>
-                <c:forEach var="i" begin="1" end="2">
-                    <i class="icon-star-empty"></i>
-                </c:forEach>
-                <!-- Tính phần trăm review 3 sao và làm tròn đến 2 chữ số thập phân -->
-                (<fmt:formatNumber value="${totalRating3 * 100.0 / (totalRating1 + totalRating2 + totalRating3 + totalRating4 + totalRating5)}" minFractionDigits="2" maxFractionDigits="2"/>%)
-            </span>
-            <span>${totalRating3} Reviews</span>
-        </p>
-
-        <!-- 2-star review -->
-        <p class="star">
-            <span>
-                <c:forEach var="i" begin="1" end="2">
-                    <i class="icon-star-full"></i>
-                </c:forEach>
-                <c:forEach var="i" begin="1" end="3">
-                    <i class="icon-star-empty"></i>
-                </c:forEach>
-                <!-- Tính phần trăm review 2 sao và làm tròn đến 2 chữ số thập phân -->
-                (<fmt:formatNumber value="${totalRating2 * 100.0 / (totalRating1 + totalRating2 + totalRating3 + totalRating4 + totalRating5)}" minFractionDigits="2" maxFractionDigits="2"/>%)
-            </span>
-            <span>${totalRating2} Reviews</span>
-        </p>
-
-        <!-- 1-star review -->
-        <p class="star">
-            <span>
-                <i class="icon-star-full"></i>
-                <c:forEach var="i" begin="1" end="4">
-                    <i class="icon-star-empty"></i>
-                </c:forEach>
-                <!-- Tính phần trăm review 1 sao và làm tròn đến 2 chữ số thập phân -->
-                (<fmt:formatNumber value="${totalRating1 * 100.0 / (totalRating1 + totalRating2 + totalRating3 + totalRating4 + totalRating5)}" minFractionDigits="2" maxFractionDigits="2"/>%)
-            </span>
-            <span>${totalRating1} Reviews</span>
-        </p>
+    <div class="filter-rating">
+        <h4>Filter by Rating:</h4>
+        <button onclick="filterComments(5)">5 Stars</button>
+        <button onclick="filterComments(4)">4 Stars</button>
+        <button onclick="filterComments(3)">3 Stars</button>
+        <button onclick="filterComments(2)">2 Stars</button>
+        <button onclick="filterComments(1)">1 Star</button>
+        <button onclick="filterComments(0)">All</button>
     </div>
+
+    <script>
+        function filterComments(stars) {
+            const reviews = document.querySelectorAll('.review');
+
+            reviews.forEach(review => {
+                // Tìm số sao trong mỗi bình luận
+                const reviewStars = review.dataset.rating;
+
+                // Hiện hoặc ẩn bình luận dựa trên đánh giá
+                if (stars === 0 || parseInt(reviewStars) === stars) {
+                    review.style.display = 'block'; // Hiển thị bình luận
+                } else {
+                    review.style.display = 'none'; // Ẩn bình luận
+                }
+            });
+        }
+
+        function validateForm() {
+            // Kiểm tra nếu không có đánh giá được chọn
+            const ratingElements = document.getElementsByName('rating');
+            let ratingSelected = false;
+
+            for (let i = 0; i < ratingElements.length; i++) {
+                if (ratingElements[i].checked) {
+                    ratingSelected = true;
+                    break;
+                }
+            }
+
+            // Lấy nội dung bình luận
+            const comment = document.getElementById('comment').value.trim();
+
+            // Hiển thị cảnh báo nếu không có đánh giá và không có bình luận
+            if (!ratingSelected && !comment) {
+                alert("Please select a rating and enter a comment.");
+                return false; // Ngăn gửi form
+            } else if (!ratingSelected) {
+                alert("Please select a rating.");
+                return false; // Ngăn gửi form
+            } else if (!comment) {
+                alert("Please enter a comment.");
+                return false; // Ngăn gửi form
+            }
+
+            return true; // Cho phép gửi form
+        }
+    </script>
+
+    <a href="FeedbackList?productId=1"></a>
 </div>
 
+<div class="feedback-list-container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-md-12 pills">
+                    <div class="bd-example bd-example-tabs">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item ">
+                                <a class="nav-link active" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-expanded="true">Review</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane border fade show active" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h3 class="head">${totalComments} Reviews</h3>
+
+                                        <c:if test="${not empty feedbackList}">
+                                            <c:forEach var="feedback" items="${feedbackList}">
+                                                <div class="review" data-rating="${feedback.getRating()}">
+                                                    <div class="user-img" style="background-image: url(https://th.bing.com/th/id/OIP.dRraM8FPURhQzbIoyQbgOwHaEK?pid=ImgDet&w=474&h=266&rs=1)"></div>
+                                                    <div class="desc">
+                                                        <h4>
+                                                            <span class="text-left">
+                                                                <strong>${feedback.getUsername()}</strong><br>
+                                                            </span>
+                                                            <span class="text-right">${feedback.getFeedbackDate()}</span>
+                                                        </h4>
+                                                        <p class="star">
+                                                            <span>
+                                                                <c:forEach var="i" begin="1" end="${feedback.getRating()}">
+                                                                    <i class="icon-star-full"></i>
+                                                                </c:forEach>
+                                                                <c:forEach var="i" begin="1" end="${5 - feedback.getRating()}">
+                                                                    <i class="icon-star-empty"></i>
+                                                                </c:forEach>
+                                                            </span>
+                                                        </p>
+                                                        <p>${feedback.getComment()}</p>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </c:if>
+                                        <c:if test="${empty feedbackList}">
+                                            <p>Không có phản hồi nào.</p>
+                                        </c:if>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="rating-wrap">
+                                            <h3 class="head">Give a Review</h3>
+                                            <div class="wrap">
+                                                <p class="star">
+                                                    <span>
+                                                        <c:forEach var="i" begin="1" end="5">
+                                                            <i class="icon-star-full"></i>
+                                                        </c:forEach>
+                                                        (<fmt:formatNumber value="${totalRating5 * 100.0 / (totalRating1 + totalRating2 + totalRating3 + totalRating4 + totalRating5)}" minFractionDigits="2" maxFractionDigits="2"/>%)
+                                                    </span>
+                                                    <span>${totalRating5} Reviews</span>
+                                                </p>
+                                                <p class="star">
+                                                    <span>
+                                                        <c:forEach var="i" begin="1" end="4">
+                                                            <i class="icon-star-full"></i>
+                                                        </c:forEach>
+                                                        <i class="icon-star-empty"></i>
+                                                        (<fmt:formatNumber value="${totalRating4 * 100.0 / (totalRating1 + totalRating2 + totalRating3 + totalRating4 + totalRating5)}" minFractionDigits="2" maxFractionDigits="2"/>%)
+                                                    </span>
+                                                    <span>${totalRating4} Reviews</span>
+                                                </p>
+                                                <p class="star">
+                                                    <span>
+                                                        <c:forEach var="i" begin="1" end="3">
+                                                            <i class="icon-star-full"></i>
+                                                        </c:forEach>
+                                                        <c:forEach var="i" begin="1" end="2">
+                                                            <i class="icon-star-empty"></i>
+                                                        </c:forEach>
+                                                        (<fmt:formatNumber value="${totalRating3 * 100.0 / (totalRating1 + totalRating2 + totalRating3 + totalRating4 + totalRating5)}" minFractionDigits="2" maxFractionDigits="2"/>%)
+                                                    </span>
+                                                    <span>${totalRating3} Reviews</span>
+                                                </p>
+                                                <p class="star">
+                                                    <span>
+                                                        <c:forEach var="i" begin="1" end="2">
+                                                            <i class="icon-star-full"></i>
+                                                        </c:forEach>
+                                                        <c:forEach var="i" begin="1" end="3">
+                                                            <i class="icon-star-empty"></i>
+                                                        </c:forEach>
+                                                        (<fmt:formatNumber value="${totalRating2 * 100.0 / (totalRating1 + totalRating2 + totalRating3 + totalRating4 + totalRating5)}" minFractionDigits="2" maxFractionDigits="2"/>%)
+                                                    </span>
+                                                    <span>${totalRating2} Reviews</span>
+                                                </p>
+                                                <p class="star">
+                                                    <span>
+                                                        <i class="icon-star-full"></i>
+                                                        <c:forEach var="i" begin="1" end="4">
+                                                            <i class="icon-star-empty"></i>
+                                                        </c:forEach>
+                                                        (<fmt:formatNumber value="${totalRating1 * 100.0 / (totalRating1 + totalRating2 + totalRating3 + totalRating4 + totalRating5)}" minFractionDigits="2" maxFractionDigits="2"/>%)
+                                                    </span>
+                                                    <span>${totalRating1} Reviews</span>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -655,144 +696,149 @@ function validateForm() {
                     </div>
                 </div>
             </div>
-            <!-- Phân trang -->
-            <div class="pagination">
-                <c:if test="${currentPage > 1}">
-                    <a href="productDetail?id=${param.id}&page=${currentPage - 1}">Trước</a>
-                </c:if>
-                <c:forEach var="i" begin="1" end="${totalPages}">
-                    <c:choose>
-                        <c:when test="${i == currentPage}">
-                            <span class="active">${i}</span>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="productDetail?id=${param.id}&page=${i}">${i}</a>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-                <c:if test="${currentPage < totalPages}">
-                    <a href="productDetail?id=${param.id}&page=${currentPage + 1}">Tiếp theo</a>
-                </c:if>
-            </div>
         </div>
     </div>
+</div>
+                
 
-
-
-
-    <!--footer-->
-    <footer id="colorlib-footer" role="contentinfo">
-        <div class="container">
-            <div class="row row-pb-md">
-                <div class="col footer-col colorlib-widget">
-                    <h4>About Footwear</h4>
-                    <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-                    <p>
-                    <ul class="colorlib-social-icons">
-                        <li><a href="#"><i class="icon-twitter"></i></a></li>
-                        <li><a href="#"><i class="icon-facebook"></i></a></li>
-                        <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                        <li><a href="#"><i class="icon-dribbble"></i></a></li>
-                    </ul>
-                    </p>
-                </div>
-                <div class="col footer-col colorlib-widget">
-                    <h4>Customer Care</h4>
-                    <p>
-                    <ul class="colorlib-footer-links">
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Returns/Exchange</a></li>
-                        <li><a href="#">Gift Voucher</a></li>
-                        <li><a href="#">Wishlist</a></li>
-                        <li><a href="#">Special</a></li>
-                        <li><a href="#">Customer Services</a></li>
-                        <li><a href="#">Site maps</a></li>
-                    </ul>
-                    </p>
-                </div>
-                <div class="col footer-col colorlib-widget">
-                    <h4>Information</h4>
-                    <p>
-                    <ul class="colorlib-footer-links">
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Delivery Information</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Support</a></li>
-                        <li><a href="#">Order Tracking</a></li>
-                    </ul>
-                    </p>
-                </div>
-
-
-
-
-
-
-
-
-
-                <div class="col footer-col">
-                    <h4>News</h4>
-                    <ul class="colorlib-footer-links">
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="#">Press</a></li>
-                        <li><a href="#">Exhibitions</a></li>
-                    </ul>
-                </div>
-
-                <div class="col footer-col">
-                    <h4>Contact Information</h4>
-                    <ul class="colorlib-footer-links">
-                        <li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-                        <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-                        <li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
-                        <li><a href="#">yoursite.com</a></li>
-                    </ul>
+                <!-- Phân trang -->
+                <div class="pagination">
+                    <c:if test="${currentPage > 1}">
+                        <a href="productDetail?id=${param.id}&page=${currentPage - 1}">Trước</a>
+                    </c:if>
+                    <c:forEach var="i" begin="1" end="${totalPages}">
+                        <c:choose>
+                            <c:when test="${i == currentPage}">
+                                <span class="active">${i}</span>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="productDetail?id=${param.id}&page=${i}">${i}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="productDetail?id=${param.id}&page=${currentPage + 1}">Tiếp theo</a>
+                    </c:if>
                 </div>
             </div>
         </div>
-        <div class="copy">
-            <div class="row">
-                <div class="col-sm-12 text-center">
-                    <p>
-                        <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
-                        <span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
-                    </p>
+
+
+
+
+        <!--footer-->
+        <footer id="colorlib-footer" role="contentinfo">
+            <div class="container">
+                <div class="row row-pb-md">
+                    <div class="col footer-col colorlib-widget">
+                        <h4>About Footwear</h4>
+                        <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+                        <p>
+                        <ul class="colorlib-social-icons">
+                            <li><a href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a href="#"><i class="icon-facebook"></i></a></li>
+                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                            <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                        </ul>
+                        </p>
+                    </div>
+                    <div class="col footer-col colorlib-widget">
+                        <h4>Customer Care</h4>
+                        <p>
+                        <ul class="colorlib-footer-links">
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Returns/Exchange</a></li>
+                            <li><a href="#">Gift Voucher</a></li>
+                            <li><a href="#">Wishlist</a></li>
+                            <li><a href="#">Special</a></li>
+                            <li><a href="#">Customer Services</a></li>
+                            <li><a href="#">Site maps</a></li>
+                        </ul>
+                        </p>
+                    </div>
+                    <div class="col footer-col colorlib-widget">
+                        <h4>Information</h4>
+                        <p>
+                        <ul class="colorlib-footer-links">
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Delivery Information</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">Order Tracking</a></li>
+                        </ul>
+                        </p>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="col footer-col">
+                        <h4>News</h4>
+                        <ul class="colorlib-footer-links">
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="#">Exhibitions</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col footer-col">
+                        <h4>Contact Information</h4>
+                        <ul class="colorlib-footer-links">
+                            <li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+                            <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+                            <li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+                            <li><a href="#">yoursite.com</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
-</div>
+            <div class="copy">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p>
+                            <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
+                            <span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
 
-<div class="gototop js-top">
-    <a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
-</div>
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
+    </div>
 
-<!-- jQuery -->
-<script src="js/jquery.min.js"></script>
-<!-- popper -->
-<script src="js/popper.min.js"></script>
-<!-- bootstrap 4.1 -->
-<script src="js/bootstrap.min.js"></script>
-<!-- jQuery easing -->
-<script src="js/jquery.easing.1.3.js"></script>
-<!-- Waypoints -->
-<script src="js/jquery.waypoints.min.js"></script>
-<!-- Flexslider -->
-<script src="js/jquery.flexslider-min.js"></script>
-<!-- Owl carousel -->
-<script src="js/owl.carousel.min.js"></script>
-<!-- Magnific Popup -->
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/magnific-popup-options.js"></script>
-<!-- Date Picker -->
-<script src="js/bootstrap-datepicker.js"></script>
-<!-- Stellar Parallax -->
-<script src="js/jquery.stellar.min.js"></script>
-<!-- Main -->
-<script src="js/main.js"></script>
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- popper -->
+    <script src="js/popper.min.js"></script>
+    <!-- bootstrap 4.1 -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- jQuery easing -->
+    <script src="js/jquery.easing.1.3.js"></script>
+    <!-- Waypoints -->
+    <script src="js/jquery.waypoints.min.js"></script>
+    <!-- Flexslider -->
+    <script src="js/jquery.flexslider-min.js"></script>
+    <!-- Owl carousel -->
+    <script src="js/owl.carousel.min.js"></script>
+    <!-- Magnific Popup -->
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/magnific-popup-options.js"></script>
+    <!-- Date Picker -->
+    <script src="js/bootstrap-datepicker.js"></script>
+    <!-- Stellar Parallax -->
+    <script src="js/jquery.stellar.min.js"></script>
+    <!-- Main -->
+    <script src="js/main.js"></script>
 </body>
 </html>
 

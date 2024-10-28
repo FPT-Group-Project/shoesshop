@@ -46,6 +46,7 @@
                 <button class="btn btn-info btn-block" type="button" id="btn-signup" onclick="window.location.href='register'">
                     <i class="fas fa-user-plus"></i> Register
                 </button>
+                <a href="forgot">Forgot password?</a>
             </form>
 
         </div>

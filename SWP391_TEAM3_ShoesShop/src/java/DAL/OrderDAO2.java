@@ -53,7 +53,7 @@ public class OrderDAO2 extends DBContext{
     }
       
     public void confirmOrder(int orderId) {
-    int newStatusId = 3; // Trạng thái mới, 3 nghĩa là đã nhận được hàng
+    int newStatusId = 4; // Trạng thái mới, 3 nghĩa là đã nhận được hàng
     String query = "UPDATE [dbo].[Order] SET StatusID = ? WHERE OrderID = ?";
     
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -140,5 +140,73 @@ order.setStatusID(resultSet.getInt("StatusID"));
     return orderDetails;
 }
  
+public String getOrderStatus(int orderId) {
+    String status = null;
+    String query = "SELECT StatusID FROM [dbo].[Order] WHERE OrderID = ?";
 
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        preparedStatement.setInt(1, orderId);
+        
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                int statusId = resultSet.getInt("StatusID");
+                
+                // Chuyển đổi StatusID thành trạng thái dưới dạng chuỗi
+                switch (statusId) {
+                    case 1:
+                        status = "pending";      // Đang chờ xử lý
+                        break;
+                    case 2:
+                        status = "approved";     // Đã phê duyệt
+                        break;
+                    case 3:
+                        status = "delivering";   // Đang giao hàng
+                        break;
+                    case 4:
+                        status = "delivered";    // Đã giao hàng
+                        break;
+                    case 5:
+                        status = "rejected";     // Bị từ chối
+                        break;
+                    case 6:
+                        status = "canceled";     // Đã hủy
+                        break;
+                   
+                }
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Xử lý lỗi nếu có
+    }
+
+    return status;
+}
+public void cancelOrder(int orderId) {
+    String query = "UPDATE [dbo].[Order] SET StatusID = 6 WHERE OrderID = ?";
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        preparedStatement.setInt(1, orderId);
+        preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace(); // Xử lý lỗi nếu có
+    }
+}
+
+
+  public static void main(String[] args) {
+        // Tạo đối tượng OrderDAO2
+        OrderDAO2 orderDAO = new OrderDAO2();
+        
+        // ID của đơn hàng cần kiểm tra
+        int orderId =1011 ; // Thay 123 bằng OrderID thực tế trong database của bạn
+        
+        // Gọi phương thức getOrderStatus và lấy kết quả
+        String status = orderDAO.getOrderStatus(orderId);
+        
+        // In ra trạng thái đơn hàng
+        if (status != null) {
+            System.out.println("Trạng thái đơn hàng với OrderID " + orderId + ": " + status);
+        } else {
+            System.out.println("Không tìm thấy đơn hàng với OrderID " + orderId);
+        }
+    }
 }

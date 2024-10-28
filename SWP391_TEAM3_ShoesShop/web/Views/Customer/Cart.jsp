@@ -168,7 +168,7 @@
 						<div class="product-cart d-flex">
                                                     <input type="hidden" name="cartId" value="${cart.cartID}">
 							<div class="one-forth">
-								<div class="product-img" style="background-image: url(images/${cart.product.avatarP});">
+								<div class="product-img" style="background-image: url(ImageProductAvt/${cart.product.avatarP});">
 								</div>
 								<div class="display-tc">
 									<h3>${cart.product.productName}</h3>

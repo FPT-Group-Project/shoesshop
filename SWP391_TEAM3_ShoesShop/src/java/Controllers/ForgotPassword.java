@@ -4,24 +4,22 @@
  */
 
 package Controllers;
-
-import DAL.NewsDao;
-import DAL.ProductDAO;
-import Models.News;
-import Models.Product;
+import DAL.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-
+import Models.Account;
+import Models.Email;
+import jakarta.servlet.http.HttpSession;
+import java.util.Random;
 /**
  *
- * @author Admin
+ * @author vh69
  */
-public class home extends HttpServlet {
+public class ForgotPassword extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,16 +36,16 @@ public class home extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet home</title>");  
+            out.println("<title>Servlet ForgotPassword</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet home at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ForgotPassword at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     } 
 
-    // <editor-fold desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -58,13 +56,7 @@ public class home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ProductDAO prd=new ProductDAO();
-        List<Product> newestProducts=prd.getNewestProducts(4);
-        List<Product> bestSellerProducts=prd.getBestSellerProducts(4);
-        request.setAttribute("newest", newestProducts);
-        request.setAttribute("bestSeller", bestSellerProducts);
-        request.getRequestDispatcher("Views/Customer/mainContent.jsp").forward(request, response);
-        
+        request.getRequestDispatcher("Views/Customer/forgot.jsp").forward(request, response);
     } 
 
     /** 
@@ -76,8 +68,40 @@ public class home extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String emailInput = request.getParameter("email");
+        AccountDAO ud = new AccountDAO();
+        Email handleEmail = new Email();
+        String email = ud.checkEmailExist(emailInput);
+        String message = "";
+        String check = null;
+
+        if (email != null) {
+            Random random = new Random();
+            message = "EXIST - valid email, check your email to have resetcode";
+            check = "true";
+            String userName = ud.getUserNameByEmail(email);
+            // Tạo số nguyên ngẫu nhiên có 6 chữ số
+            Integer code = 100000 + random.nextInt(900000);
+            String code_str = code.toString();
+            String subject = handleEmail.subjectForgotPass();
+            String msgEmail = handleEmail.messageForgotPass(userName, code);
+            handleEmail.sendEmail(subject, msgEmail, email);
+
+            // 
+            session.setAttribute("code", code_str);
+            request.setAttribute("email", emailInput);
+            request.setAttribute("check", check);
+            request.setAttribute("mess", message);
+            request.getRequestDispatcher("Views/Customer/forgot.jsp").forward(request, response);
+        } else {
+            message = "NOT EXIST - Invalid email";
+            check = "false";
+            request.setAttribute("error", message);
+            request.setAttribute("check", check);
+            request.getRequestDispatcher("Views/Customer/forgot.jsp").forward(request, response);
+        }
     }
 
     /** 
