@@ -5,9 +5,7 @@
 
 package Controllers;
 
-import DAL.BrandDAO;
 import DAL.ProductDAO;
-import Models.Brand;
 import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +13,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,67 +61,24 @@ public class searchProduct extends HttpServlet {
         ProductDAO prd=new ProductDAO();
         String searchQuery=request.getParameter("searchQuery");
         List<String> keywords=Arrays.asList((searchQuery.trim()).split("\\s+"));
-        String[] checkedBrandValues=request.getParameterValues("brands");
-        String fromValue=request.getParameter("from");
-        String toValue=request.getParameter("to");
+        List<Product> searchResult=prd.searchProductByKeywords(keywords);
+        List<List<Product>> productPageList=prd.getAllProductsPaginated(searchResult, 12);
         String page=request.getParameter("page");
         int pageNumber;
-        List<Product> productList=prd.searchProductByKeywords(keywords);
-        BrandDAO brd=new BrandDAO();
-        List<Brand> brandList=brd.getAllBrands();
-        //Filter if at least 1 parameter is filled
-        if(checkedBrandValues!=null || fromValue!=null || toValue!=null){
-            List<Integer> checkedBrandIds= new ArrayList<>();
-            Double from=null, to=null;
-            if(checkedBrandValues!=null){
-                for(int i=0;i<checkedBrandValues.length;i++){
-                    try{
-                        checkedBrandIds.add(Integer.parseInt(checkedBrandValues[i]));
-                    }
-                    catch(NumberFormatException e){
-                        
-                    }
-                }
+        try{
+            pageNumber=Integer.parseInt(page);
+            if(pageNumber<=0||pageNumber>=productPageList.size()){
+                throw new NumberFormatException();
             }
-            try{
-                from=Double.parseDouble(fromValue);
-            }
-            catch(NumberFormatException e){
-                
-            }
-            try{
-                to=Double.parseDouble(toValue);
-            }
-            catch(NumberFormatException e){
-                
-            }
-            productList=prd.filterByBrandId(productList, checkedBrandIds);
-            productList=prd.filterByPrice(productList,from,to);
-            request.setAttribute("checkedBrands", checkedBrandIds);
-            request.setAttribute("from", from);
-            request.setAttribute("to", to);
         }
-        if(!productList.isEmpty()){
-            List<List<Product>> productPageList=prd.getAllProductsPaginated(productList, 12);
-            //Set screen to page
-            try{
-                pageNumber=Integer.parseInt(page);
-                if(pageNumber<=0||pageNumber>productPageList.size()){
-                    throw new NumberFormatException();
-                }
-            }
-
-            catch(NumberFormatException e){
-                pageNumber=1;
-            }
-            List<Product> pageContent=productPageList.get(pageNumber-1);
-            request.setAttribute("list", pageContent);
-            request.setAttribute("pagesNumber", productPageList.size());
-            request.setAttribute("atPage", pageNumber);
+        catch(NumberFormatException e){
+            pageNumber=1;
         }
-        request.setAttribute("searchQuery", searchQuery);
-        request.setAttribute("brands", brandList);  
-        request.getRequestDispatcher("Views/Customer/searchResult.jsp").forward(request, response);
+        List<Product> pageContent=productPageList.get(pageNumber-1);
+        request.setAttribute("list", pageContent);
+        request.setAttribute("pagesNumber", productPageList.size());
+        request.setAttribute("pageName", "Shoes Shop");
+        request.getRequestDispatcher("homePage.jsp").forward(request, response);
     } 
 
     /** 

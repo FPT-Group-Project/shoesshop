@@ -80,15 +80,13 @@ public class addToCart extends HttpServlet {
         // Lấy thông tin từ request
        
         int productId = Integer.parseInt(request.getParameter("productId"));
-         HttpSession session = request.getSession();
-        Account acc = (Account) session.getAttribute("acc");
-
-        if (acc == null) {
-            // Redirect to login page if user is not logged in
-            response.sendRedirect("login");
-            return;
-        }
-        Integer accountId = acc.getAccountID();
+        HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("acc");
+            Integer accountId = acc.getAccountID();
+            if (accountId == null) {
+                out.println("{\"message\":\"You need to log in before start shopping\", \"status\":\"warning\"}");
+                return;
+            }
 
         int colorId = Integer.parseInt(request.getParameter("colors"));
         int sizeId = Integer.parseInt(request.getParameter("sizes"));
@@ -109,7 +107,7 @@ public class addToCart extends HttpServlet {
         //} else {
         //    response.getWriter().write("Lỗi khi thêm sản phẩm vào giỏ hàng.");
         //}
-        response.sendRedirect("cart");
+        response.sendRedirect("home");
     }
  
 }

@@ -75,7 +75,7 @@ public class RegisterControl extends HttpServlet {
         String phone = request.getParameter("phone");
 
         AccountDAO dao = new AccountDAO();
-        String account = dao.checkEmailExist(email);
+        Account account = dao.checkEmailExist(email);
         Account checkuser = dao.checkAccountExist(user);
         Account phonenum = dao.checkPhoneExist(phone);
         //check format email 

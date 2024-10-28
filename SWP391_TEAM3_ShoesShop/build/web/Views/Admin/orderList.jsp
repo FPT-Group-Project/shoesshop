@@ -141,7 +141,7 @@
                                                         <c:when test="${order.statusID == 2}"> <!-- Approved -->
                                                             <form action="updateOrderStatus" method="post">
                                                                 <input type="hidden" name="orderID" value="${order.orderID}" />
-                                                                <button type="submit" name="action" value="delivering">     </button>
+                                                                <button type="submit" name="action" value="delivering">Delivering</button>
                                                             </form>
                                                         </c:when>
                                                         <c:when test="${order.statusID == 3}"> <!-- Delivering -->

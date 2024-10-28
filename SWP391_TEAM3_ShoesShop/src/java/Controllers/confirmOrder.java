@@ -32,34 +32,21 @@ public class confirmOrder extends HttpServlet {
         orderDAO = new OrderDAO2(/* Thêm đối tượng Connection tại đây */);
     }
 
-     @Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Get orderID from the request
+        // Lấy orderID từ request
         int orderId = Integer.parseInt(request.getParameter("orderID"));
-
-        // Get the current session
+        
+        // Lấy session hiện tại
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("acc");
-         if (acc == null) {
-            // Nếu không có tài khoản, chuyển hướng đến trang đăng nhập
-            response.sendRedirect("login"); // Thay đổi 'login' thành URL đúng của trang đăng nhập của bạn
-            return; // Kết thúc phương thức để tránh thực hiện tiếp
-        }
         Integer accountId = acc.getAccountID();
-
-        // Get the current order status
-        String orderStatus = orderDAO.getOrderStatus(orderId);
         
-        // Check if the order status is 'delivering' (3)
-        if ("delivering".equals(orderStatus)) {
-            // Confirm the order if status is valid
-            orderDAO.confirmOrder(orderId);
-            response.sendRedirect("orderHistory");
-        } else {
-            // If the order status is not valid for confirmation, redirect back with an error message
-            request.setAttribute("errorMessage", "You can only confirm orders that are currently being delivered.");
-            request.getRequestDispatcher("orderHistory").forward(request, response);
-        }
+        // Xác nhận đơn hàng
+        orderDAO.confirmOrder(orderId);
+        
+     response.sendRedirect("orderHistory");
+        
     }
 }

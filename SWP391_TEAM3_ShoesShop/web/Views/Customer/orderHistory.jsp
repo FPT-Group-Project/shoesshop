@@ -294,7 +294,6 @@
                 </div>
             </nav>
 
-
             <div class="breadcrumbs">
                 <div class="container">
                     <div class="row">
@@ -312,11 +311,6 @@
                             <div class="breadcrumbs-img" style="background-image: url(images/cover-img-1.jpg);">
 
                             </div>
-                            <% if (request.getAttribute("errorMessage") != null) { %>
-                            <div class="alert alert-danger">
-                                <%= request.getAttribute("errorMessage") %>
-                            </div>
-                            <% } %>
                             <div class="container">
                                 <main>
                                     <section class="orders-section">
@@ -328,12 +322,9 @@
                                                     <span class="order-id">Mã đơn hàng: ${order.orderID}</span>
                                                     <span class="order-status">
                                                         <c:choose>
-                                                            <c:when test="${order.statusID == 1}">Pending</c:when>
-                                                            <c:when test="${order.statusID == 2}">Approved</c:when>
-                                                            <c:when test="${order.statusID == 3}">Delivering</c:when>
-                                                            <c:when test="${order.statusID == 4}">Delivered</c:when>
-                                                            <c:when test="${order.statusID == 5}">Rejected</c:when>
-                                                            <c:when test="${order.statusID == 6}">Canceled</c:when>
+                                                            <c:when test="${order.statusID == 1}">Chờ xác nhận</c:when>
+                                                            <c:when test="${order.statusID == 2}">Đang giao</c:when>
+                                                            <c:when test="${order.statusID == 3}">Đã nhận</c:when>
                                                             <c:otherwise>Không xác định</c:otherwise>
                                                         </c:choose>
                                                     </span>
@@ -343,9 +334,9 @@
                                                 <div class="order-details">
                                                     <c:forEach var="detail" items="${order.orderDetails}">
                                                         <div class="product-item">
-
+                                                           
                                                             <div class="product-info">
-                                                                <img src="ImageProductAvt/${detail.imageUrl}" alt="${detail.productID.productName}" style="height: 100px; width: 100px" class="product-image" />
+                                                                 <img src="ImageProductAvt/${detail.imageUrl}" alt="${detail.productID.productName}" style="height: 100px; width: 100px" class="product-image" />
                                                                 <span class="product-name">${detail.productID.productName}</span>
                                                                 <span class="product-size">Kích thước: ${detail.size}</span>
                                                                 <span class="product-color">Màu sắc: ${detail.color}</span>
@@ -363,23 +354,18 @@
 
                                                 <!-- Hành động cho đơn hàng -->
                                                 <div class="order-actions">
-                                                    <button class="order-btn" onclick="window.location.href = 'orderDetail2?id=${order.orderID}'">View Detail</button>
+                                                    <button class="order-btn" onclick="window.location.href = 'orderDetail2?id=${order.orderID}'">Xem Thông Tin</button>
 
                                                     <button class="order-btn" onclick="confirmOrder(${order.orderID})">Order Confirmation</button>
-                                                    <button class="order-btn" onclick="cancelOrder(${order.orderID})">Cancel Order</button> <!-- Nút hủy đơn hàng -->
+
                                                     <script>
                                                         function confirmOrder(orderID) {
                                                             if (confirm("Are you sure you want to confirm this order?")) {
                                                                 window.location.href = 'confirmOrder?orderID=' + orderID;
                                                             }
                                                         }
-                                                        function cancelOrder(orderID) {
-                                                            if (confirm("Are you sure you want to cancel this order?")) {
-                                                                window.location.href = 'cancelOrder?orderID=' + orderID; // Thay đổi đường dẫn theo yêu cầu của bạn
-                                                            }
-                                                        }
                                                     </script>
-
+                                                    <button class="order-btn">Comment</button>
                                                 </div>
                                             </div> <!-- Kết thúc order-item -->
                                         </c:forEach>
