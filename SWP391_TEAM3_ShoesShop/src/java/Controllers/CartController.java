@@ -44,14 +44,15 @@ public class CartController extends HttpServlet {
 //        
          HttpSession session = request.getSession();
          Account acc = (Account) session.getAttribute("acc");
-            Integer accountId = acc.getAccountID();
-        List<Cart> arr = cartDAO.getCartItemsByAccountId(accountId); 
-         if (accountId == null) {
+          
+        
+         if (acc == null) {
             // Redirect to login page if user is not logged in
             response.sendRedirect("login");
             return;
         }
-
+  Integer accountId = acc.getAccountID();
+  List<Cart> arr = cartDAO.getCartItemsByAccountId(accountId); 
         //System.out.println(arr.size());
          int itemCount = cartDAO.countItemsByAccountId(accountId);  
         
