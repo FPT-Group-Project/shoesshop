@@ -222,10 +222,10 @@
 									<h2>Cart Total</h2>
 									<ul>
 										<li>
-											<span>Subtotal</span> <span>$${total}</span>
+											<span>Subtotal</span> <span>${total}₫</span>
 										</li>
-										<li><span>Shipping</span> <span>$${shipping}</span></li>
-										<li><span>Order Total</span> <span>$${total + shipping}</span></li>
+										<li><span>Shipping</span> <span>${shipping}₫</span></li>
+										<li><span>Order Total</span> <span>${total + shipping}₫</span></li>
 									</ul>
 								</div>
 						   </div>

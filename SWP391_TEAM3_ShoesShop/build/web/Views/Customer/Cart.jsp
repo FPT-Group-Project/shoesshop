@@ -168,7 +168,7 @@
 						<div class="product-cart d-flex">
                                                     <input type="hidden" name="cartId" value="${cart.cartID}">
 							<div class="one-forth">
-								<div class="product-img" style="background-image: url(images/${cart.product.avatarP});">
+								<div class="product-img" style="background-image: url(ImageProductAvt/${cart.product.avatarP});">
 								</div>
 								<div class="display-tc">
 									<h3>${cart.product.productName}</h3>
@@ -262,11 +262,11 @@ parent.parentNode.removeChild(parent);
 								<div class="col-sm-4 text-center">
 									<div class="total">
 										<div class="sub">
-                                                                                    <p><span>Subtotal:</span> <span id="subtotal">$${total}</span></p>
-											<p><span>Discount:</span> <span>$0.00</span></p>
+                                                                                    <p><span>Subtotal:</span> <span id="subtotal">${total}₫</span></p>
+											<p><span>Discount:</span> <span>0.00₫</span></p>
 										</div>
 										<div class="grand-total">
-											<p><span><strong>Total:</strong></span> <span id="total">$${total}</span></p>
+											<p><span><strong>Total:</strong></span> <span id="total">${total}₫</span></p>
 										</div>
 									</div>
                                                                                 <input type="submit" value="Checkout" class="btn btn-primary" onclick="checkout()">
