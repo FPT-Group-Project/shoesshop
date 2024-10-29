@@ -42,7 +42,31 @@
 
         <!-- Theme style  -->
         <link rel="stylesheet" href="css/style.css">
+        <style>
+           .wishlist-icon {
+    position: absolute; /* Định vị tuyệt đối */
+    top: 10px; /* Cách từ phía trên */
+    right: 10px; /* Cách từ phía bên phải */
+    z-index: 10; /* Đảm bảo biểu tượng nằm trên các phần khác */
+    color: red; /* Màu sắc của biểu tượng */
+}
 
+.icon-heart {
+    font-size: 24px; /* Kích thước của biểu tượng */
+}
+.icon-heart {
+    color: red; /* Màu của biểu tượng trái tim */
+    margin-left: 10px; /* Khoảng cách giữa tên sản phẩm và biểu tượng */
+    cursor: pointer; /* Hiện con trỏ như một liên kết */
+    font-size: 1.2em; /* Kích thước biểu tượng */
+}
+
+.icon-heart:hover {
+    color: darkred; /* Màu khi di chuột qua biểu tượng */
+}
+
+
+</style>
     </head>
     <body>
 
@@ -64,7 +88,7 @@
                                 </form>
                             </div>
                         </div>
-                     
+
                         <div class="row">
                             <div class="col-sm-12 text-left menu-1">
                                 <ul>
@@ -79,21 +103,21 @@
                                             <li><a href="add-to-wishlist.html">Wishlist</a></li>
                                         </ul>
                                     </li>
-                                     <li><a href="orderHistory">Order History</a></li>
+                                    <li><a href="orderHistory">Order History</a></li>
                                     <li><a href="about.html">About</a></li>
                                     <li><a href="contact">Contact</a></li>
-                                    <c:if test="${sessionScope.acc==null}">
-                                       <li class="login">
-                                           <a href="login">Login</a>
-                                       </li>
+                                        <c:if test="${sessionScope.acc==null}">
+                                        <li class="login">
+                                            <a href="login">Login</a>
+                                        </li>
                                     </c:if>
                                     <c:if test="${sessionScope.acc!=null}">
-                                       <li class="logout">
-                                           <a href="logout">Logout</a>
-                                       </li>
-                                       <li class="profile">
-                                           <a href="profile?id=${acc.getAccountID()}">Profile</a>
-                                       </li>
+                                        <li class="logout">
+                                            <a href="logout">Logout</a>
+                                        </li>
+                                        <li class="profile">
+                                            <a href="profile?id=${acc.getAccountID()}">Profile</a>
+                                        </li>
                                     </c:if>
                                     <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
                                 </ul>
@@ -135,9 +159,9 @@
                     </div>
                 </div>
             </div>
-            
-            
-            
+
+
+
 
             <div class="colorlib-product">
                 <div class="container">
@@ -179,32 +203,38 @@
                                     }
                                     window.onload = function () {
                                         const brands = document.querySelectorAll('input[name="brands"]');
-                                        <c:forEach items="${checkedBrands}" var="cb">
-                                            brands.forEach(b => {
-                                                if(Number(b.value)===Number(${cb})){
-                                                    b.checked=true;
-                                                }
-                                            });
-                                        </c:forEach>
+                                    <c:forEach items="${checkedBrands}" var="cb">
+                                        brands.forEach(b => {
+                                            if (Number(b.value) === Number(${cb})) {
+                                                b.checked = true;
+                                            }
+                                        });
+                                    </c:forEach>
                                     };
                                 </script>
+                               
                             </div>
-
+                                                
                             <div class="col">
                                 <div class="row row-pb-md">
-                                    <c:forEach items="${list}" var="p">
-                                        <div class="col-lg-3 mb-4 text-center" >
-                                            <div class="product-entry border">
-                                                <a href="productDetail?id=${p.getProductId()}" class="prod-img">
-                                                    <img src="ImageProductAvt/${p.getAvatarP()}" class="img-fluid" alt="Free html5 bootstrap 4 template">
-                                                </a>
-                                                <div class="desc">
-                                                    <h2><a href="productDetail?id=${p.getProductId()}">${p.getProductName()}</a></h2>
-                                                    <span class="price">$${p.getPrice()}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
+                                   <c:forEach items="${list}" var="p">
+    <div class="col-lg-3 mb-4 text-center">
+        <div class="product-entry border" style="position: relative;"> <!-- Thêm position: relative -->
+            <a href="productDetail?id=${p.getProductId()}" class="prod-img">
+                <img src="ImageProductAvt/${p.getAvatarP()}" class="img-fluid" alt="Free html5 bootstrap 4 template">
+            </a>
+            <div class="wishlist-icon">
+                <a href="addWishlist?id=${p.getProductId()}" title="Add to Wishlist">
+                    <i class="icon-heart"></i> <!-- Biểu tượng trái tim -->
+                </a>
+            </div>
+            <div class="desc">
+                <h2><a href="productDetail?id=${p.getProductId()}">${p.getProductName()}</a></h2>
+                <span class="price">$${p.getPrice()}</span>
+            </div>
+        </div>
+    </div>
+</c:forEach>
                                 </div>
                                 <c:choose>
                                     <c:when test="${list!=null}">
