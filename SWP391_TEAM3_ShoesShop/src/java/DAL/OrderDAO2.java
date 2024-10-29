@@ -4,6 +4,7 @@
  */
 package DAL;
 
+import Models.Account;
 import Models.Order2;
 import Models.OrderDetail;
 import Models.OrderDetail2;
@@ -23,7 +24,7 @@ public class OrderDAO2 extends DBContext {
 
     public List<Order2> getOrdersByAccountId(int accountId) {
         List<Order2> orderList = new ArrayList<>();
-        String query = "SELECT * FROM [dbo].[Order] WHERE AccountID = ?";
+        String query = "SELECT * FROM [dbo].[Order] WHERE AccountID = ? ORDER BY OrderDate DESC";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, accountId);
@@ -75,14 +76,15 @@ public class OrderDAO2 extends DBContext {
         String sql = "SELECT o.OrderID, od.OrderDetailID, p.ProductID, p.ProductName, p.AvatarP, ps.SizeID, s.Size, "
                 + "pc.ColorID, pc.Color, od.Quantity, od.UnitPrice, "
                 + "(od.Quantity * od.UnitPrice) AS TotalPrice, "
-                + "o.StatusID, o.OrderDate, o.ArrivalDate, ps.StockId "
-                + // Thêm StockId vào truy vấn
-                "FROM [dbo].[Order] o "
+                + "o.StatusID, o.OrderDate, o.Address, o.ArrivalDate, ps.StockId, "
+                + "a.AccountID, a.FullName, a.Email, a.PhoneNumber " // Thêm thông tin người mua
+                + "FROM [dbo].[Order] o "
                 + "JOIN [dbo].[OrderDetail] od ON o.OrderID = od.OrderID "
                 + "JOIN [dbo].[Product] p ON od.ProductID = p.ProductID "
                 + "JOIN [dbo].[ProductStock] ps ON od.StockID = ps.StockId "
                 + "JOIN [dbo].[Product_Color] pc ON ps.ColorID = pc.ColorID "
                 + "JOIN [dbo].[Product_Size] s ON ps.SizeID = s.SizeID "
+                + "JOIN [dbo].[Account] a ON o.AccountID = a.AccountID " // JOIN vào bảng Account
                 + "WHERE o.OrderID = ?";  // Sử dụng tham số cho OrderID
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -99,6 +101,8 @@ public class OrderDAO2 extends DBContext {
                     order.setOrderDate(resultSet.getDate("OrderDate"));
                     order.setTotalPrice(resultSet.getBigDecimal("TotalPrice"));
                     order.setStatusID(resultSet.getInt("StatusID"));
+                    order.setAddress(resultSet.getString("address"));
+                   
 
                     // Gán OrderID trực tiếp (nếu không cần thông tin chi tiết của Order)
                     orderDetail.setOrderID(order);
@@ -107,6 +111,7 @@ public class OrderDAO2 extends DBContext {
                     Product product = new Product();
                     product.setProductId(resultSet.getInt("ProductID"));
                     product.setProductName(resultSet.getString("ProductName"));
+                    product.setAvatarP(resultSet.getString("AvatarP"));
 
                     orderDetail.setProductID(product);
 
@@ -124,7 +129,11 @@ public class OrderDAO2 extends DBContext {
                     orderDetail.setQuantity(resultSet.getInt("Quantity"));
                     orderDetail.setUnitPrice(resultSet.getDouble("UnitPrice"));
                     orderDetail.setImageUrl(resultSet.getString("AvatarP")); // Lấy đường dẫn đến hình ảnh từ ResultSet
-
+                    Account account = new Account();
+                    account.setEmail(resultSet.getString("email"));
+                    account.setFullName(resultSet.getString("fullName"));
+                    account.setPhoneNumber(resultSet.getString("phoneNumber"));
+                    orderDetail.setAccount(account); // Bạn cần thêm phương thức setAccount trong OrderDetail2
                     // Thêm orderDetail vào danh sách
                     orderDetails.add(orderDetail);
                 }
@@ -136,54 +145,56 @@ public class OrderDAO2 extends DBContext {
 
         return orderDetails;
     }
-public String getOrderStatus(int orderId) {
-    String status = null;
-    String query = "SELECT StatusID FROM [dbo].[Order] WHERE OrderID = ?";
 
-    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-        preparedStatement.setInt(1, orderId);
-        
-        try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            if (resultSet.next()) {
-                int statusId = resultSet.getInt("StatusID");
-                
-                // Chuyển đổi StatusID thành trạng thái dưới dạng chuỗi
-                switch (statusId) {
-                    case 1:
-                        status = "pending";      // Đang chờ xử lý
-                        break;
-                    case 2:
-                        status = "approved";     // Đã phê duyệt
-                        break;
-                    case 3:
-                        status = "delivering";   // Đang giao hàng
-                        break;
-                    case 4:
-                        status = "delivered";    // Đã giao hàng
-                        break;
-                    case 5:
-                        status = "rejected";     // Bị từ chối
-                        break;
-                    case 6:
-                        status = "canceled";     // Đã hủy
-                        break;
-                   
+    public String getOrderStatus(int orderId) {
+        String status = null;
+        String query = "SELECT StatusID FROM [dbo].[Order] WHERE OrderID = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, orderId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int statusId = resultSet.getInt("StatusID");
+
+                    // Chuyển đổi StatusID thành trạng thái dưới dạng chuỗi
+                    switch (statusId) {
+                        case 1:
+                            status = "pending";      // Đang chờ xử lý
+                            break;
+                        case 2:
+                            status = "approved";     // Đã phê duyệt
+                            break;
+                        case 3:
+                            status = "delivering";   // Đang giao hàng
+                            break;
+                        case 4:
+                            status = "delivered";    // Đã giao hàng
+                            break;
+                        case 5:
+                            status = "rejected";     // Bị từ chối
+                            break;
+                        case 6:
+                            status = "canceled";     // Đã hủy
+                            break;
+
+                    }
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Xử lý lỗi nếu có
         }
-    } catch (SQLException e) {
-        e.printStackTrace(); // Xử lý lỗi nếu có
+
+        return status;
     }
 
-    return status;
-}
-public void cancelOrder(int orderId) {
-    String query = "UPDATE [dbo].[Order] SET StatusID = 6 WHERE OrderID = ?";
-    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-        preparedStatement.setInt(1, orderId);
-        preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace(); // Xử lý lỗi nếu có
+    public void cancelOrder(int orderId) {
+        String query = "UPDATE [dbo].[Order] SET StatusID = 6 WHERE OrderID = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); // Xử lý lỗi nếu có
+        }
     }
-}
 }

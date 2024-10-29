@@ -293,8 +293,12 @@
                     </div>
                 </div>
             </nav>
-
-
+ <% if (request.getAttribute("errorMessage") != null) { %>
+                            <div class="alert alert-danger">
+                                <%= request.getAttribute("errorMessage") %>
+                            </div>
+                            <% } %>
+  
             <div class="breadcrumbs">
                 <div class="container">
                     <div class="row">
@@ -324,8 +328,8 @@
                                             <div class="order-item">
                                                 Order History
                                                 <div class="order-header">
-                                                    <span class="shop-name">Shoe Shop</span>
-                                                    <span class="order-id">Mã đơn hàng: ${order.orderID}</span>
+                                                    <span class="shop-name">${order.orderDate}</span>
+                                                    <span class="order-id">Order Code: ${order.orderID}</span>
                                                     <span class="order-status">
                                                         <c:choose>
                                                             <c:when test="${order.statusID == 1}">Pending</c:when>
@@ -347,10 +351,10 @@
                                                             <div class="product-info">
                                                                 <img src="ImageProductAvt/${detail.imageUrl}" alt="${detail.productID.productName}" style="height: 100px; width: 100px" class="product-image" />
                                                                 <span class="product-name">${detail.productID.productName}</span>
-                                                                <span class="product-size">Kích thước: ${detail.size}</span>
-                                                                <span class="product-color">Màu sắc: ${detail.color}</span>
-                                                                <span class="product-quantity">Số lượng: ${detail.quantity}</span>
-                                                                <span class="product-price">Giá: ₫${detail.unitPrice}</span>
+                                                                <span class="product-size">Size: ${detail.size}</span>
+                                                                <span class="product-color">Color: ${detail.color}</span>
+                                                                <span class="product-quantity">Quantity: ${detail.quantity}</span>
+                                                                <span class="product-price">Price: ${detail.unitPrice}₫</span>
                                                             </div>
                                                         </div>
                                                     </c:forEach>
@@ -358,7 +362,7 @@
 
                                                 <!-- Tổng giá trị đơn hàng -->
                                                 <div class="order-footer">
-                                                    <span class="order-total">Tổng tiền: ₫${order.totalPrice}</span>
+                                                    <span class="order-total">Total: ${order.totalPrice}₫</span>
                                                 </div>
 
                                                 <!-- Hành động cho đơn hàng -->

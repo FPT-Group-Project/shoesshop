@@ -35,18 +35,26 @@ public class confirmOrder extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Lấy orderID từ request
-        int orderId = Integer.parseInt(request.getParameter("orderID"));
-        
-        // Lấy session hiện tại
-        HttpSession session = request.getSession();
-        Account acc = (Account) session.getAttribute("acc");
-        Integer accountId = acc.getAccountID();
-        
-        // Xác nhận đơn hàng
-        orderDAO.confirmOrder(orderId);
-        
-     response.sendRedirect("orderHistory");
-        
+      int orderId = Integer.parseInt(request.getParameter("orderID"));
+    HttpSession session = request.getSession();
+    Account acc = (Account) session.getAttribute("acc");
+
+    // Check if the user is authenticated
+    if (acc != null) {
+        String orderStatus = orderDAO.getOrderStatus(orderId);
+
+        // Kiểm tra nếu trạng thái là "Delivering"
+        if ("Delivering".equalsIgnoreCase(orderStatus)) {
+            orderDAO.confirmOrder(orderId);
+            response.sendRedirect("orderHistory");
+        } else {
+            // Đặt thông báo lỗi vào request
+            request.setAttribute("errorMessage", "Order cannot be confirmed. It must be in 'Delivering' status.");
+            // Chuyển hướng tới trang JSP (ví dụ: orderConfirmation.jsp)
+            request.getRequestDispatcher("orderHistory").forward(request, response);
+        }
+    } else {
+        response.sendRedirect("login"); // Redirect to login if the user is not authenticated
     }
+}
 }

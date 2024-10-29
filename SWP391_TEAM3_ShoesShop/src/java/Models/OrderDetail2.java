@@ -18,6 +18,25 @@ public class OrderDetail2 {
     private String color; // Thêm thuộc tính cho màu sắc
     private String size;  // Thêm thuộc tính cho kích thước
     private String imageUrl;
+    private Account account;
+    private String  address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+    
     
     public OrderDetail2() {
     }
