@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 public class FeedbackDAO extends DBContext {
 
     public boolean addFeedback(Feedback feedback) {
-        String sql = "INSERT INTO Feedback (AccountID, ProductID, Rating, Comment, FeedbackDate, Status) "
-                   + "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Feedback (AccountID, ProductID, Rating, Comment, FeedbackDate) "
+                   + "VALUES (?, ?, ?, ?, ?)";
         
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, feedback.getAccountId());
@@ -20,7 +20,7 @@ public class FeedbackDAO extends DBContext {
             statement.setInt(3, feedback.getRating());
             statement.setString(4, feedback.getComment());
             statement.setDate(5, new Date(feedback.getFeedbackDate().getTime())); // Chuyển đổi từ java.util.Date sang java.sql.Date
-            statement.setString(6, feedback.getStatus());
+           
 
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0; // true if insert was successful
@@ -31,7 +31,7 @@ public class FeedbackDAO extends DBContext {
     }
   public List<Feedback> getFeedbackByProductId(int productId) {
     List<Feedback> feedbackList = new ArrayList<>();
-   String sql = "SELECT f.FeedbackID, f.AccountID, f.ProductID, f.Rating, f.Comment, f.FeedbackDate, f.Status, a.Username " +
+   String sql = "SELECT f.FeedbackID, f.AccountID, f.ProductID, f.Rating, f.Comment, f.FeedbackDate,  a.Username, a.FullName " +
              "FROM Feedback f " +
              "JOIN Account a ON f.AccountID = a.AccountID " +
              "WHERE f.ProductID = ? " +
@@ -46,10 +46,11 @@ public class FeedbackDAO extends DBContext {
             int rating = resultSet.getInt("Rating");
             String comment = resultSet.getString("Comment");
             java.util.Date feedbackDate = resultSet.getDate("FeedbackDate");
-            String status = resultSet.getString("Status");
+           
             String username = resultSet.getString("Username"); // Lấy tên người dùng
+            String fullname = resultSet.getString("Fullname");
+            Feedback feedback  = new Feedback(accountId, productId, rating, comment, feedbackDate, username, fullname);
             
-            Feedback feedback = new Feedback(accountId, productId, rating, comment, status, feedbackDate, username);
             feedbackList.add(feedback);
         }
     } catch (SQLException ex) {
@@ -101,7 +102,7 @@ public class FeedbackDAO extends DBContext {
          
          FeedbackDAO feedbackDAO = new FeedbackDAO();
          // Thay đổi productId theo sản phẩm mà bạn muốn kiểm tra
-         int productId = 1;
+         int productId = 2;
          List<Feedback> feedbackList = feedbackDAO.getFeedbackByProductId(productId);
          // Hiển thị thông tin phản hồi
          for (Feedback feedback : feedbackList) {
@@ -110,7 +111,7 @@ public class FeedbackDAO extends DBContext {
              System.out.println("Rating: " + feedback.getRating());
              System.out.println("Comment: " + feedback.getComment());
              System.out.println("Feedback Date: " + feedback.getFeedbackDate());
-             System.out.println("Status: " + feedback.getStatus());
+             
              System.out.println("-----------------------------");
          }
     }

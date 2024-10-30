@@ -18,28 +18,47 @@ public class Feedback {
     private int productId;
     private int rating;
     private String comment;
-    private String status;
+    
     private Date feedbackDate; // Thêm thuộc tính này
     private String  username;
+    private String fullname;
 
-    public Feedback(int accountId, int productId, int rating, String comment, String status, Date feedbackDate) {
+    public Feedback(int accountId, int productId, int rating, String comment, Date feedbackDate) {
         this.accountId = accountId;
         this.productId = productId;
         this.rating = rating;
         this.comment = comment;
-        this.status = status;
+        
         this.feedbackDate = feedbackDate; // Gán giá trị cho thuộc tính\
         
     }
 
-    public Feedback(int accountId, int productId, int rating, String comment, String status, Date feedbackDate, String username) {
+    public Feedback(int accountId, int productId, int rating, String comment, Date feedbackDate, String username) {
         this.accountId = accountId;
         this.productId = productId;
         this.rating = rating;
         this.comment = comment;
-        this.status = status;
+      
         this.feedbackDate = feedbackDate;
         this.username = username;
+    }
+
+    public Feedback(int accountId, int productId, int rating, String comment, Date feedbackDate, String username, String fullname) {
+        this.accountId = accountId;
+        this.productId = productId;
+        this.rating = rating;
+        this.comment = comment;
+        this.feedbackDate = feedbackDate;
+        this.username = username;
+        this.fullname = fullname;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
         public String getUsername() {
@@ -82,13 +101,7 @@ public class Feedback {
         this.comment = comment;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+  
 
     public Date getFeedbackDate() {
         return feedbackDate;

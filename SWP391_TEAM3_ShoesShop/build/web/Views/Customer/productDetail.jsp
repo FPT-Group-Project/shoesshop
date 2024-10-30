@@ -536,7 +536,7 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <h3 class="head">${totalComments}  Reviews</h3>
-                                                // 
+                                                
                                                 <c:if test="${not empty feedbackList}">
                                                     <c:forEach var="feedback" items="${feedbackList}">
                                                         <div class="review">
@@ -545,7 +545,8 @@
                                                                 <h4>
                                                                     <span class="text-left">
 
-                                                                        <strong></strong> ${ feedback.getUsername() }</br>
+                                                                        
+                                                                         <strong></strong> ${ feedback.getFullname() }</br>
 
                                                                     </span>
 
