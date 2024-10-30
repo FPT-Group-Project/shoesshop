@@ -47,11 +47,11 @@ public class SubmitFeedbackServlet extends HttpServlet {
 
         int rating = Integer.parseInt(request.getParameter("rating"));
         String comment = request.getParameter("comment");
-        String status = request.getParameter("status");
+        
 
         Date feedbackDate = new Date(); // Gán ngày hiện tại
 
-        Feedback feedback = new Feedback(accountId, productId, rating, comment, status, feedbackDate);
+        Feedback feedback = new Feedback(accountId, productId, rating, comment, feedbackDate);
         FeedbackDAO feedbackDAO = new FeedbackDAO();
         boolean success = feedbackDAO.addFeedback(feedback);
 
