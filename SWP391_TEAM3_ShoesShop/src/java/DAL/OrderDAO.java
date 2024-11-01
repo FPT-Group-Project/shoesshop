@@ -55,7 +55,7 @@ public class OrderDAO extends DBContext {
                 ps.setInt(4, cart.getQuantity());
                 ps.setDouble(5, cart.getQuantity() * cart.getProduct().getPrice());
                 ps.executeUpdate();
-                PreparedStatement ps2 = connection.prepareStatement("UPDATE ProductStock SET quantity = quantity - ? WHERE StockId = ?");
+                PreparedStatement ps2 = connection.prepareStatement("UPDATE ProductStock SET quantity = quantity");
                 ps2.setInt(1, cart.getQuantity());
                 ps2.setInt(2, cart.getStockID());
                 ps2.executeUpdate();
@@ -141,8 +141,6 @@ public List<Map<String, Object>> getAllOrdersWithCustomerNames() {
             orderData.put("customerName", rs.getString("customerName")); // Lấy tên khách hàng
             orderData.put("address", rs.getString("address"));
             orderData.put("totalPrice", rs.getBigDecimal("totalPrice"));
-            orderData.put("orderDate", rs.getDate("orderDate"));
-            orderData.put("arrivalDate", rs.getDate("arrivalDate"));
             orderData.put("statusID", rs.getInt("statusID"));
             orderData.put("paymentStatus", rs.getString("paymentStatus"));
             orders.add(orderData); // Thêm vào danh sách

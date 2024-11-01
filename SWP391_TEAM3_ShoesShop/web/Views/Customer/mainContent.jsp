@@ -125,7 +125,35 @@
                 </div>
             </nav>
             <!---->
+            <aside id="colorlib-hero">
+                <div class="flexslider">
+                    <style>
+                        #banner_slide li:hover{
+                            cursor: pointer;
+                        }
+                    </style>
+                    <ul class="slides" id="banner_slide">
+                        <c:forEach items="${banners}" var="ba">
+                            <li style="background-image: url('ImageBanner/${ba.getImage()}');" onclick="location.href='${ba.getLink()}'">
+                                <div class="overlay"></div>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-6 offset-sm-3 text-center slider-text">
+                                            <div class="slider-text-inner">
+                                                <div class="desc">
+                                                    <p><a href="products" class="btn btn-primary">Shop All Products</a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
 
+
+                        </c:forEach>
+                    </ul>
+                </div>
+            </aside>
             <div class="colorlib-intro">
                 <div class="container">
                     <div class="row">

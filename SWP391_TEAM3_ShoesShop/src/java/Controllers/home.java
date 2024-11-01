@@ -5,8 +5,10 @@
 
 package Controllers;
 
+import DAL.BannerDAO;
 import DAL.NewsDao;
 import DAL.ProductDAO;
+import Models.Banner;
 import Models.News;
 import Models.Product;
 import java.io.IOException;
@@ -56,16 +58,19 @@ public class home extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        BannerDAO bnd=new BannerDAO();
+        List<Banner> banners=bnd.getNewestBanners(5);
         ProductDAO prd=new ProductDAO();
         List<Product> newestProducts=prd.getNewestProducts(4);
         List<Product> bestSellerProducts=prd.getBestSellerProducts(4);
+        request.setAttribute("banners", banners);
         request.setAttribute("newest", newestProducts);
         request.setAttribute("bestSeller", bestSellerProducts);
         request.getRequestDispatcher("Views/Customer/mainContent.jsp").forward(request, response);
         
-    } 
+    }  
 
     /** 
      * Handles the HTTP <code>POST</code> method.
