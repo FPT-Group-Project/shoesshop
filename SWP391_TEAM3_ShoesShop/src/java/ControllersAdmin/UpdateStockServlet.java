@@ -1,8 +1,10 @@
 package ControllersAdmin;
 
 import DAL.ProductStockDAO;
+import DAL.SeriDAO; // Thêm import cho SeriDAO
 import Models.ProductStock;
-import DAL.DBContext; // Import DBContext
+import Models.Seri; // Thêm import cho Seri
+import DAL.DBContext; 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,7 +17,7 @@ import java.io.IOException;
 public class UpdateStockServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int productID = Integer.parseInt(request.getParameter("productID"));
         int sizeID = Integer.parseInt(request.getParameter("sizeID"));
@@ -41,13 +43,32 @@ public class UpdateStockServlet extends HttpServlet {
         productStock.setColorID(colorID);
         productStock.setQuantity(newQuantity);
 
-        boolean success = productStockDAO.updateProductStock(productStock);
+        boolean stockUpdateSuccess = productStockDAO.updateProductStock(productStock);
 
-        // Chuyển hướng hoặc thông báo thành công
-        if (success) {
-            response.sendRedirect("manageStock?productID=" + productID);
+        // Nếu cập nhật thành công, xử lý thêm seri hoặc cập nhật trạng thái
+        if (stockUpdateSuccess) {
+            SeriDAO seriDAO = new SeriDAO(new DBContext());
+            int stockId = productStockDAO.getProductStockId(productID, sizeID, colorID); // Lấy stockId từ ProductStock
+
+            if ("add".equals(quantityChange)) {
+                // Thêm seri mới cho số lượng đã thêm
+                for (int i = 0; i < quantityAmount; i++) {
+                    Seri seri = new Seri();
+                    seri.setStockId(stockId);
+                    seri.setStatus("available"); // Trạng thái mới
+                    seriDAO.insertSeri(seri); // Thêm seri vào database
+                }
+            } else if ("subtract".equals(quantityChange)) {
+                boolean statusUpdateSuccess = seriDAO.updateSeriStatusToDeleted(stockId, quantityAmount);
+                if (!statusUpdateSuccess) {
+                    // Xử lý lỗi nếu không cập nhật được trạng thái
+                    response.sendRedirect("manageStock?productID=" + productID + "&error=updateStatusFailed");
+                    return;
+                }
+            }
+            response.sendRedirect("manageStock?productID=" + productID); // Chuyển hướng thành công
         } else {
-            response.sendRedirect("manageStock?productID=" + productID);
+            response.sendRedirect("manageStock?productID=" + productID + "&error=stockUpdateFailed"); // Chuyển hướng nếu có lỗi
         }
     }
 }

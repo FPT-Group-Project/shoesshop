@@ -71,12 +71,18 @@
                         <div class="app-card-body">
 
                             <div class="table-responsive">
-                                <!-- Thông tin khách hàng -->
-                                <h3>Customer Information</h3>
-                                <p>Customer ID: ${account.accountID}</p>
-                                <p>Customer Name: ${account.fullName}</p>
-                                <p>Customer Email: ${account.email}</p>
-                                <p>Customer Phone: ${account.phoneNumber}</p>
+                                <!-- Thông tin khách hàng và đơn hàng -->
+                                <h3>Customer & Order Information</h3>
+                                <p><strong>Customer ID:</strong> ${account.accountID}</p>
+                                <p><strong>Customer Name:</strong> ${account.fullName}</p>
+                                <p><strong>Customer Email:</strong> ${account.email}</p>
+                                <p><strong>Customer Phone:</strong> ${account.phoneNumber}</p>
+
+                                <p><strong>Order Date:</strong> ${not empty order.orderDate ? fn:formatDate(order.orderDate, "dd/MM/yyyy") : 'N/A'}</p>
+                                <p><strong>Approve Date:</strong> ${not empty order.approveDate ? fn:formatDate(order.approveDate, "dd/MM/yyyy") : 'N/A'}</p>
+                                <p><strong>Send Date:</strong> ${not empty order.sendDate ? fn:formatDate(order.sendDate, "dd/MM/yyyy") : 'N/A'}</p>
+                                <p><strong>Arrival Date:</strong> ${not empty order.arrivalDate ? fn:formatDate(order.arrivalDate, "dd/MM/yyyy") : 'N/A'}</p>
+                                <p><strong>Address:</strong> ${order.address != null ? order.address : 'N/A'}</p>
 
                                 <!-- Chi tiết đơn hàng -->
                                 <h3>Order Details</h3>
@@ -90,6 +96,8 @@
                                             <th>Unit Price</th>
                                             <th>Avatar</th> <!-- Cột Avatar -->
                                             <th>Price</th>  <!-- Cột Price -->
+                                            <th>Color</th>  <!-- Cột Color -->
+                                            <th>Size</th>   <!-- Cột Size -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -101,9 +109,11 @@
                                                 <td>${detail.quantity}</td>
                                                 <td>${detail.unitPrice}</td>
                                                 <td>
-                                                    <img src="${productInfoMap[detail.productID]['avatarP']}" alt="Product Image" width="50" height="50"/>
+                                                    <img src="${productInfoMap[detail.stockID]['avatarP']}" alt="Product Image" width="50" height="50"/>
                                                 </td> <!-- Hiển thị avatarP -->
-                                                <td>${productInfoMap[detail.productID]['price']}</td>  <!-- Hiển thị price -->
+                                                <td>${productInfoMap[detail.stockID]['price']}</td> <!-- Hiển thị price -->
+                                                <td>${productInfoMap[detail.stockID]['color']}</td> <!-- Hiển thị color -->
+                                                <td>${productInfoMap[detail.stockID]['size']}</td> <!-- Hiển thị size -->
                                             </tr>
                                         </c:forEach>
                                     </tbody>

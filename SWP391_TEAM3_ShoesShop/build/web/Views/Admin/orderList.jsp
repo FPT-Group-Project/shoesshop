@@ -79,6 +79,8 @@
                                             <th>Address</th>
                                             <th>Total Price</th>
                                             <th>Order Date</th>
+                                            <th>Approve Date</th>
+                                            <th>Send Date</th>
                                             <th>Arrival Date</th>
                                             <th>Status</th>
                                             <th>Details</th>
@@ -104,6 +106,8 @@
                                                 <td>${order.address}</td>
                                                 <td>${order.totalPrice}</td>
                                                 <td>${order.orderDate}</td>
+                                                <td>${order.approveDate != null ? order.approveDate : 'N/A'}</td>
+                                                <td>${order.sendDate != null ? order.sendDate : 'N/A'}</td>
                                                 <td>${order.arrivalDate != null ? order.arrivalDate : 'N/A'}</td>
                                                 <td>
                                                     <c:choose>
@@ -119,7 +123,7 @@
                                                         <c:when test="${order.statusID == 4}">
                                                             delivered
                                                         </c:when>
-                                                            <c:when test="${order.statusID == 5}">
+                                                        <c:when test="${order.statusID == 5}">
                                                             rejected
                                                         </c:when>
                                                         <c:otherwise>
