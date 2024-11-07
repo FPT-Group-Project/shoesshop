@@ -4,9 +4,13 @@ import DAL.AccountDAO;
 import DAL.OrderDetailDAO;
 import Models.OrderDetail;
 import DAL.DBContext;
+import DAL.OrderDAO;
 import DAL.ProductDAO;
+import DAL.ProductStockDAO;
 import Models.Account;
+import Models.Order;
 import Models.Product;
+import Models.ProductStock;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,12 +26,11 @@ import java.util.Map;
 @WebServlet(name = "OrderDetailServlet", urlPatterns = {"/orderDetail"})
 public class OrderDetailServlet extends HttpServlet {
 
-    @Override
+@Override
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     String orderIDParam = request.getParameter("orderID");
     String accountIDParam = request.getParameter("accountID");
 
-    // Chuyển đổi orderID và accountID từ String sang int
     int orderID = 0;
     int accountID = 0;
     try {
@@ -39,31 +42,41 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
         return;
     }
 
-    // Lấy thông tin chi tiết đơn hàng
     OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
     List<OrderDetail> orderDetails = orderDetailDAO.getOrderDetailsByOrderId(orderID);
-    
-    // Lấy thông tin khách hàng
+
+    // Lấy thông tin đơn hàng
+    OrderDAO orderDAO = new OrderDAO();
+    Order order = orderDAO.getOrderById(orderID);
+
     AccountDAO accountDAO = new AccountDAO();
     Account account = accountDAO.getAccountByID(accountID);
-    
-    // Map lưu thông tin sản phẩm (productID -> Map với avatarP và price)
-    Map<Integer, Map<String, Object>> productInfoMap = new HashMap<>();
 
+    Map<Integer, Map<String, Object>> productInfoMap = new HashMap<>();
     ProductDAO productDAO = new ProductDAO();
+    ProductStockDAO productStockDAO = new ProductStockDAO(new DBContext());
+
     for (OrderDetail detail : orderDetails) {
         Product product = productDAO.getProductById(detail.getProductID());
         Map<String, Object> productInfo = new HashMap<>();
+        
+        // Thêm ảnh đại diện và giá từ Product
         productInfo.put("avatarP", product.getAvatarP());
         productInfo.put("price", product.getPrice());
-        productInfoMap.put(product.getProductId(), productInfo);
+        
+        // Lấy color và size từ ProductStock bằng stockID
+        ProductStock productStock = productStockDAO.getProductStockById(detail.getStockID());
+        productInfo.put("color", productStock.getColorID());
+        productInfo.put("size", productStock.getSizeID());
+
+        productInfoMap.put(detail.getStockID(), productInfo); // Lưu theo stockID
     }
 
     request.setAttribute("orderDetails", orderDetails);
     request.setAttribute("account", account);
+    request.setAttribute("order", order); // Thêm thông tin đơn hàng
     request.setAttribute("productInfoMap", productInfoMap);
 
     request.getRequestDispatcher("Views/Admin/orderDetail.jsp").forward(request, response);
 }
-
 }

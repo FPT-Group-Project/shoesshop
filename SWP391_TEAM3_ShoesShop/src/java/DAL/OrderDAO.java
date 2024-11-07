@@ -15,7 +15,6 @@ import java.sql.SQLException;
  *
  * @author thanh
  */
-
 import java.sql.ResultSet;
 import java.sql.Date;
 
@@ -39,13 +38,13 @@ public class OrderDAO extends DBContext {
             pre.setInt(5, 1);
             pre.setString(6, payment);
             int rowsAffected = pre.executeUpdate();
-            
-                PreparedStatement p2 = connection.prepareStatement("SELECT TOP 1 [OrderID] FROM [Order] ORDER BY [OrderID] DESC");
-                ResultSet odid = p2.executeQuery();
-                int OrderID = 1;
-                if(odid.next()) {
-                    OrderID = odid.getInt("OrderID");
-                }
+
+            PreparedStatement p2 = connection.prepareStatement("SELECT TOP 1 [OrderID] FROM [Order] ORDER BY [OrderID] DESC");
+            ResultSet odid = p2.executeQuery();
+            int OrderID = 1;
+            if (odid.next()) {
+                OrderID = odid.getInt("OrderID");
+            }
             for (int i = 0; i < carts.size(); i++) {
                 Cart cart = carts.get(i);
                 PreparedStatement ps = connection.prepareStatement("INSERT INTO OrderDetail (OrderID, ProductID, StockID, Quantity, UnitPrice) VALUES (?, ?, ?, ?, ?)");
@@ -69,116 +68,151 @@ public class OrderDAO extends DBContext {
             e.printStackTrace();
             return false;
         }
-        
+
     }
 // Phương thức để lấy danh sách tất cả các đơn hàng
-public List<Order> getAllOrders() {
-    List<Order> orders = new ArrayList<>();
-    String sql = "SELECT * FROM [Order]";
-    
-    try {
-        PreparedStatement pre = connection.prepareStatement(sql);
-        ResultSet rs = pre.executeQuery();
-        
-        while (rs.next()) {
-            Order order = new Order();
-            order.setOrderID(rs.getInt("OrderID"));
-            order.setAccountID(rs.getInt("AccountID"));
-            order.setAddress(rs.getString("Address"));
-            order.setTotalPrice(rs.getBigDecimal("TotalPrice"));
-            order.setOrderDate(rs.getDate("OrderDate"));
-            order.setArrivalDate(rs.getDate("ArrivalDate"));
-            order.setStatusID(rs.getInt("StatusID"));
-            order.setPaymentStatus(rs.getString("PaymentStatus"));
-            orders.add(order);
+
+    public List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM [Order]";
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderID(rs.getInt("OrderID"));
+                order.setAccountID(rs.getInt("AccountID"));
+                order.setAddress(rs.getString("Address"));
+                order.setTotalPrice(rs.getBigDecimal("TotalPrice"));
+                order.setOrderDate(rs.getDate("OrderDate"));
+                order.setArrivalDate(rs.getDate("ArrivalDate"));
+                order.setStatusID(rs.getInt("StatusID"));
+                order.setPaymentStatus(rs.getString("PaymentStatus"));
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return orders;
     }
-    
-    return orders;
-}
 
 // Phương thức để lấy chi tiết cho một đơn hàng cụ thể
-public List<OrderDetail> getOrderDetails(int orderId) {
-    List<OrderDetail> orderDetails = new ArrayList<>();
-    String sql = "SELECT * FROM OrderDetail WHERE OrderID = ?";
+    public List<OrderDetail> getOrderDetails(int orderId) {
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        String sql = "SELECT * FROM OrderDetail WHERE OrderID = ?";
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setInt(1, orderId);
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+                OrderDetail detail = new OrderDetail();
+                detail.setOrderDetailID(rs.getInt("OrderDetailID"));
+                detail.setOrderID(rs.getInt("OrderID"));
+                detail.setProductID(rs.getInt("ProductID"));
+                detail.setStockID(rs.getInt("StockID"));
+                detail.setQuantity(rs.getInt("Quantity"));
+                detail.setUnitPrice(rs.getBigDecimal("UnitPrice"));
+                orderDetails.add(detail);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return orderDetails;
+    }
+
+    public List<Map<String, Object>> getAllOrdersWithCustomerNames() {
+        List<Map<String, Object>> orders = new ArrayList<>();
+        String sql = "SELECT o.*, a.fullname AS customerName FROM [Order] o JOIN Account a ON o.accountID = a.accountID";
+
+        try (PreparedStatement pre = connection.prepareStatement(sql); ResultSet rs = pre.executeQuery();) {
+
+            while (rs.next()) {
+                Map<String, Object> orderData = new HashMap<>();
+                orderData.put("orderID", rs.getInt("orderID"));
+                orderData.put("accountID", rs.getInt("accountID"));
+                orderData.put("customerName", rs.getString("customerName")); // Lấy tên khách hàng
+                orderData.put("address", rs.getString("address"));
+                orderData.put("totalPrice", rs.getBigDecimal("totalPrice"));
+                orderData.put("orderDate", rs.getDate("orderDate"));
+                orderData.put("sendDate", rs.getDate("sendDate"));
+                orderData.put("approveDate", rs.getDate("approveDate"));
+                orderData.put("arrivalDate", rs.getDate("arrivalDate"));
+                orderData.put("statusID", rs.getInt("statusID"));
+                orderData.put("paymentStatus", rs.getString("paymentStatus"));
+                orders.add(orderData); // Thêm vào danh sách
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public void updateOrderStatus(int orderID, int statusID) {
+        String sql;
+
+        // Xác định câu truy vấn SQL theo statusID
+        if (statusID == 4) { // Delivered
+            sql = "UPDATE [Order] SET StatusID = ?, ArrivalDate = ? WHERE OrderID = ?";
+        } else if (statusID == 2) { // Approved
+            sql = "UPDATE [Order] SET StatusID = ?, ApproveDate = ? WHERE OrderID = ?";
+        } else if (statusID == 3) { // Delivering
+            sql = "UPDATE [Order] SET StatusID = ?, SendDate = ? WHERE OrderID = ?";
+        } else {
+            sql = "UPDATE [Order] SET StatusID = ? WHERE OrderID = ?";
+        }
+
+        try (PreparedStatement pre = connection.prepareStatement(sql)) {
+            pre.setInt(1, statusID);
+
+            // Kiểm tra và thiết lập các giá trị thời gian phù hợp với statusID
+            if (statusID == 4) { // Delivered
+                pre.setDate(2, new java.sql.Date(System.currentTimeMillis())); // ArrivalDate
+                pre.setInt(3, orderID);
+            } else if (statusID == 2) { // Approved
+                pre.setDate(2, new java.sql.Date(System.currentTimeMillis())); // ApproveDate
+                pre.setInt(3, orderID);
+            } else if (statusID == 3) { // Delivering
+                pre.setDate(2, new java.sql.Date(System.currentTimeMillis())); // SendDate
+                pre.setInt(3, orderID);
+            } else {
+                pre.setInt(2, orderID);
+            }
+
+            pre.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Order getOrderById(int orderId) {
+    Order order = null;
+    String sql = "SELECT * FROM Orders WHERE OrderID = ?";
     
     try {
         PreparedStatement pre = connection.prepareStatement(sql);
         pre.setInt(1, orderId);
         ResultSet rs = pre.executeQuery();
         
-        while (rs.next()) {
-            OrderDetail detail = new OrderDetail();
-            detail.setOrderDetailID(rs.getInt("OrderDetailID"));
-            detail.setOrderID(rs.getInt("OrderID"));
-            detail.setProductID(rs.getInt("ProductID"));
-            detail.setStockID(rs.getInt("StockID"));
-            detail.setQuantity(rs.getInt("Quantity"));
-            detail.setUnitPrice(rs.getBigDecimal("UnitPrice"));
-            orderDetails.add(detail);
+        if (rs.next()) {
+            order = new Order();
+            order.setOrderID(rs.getInt("OrderID"));
+            order.setOrderDate(rs.getDate("OrderDate"));
+            order.setApproveDate(rs.getDate("ApproveDate"));
+            order.setSendDate(rs.getDate("SendDate"));
+            order.setArrivalDate(rs.getDate("ArrivalDate"));
+            order.setAddress(rs.getString("Address"));
+            // Thêm các trường khác nếu cần
         }
     } catch (SQLException e) {
         e.printStackTrace();
     }
     
-    return orderDetails;
+    return order;
 }
-   
-
-public List<Map<String, Object>> getAllOrdersWithCustomerNames() {
-    List<Map<String, Object>> orders = new ArrayList<>();
-    String sql = "SELECT o.*, a.fullname AS customerName FROM [Order] o JOIN Account a ON o.accountID = a.accountID";
-
-    try (PreparedStatement pre = connection.prepareStatement(sql);
-        ResultSet rs = pre.executeQuery();) {
-
-        while (rs.next()) {
-            Map<String, Object> orderData = new HashMap<>();
-            orderData.put("orderID", rs.getInt("orderID"));
-            orderData.put("accountID", rs.getInt("accountID"));
-            orderData.put("customerName", rs.getString("customerName")); // Lấy tên khách hàng
-            orderData.put("address", rs.getString("address"));
-            orderData.put("totalPrice", rs.getBigDecimal("totalPrice"));
-            orderData.put("statusID", rs.getInt("statusID"));
-            orderData.put("paymentStatus", rs.getString("paymentStatus"));
-            orders.add(orderData); // Thêm vào danh sách
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    return orders;
-}
-
-public void updateOrderStatus(int orderID, int statusID) {
-    String sql;
-
-    // Nếu statusID là 4 (Delivered), hãy cập nhật ArrivalDate
-    if (statusID == 4) {
-        sql = "UPDATE [Order] SET StatusID = ?, ArrivalDate = ? WHERE OrderID = ?";
-    } else {
-        sql = "UPDATE [Order] SET StatusID = ? WHERE OrderID = ?";
-    }
-
-    try (PreparedStatement pre = connection.prepareStatement(sql)) {
-        
-        pre.setInt(1, statusID);
-        
-        if (statusID == 4) {
-            pre.setDate(2, new java.sql.Date(System.currentTimeMillis())); // Ghi lại thời điểm hiện tại
-            pre.setInt(3, orderID);
-        } else {
-            pre.setInt(2, orderID);
-        }
-        
-        pre.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
-
-
-
-
 }
