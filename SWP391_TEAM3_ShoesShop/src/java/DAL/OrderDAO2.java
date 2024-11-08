@@ -197,4 +197,40 @@ public class OrderDAO2 extends DBContext {
             e.printStackTrace(); // Xử lý lỗi nếu có
         }
     }
+    public void reorderToCart(int orderId, int accountId) {
+    // SQL truy vấn để lấy chi tiết sản phẩm từ đơn hàng cũ
+    String selectOrderDetails = "SELECT ProductID, StockID, Quantity FROM [dbo].[OrderDetail] WHERE OrderID = ?";
+    // SQL truy vấn để thêm sản phẩm vào giỏ hàng của người dùng hiện tại
+    String insertToCart = "INSERT INTO [dbo].[Cart] (AccountID, ProductID, StockID, Quantity) VALUES (?, ?, ?, ?)";
+
+    try (PreparedStatement selectStmt = connection.prepareStatement(selectOrderDetails);
+         PreparedStatement insertStmt = connection.prepareStatement(insertToCart)) {
+        
+        // Gán OrderID cho truy vấn lấy chi tiết đơn hàng
+        selectStmt.setInt(1, orderId);
+        ResultSet resultSet = selectStmt.executeQuery();
+
+        // Lặp qua các sản phẩm trong đơn hàng cũ và thêm vào giỏ hàng
+        while (resultSet.next()) {
+            int productId = resultSet.getInt("ProductID");
+            int stockId = resultSet.getInt("StockID");
+            int quantity = resultSet.getInt("Quantity");
+
+            // Gán thông tin vào truy vấn thêm sản phẩm vào giỏ hàng
+            insertStmt.setInt(1, accountId);
+            insertStmt.setInt(2, productId);
+            insertStmt.setInt(3, stockId);
+            insertStmt.setInt(4, quantity);
+            
+            // Thực thi truy vấn
+            insertStmt.executeUpdate();
+        }
+
+        System.out.println("Các sản phẩm từ OrderID " + orderId + " đã được thêm vào giỏ hàng của AccountID " + accountId);
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Không thể thêm sản phẩm vào giỏ hàng.");
+    }
+}
 }

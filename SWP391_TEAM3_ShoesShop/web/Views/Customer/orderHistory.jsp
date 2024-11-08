@@ -366,25 +366,37 @@
                                                 </div>
 
                                                 <!-- Hành động cho đơn hàng -->
-                                                <div class="order-actions">
-                                                    <button class="order-btn" onclick="window.location.href = 'orderDetail2?id=${order.orderID}'">View Detail</button>
+                                            <div class="order-actions">
+    <button class="order-btn" onclick="window.location.href = 'orderDetail2?id=${order.orderID}'">View Detail</button>
 
-                                                    <button class="order-btn" onclick="confirmOrder(${order.orderID})">Order Confirmation</button>
-                                                    <button class="order-btn" onclick="cancelOrder(${order.orderID})">Cancel Order</button> <!-- Nút hủy đơn hàng -->
-                                                    <script>
-                                                        function confirmOrder(orderID) {
-                                                            if (confirm("Are you sure you want to confirm this order?")) {
-                                                                window.location.href = 'confirmOrder?orderID=' + orderID;
-                                                            }
-                                                        }
-                                                        function cancelOrder(orderID) {
-                                                            if (confirm("Are you sure you want to cancel this order?")) {
-                                                                window.location.href = 'cancelOrder?orderID=' + orderID; // Thay đổi đường dẫn theo yêu cầu của bạn
-                                                            }
-                                                        }
-                                                    </script>
+    <button class="order-btn" onclick="confirmOrder(${order.orderID})">Order Confirmation</button>
+    <button class="order-btn" onclick="cancelOrder(${order.orderID})">Cancel Order</button> <!-- Nút hủy đơn hàng -->
 
-                                                </div>
+    <!-- Nút Mua lại -->
+    <button class="order-btn" onclick="reorderOrder(${order.orderID})">Reorder</button>
+
+    <script>
+        function confirmOrder(orderID) {
+            if (confirm("Are you sure you want to confirm this order?")) {
+                window.location.href = 'confirmOrder?orderID=' + orderID;
+            }
+        }
+        
+        function cancelOrder(orderID) {
+            if (confirm("Are you sure you want to cancel this order?")) {
+                window.location.href = 'cancelOrder?orderID=' + orderID;
+            }
+        }
+
+        // Hàm để mua lại
+        function reorderOrder(orderID) {
+            if (confirm("Are you sure you want to reorder this item?")) {
+                window.location.href = 'reorder?orderID=' + orderID; // Điều hướng đến servlet 'ReorderServlet'
+            }
+        }
+    </script>
+</div>
+
                                             </div> <!-- Kết thúc order-item -->
                                         </c:forEach>
 
