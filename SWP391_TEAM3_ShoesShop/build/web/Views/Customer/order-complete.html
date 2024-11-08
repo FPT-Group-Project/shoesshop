@@ -58,7 +58,7 @@
 					<div class="row">
 						<div class="col-sm-12 text-left menu-1">
 							<ul>
-								<li><a href="home">Home</a></li>
+<li><a href="<%= request.getContextPath() %>/home">Home</a></li>
 								<li class="has-dropdown">
 									<a href="men.html">Men</a>
 									<ul class="dropdown active">
@@ -107,7 +107,13 @@
 			<div class="container">
 				<div class="row">
 					<div class="col">
-						<p class="bread"><span><a href="home">Home</a></span> / <span>Purchase Complete</span></p>
+<p class="bread">
+    <span>
+        <a href="${pageContext.request.contextPath}/home">Home</a>
+    </span> 
+    / <span>Purchase Complete</span>
+</p>
+
 					</div>
 				</div>
 			</div>

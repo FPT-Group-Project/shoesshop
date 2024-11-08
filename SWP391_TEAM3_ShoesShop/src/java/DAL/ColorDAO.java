@@ -153,5 +153,32 @@ public class ColorDAO extends DBContext {
 
         return colors;
     }
+  //////
+public boolean colorExists(String colorName) {
+    String sql = "SELECT COUNT(*) FROM Product_Color WHERE Color = ?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, colorName);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0; 
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false; 
+}
+public void insertColor(String colorName) {
+    // Truy vấn INSERT
+    String sql = "INSERT INTO Product_Color (Color) VALUES (?)";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, colorName);
+        
+        ps.executeUpdate(); // Chạy câu truy vấn
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
 }

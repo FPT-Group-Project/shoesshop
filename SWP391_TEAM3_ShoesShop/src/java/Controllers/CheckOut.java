@@ -10,6 +10,7 @@ import DAL.CartDAO;
 import DAL.OrderDAO;
 import Models.Account;
 import Models.Cart;
+import jakarta.servlet.RequestDispatcher;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import static java.lang.System.out;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,34 +89,44 @@ public class CheckOut extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
- @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String type = request.getParameter("type");
-        if(type.equalsIgnoreCase("order")) {
+   @Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
         CartDAO cartDAO = new CartDAO();
-//        int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
         HttpSession session = request.getSession();
-            Account acc = (Account) session.getAttribute("acc");
-            Integer accountId = acc.getAccountID();
-             if (accountId == null) {
-                out.println("{\"message\":\"You need to log in before start shopping\", \"status\":\"warning\"}");
-                return;
-            }
-
-
-        String email = acc.getEmail();
-        String phone = acc.getPhoneNumber();
-        double total = Double.parseDouble(request.getParameter("total"));
-        String address = request.getParameter("address");
-        String payment = request.getParameter("payment");
+        Account acc = (Account) session.getAttribute("acc");
+        Integer accountId = acc.getAccountID();
         
+        if (accountId == null) {
+            response.getWriter().println("{\"message\":\"You need to log in before start shopping\", \"status\":\"warning\"}");
+            return;
+        }
+
+        OrderDAO orderDAO = new OrderDAO();
+        int total = Integer.parseInt(request.getParameter("total"));
+        String address = request.getParameter("address");
+        String payment = request.getParameter("optradio"); // Lấy phương thức thanh toán từ "optradio"
 
         List<Cart> carts = cartDAO.getCartItemsByAccountId(accountId);
-        OrderDAO orderDAO = new OrderDAO();
-        orderDAO.addOrder(accountId, carts, address, payment, total);
-        }
+
+        // Thêm đơn hàng vào cơ sở dữ liệu
+double totalAmount = (double) total; // If total is an integer or another numeric type
+int addOrder = orderDAO.addOrder(acc.getAccountID(), address, totalAmount, "NULL");
+        boolean a2= orderDAO.addOrderDetails(addOrder, carts);
+boolean a1= orderDAO.clearCart(acc.getAccountID());
+
+        session.setAttribute("orderId", addOrder);
+
+        // Kiểm tra phương thức thanh toán
+        if ("bank".equalsIgnoreCase(payment)) {
+            //  ssuwr lí khi check out = COD = bank
+            response.sendRedirect("vnpay?amount=" + total);
+        } else if ("COD".equalsIgnoreCase(payment)) {
+            //  ssuwr lí khi check out = COD
+request.getRequestDispatcher("/Views/Customer/orderSuccess.jsp").forward(request, response);        }
     }
- 
+
+
 }
 
 
