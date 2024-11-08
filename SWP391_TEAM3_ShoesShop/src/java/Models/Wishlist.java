@@ -15,7 +15,8 @@ public class Wishlist {
     private int accountId;
     private Product productId;
     private Date addedDate;
-
+private  String productname;
+private String avatarP;
     public Wishlist() {
     }
 
@@ -24,6 +25,22 @@ public class Wishlist {
         this.accountId = accountId;
         this.productId = productId;
         this.addedDate = addedDate;
+    }
+
+    public String getAvatarP() {
+        return avatarP;
+    }
+
+    public void setAvatarP(String avatarP) {
+        this.avatarP = avatarP;
+    }
+
+    public String getProductname() {
+        return productname;
+    }
+
+    public void setProductname(String productname) {
+        this.productname = productname;
     }
 
     public int getWishlistId() {

@@ -8,25 +8,41 @@ package DAL;
  *
  * @author thanh
  */
-
 import Models.Product;
 import Models.Wishlist;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WishlistDAO extends   DBContext{
-  
+public class WishlistDAO extends DBContext {
 
-   
     // Thêm sản phẩm vào Wishlist
     public boolean addProductToWishlist(int accountId, int productId) throws SQLException {
-        String sql = "INSERT INTO Wishlist (AccountID, ProductID, AddedDate) VALUES (?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, accountId);
-            stmt.setInt(2, productId);
-            stmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-            return stmt.executeUpdate() > 0;
+        // Kiểm tra xem sản phẩm đã tồn tại trong Wishlist hay chưa
+        String checkSql = "SELECT COUNT(*) FROM Wishlist WHERE AccountID = ? AND ProductID = ?";
+        String insertSql = "INSERT INTO Wishlist (AccountID, ProductID, AddedDate) VALUES (?, ?, GETDATE())";
+
+        try (PreparedStatement checkStmt = connection.prepareStatement(checkSql)) {
+            checkStmt.setInt(1, accountId);
+            checkStmt.setInt(2, productId);
+
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    // Nếu sản phẩm đã tồn tại trong Wishlist, trả về false để không thêm vào
+                    System.out.println("Sản phẩm đã có trong Wishlist.");
+                    return false;
+                }
+            }
+        }
+
+        // Thêm sản phẩm vào Wishlist nếu chưa tồn tại
+        try (PreparedStatement insertStmt = connection.prepareStatement(insertSql)) {
+            insertStmt.setInt(1, accountId);
+            insertStmt.setInt(2, productId);
+            int rowsAffected = insertStmt.executeUpdate();
+
+            // Kiểm tra nếu thêm thành công (rowsAffected > 0)
+            return rowsAffected > 0;
         }
     }
 
@@ -39,51 +55,83 @@ public class WishlistDAO extends   DBContext{
             return stmt.executeUpdate() > 0;
         }
     }
-ProductDAO productDAO = new ProductDAO();
+    ProductDAO productDAO = new ProductDAO();
     // Lấy danh sách sản phẩm trong Wishlist của người dùng
+
     public List<Wishlist> getWishlistByAccountId(int accountId) throws SQLException {
         List<Wishlist> wishlist = new ArrayList<>();
-        String sql = "SELECT * FROM Wishlist WHERE AccountID = ?";
+        String sql = "SELECT \n"
+                + "    Wishlist.*, \n"
+                + "    Product.AvatarP, \n"
+                + "    Product.Price,\n"
+                + "    Product.ProductName\n"
+                + "FROM \n"
+                + "    Wishlist\n"
+                + "INNER JOIN \n"
+                + "    Product ON Wishlist.ProductID = Product.ProductID\n"
+                + "WHERE \n"
+                + "    Wishlist.AccountID = ?;";
+
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, accountId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     int productId = rs.getInt("ProductID");
-                    Product product = productDAO.getProductById(productId); // Lấy Product từ productId
+                    Product product = productDAO.getProductById(productId); // Get Product from productId
+
                     Wishlist item = new Wishlist();
                     item.setWishlistId(rs.getInt("WishlistID"));
                     item.setAccountId(rs.getInt("AccountID"));
                     item.setProductId(product);
-                   
                     item.setAddedDate(rs.getTimestamp("AddedDate"));
+                    item.setProductId(product);
+                    // Set ProductName in the Wishlist object
+                    item.setProductname(rs.getString("ProductName"));
+                    item.setAvatarP(rs.getString("AvatarP"));
                     wishlist.add(item);
                 }
             }
         }
         return wishlist;
     }
-     public static void main(String[] args) {
-        // Thay đổi các thông tin kết nối phù hợp với cấu hình của bạn
-       
-        // Kết nối đến cơ sở dữ liệu
-        try  {
-            // Tạo đối tượng WishlistDAO
-            WishlistDAO wishlistDAO = new WishlistDAO();
 
-            // Thay đổi các giá trị accountId và productId theo nhu cầu của bạn
-            int accountId = 23; // ID của tài khoản
-            int productId = 1; // ID của sản phẩm
+    public static void main(String[] args) {
+      
+    // Thay đổi các thông tin kết nối phù hợp với cấu hình của bạn
 
-            // Gọi hàm addProductToWishlist
-            boolean result = wishlistDAO.addProductToWishlist(accountId, productId);
+    try {
+        // Tạo đối tượng WishlistDAO
+        WishlistDAO wishlistDAO = new WishlistDAO();
 
-            if (result) {
-                System.out.println("Sản phẩm đã được thêm vào Wishlist thành công.");
-            } else {
-                System.out.println("Không thể thêm sản phẩm vào Wishlist.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        // Thay đổi các giá trị accountId và productId theo nhu cầu của bạn
+        int accountId = 23; // Thay đổi ID người dùng nếu cần
+        int productId = 4; // ID của sản phẩm cần xóa khỏi Wishlist
+
+        // Thực hiện xóa sản phẩm khỏi Wishlist
+        boolean isRemoved = wishlistDAO.removeProductFromWishlist(accountId, productId);
+
+        // Kiểm tra kết quả xóa và hiển thị thông báo
+        if (isRemoved) {
+            System.out.println("Đã xóa sản phẩm có Product ID " + productId + " khỏi Wishlist.");
+        } else {
+            System.out.println("Không tìm thấy sản phẩm có Product ID " + productId + " trong Wishlist để xóa.");
         }
+
+        // Lấy danh sách Wishlist để kiểm tra lại
+        List<Wishlist> wishlist = wishlistDAO.getWishlistByAccountId(accountId);
+
+        // In danh sách Wishlist ra màn hình sau khi xóa
+        for (Wishlist item : wishlist) {
+            System.out.println("Wishlist ID: " + item.getWishlistId());
+            System.out.println("Account ID: " + item.getAccountId());
+            System.out.println("Product ID: " + item.getProductId().getProductId());
+            System.out.println("Product Name: " + item.getProductname());
+            System.out.println("Avatar: " + item.getAvatarP());
+            System.out.println("Added Date: " + item.getAddedDate());
+            System.out.println("-------------------------------");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
 }

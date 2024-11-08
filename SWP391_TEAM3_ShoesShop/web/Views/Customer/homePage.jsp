@@ -94,7 +94,7 @@
                                 <ul>
                                     <li class="active"><a href="home">Home</a></li>
                                     <li class="has-dropdown">
-                                        <a href="men.html">Men</a>
+                                        <a href="WishlistControl">Whishlist</a>
                                         <ul class="dropdown">
                                             <li><a href="product-detail.html">Product Detail</a></li>
                                             <li><a href="cart">Shopping Cart</a></li>
@@ -149,7 +149,20 @@
                 </div>
             </nav>
             <!---->
+<% String successMessage = (String) request.getAttribute("successMessage"); %>
+<% String errorMessage = (String) request.getAttribute("errorMessage"); %>
 
+<% if (successMessage != null) { %>
+    <div class="alert alert-success" style="color: green;">
+        <%= successMessage %>
+    </div>
+<% } %>
+
+<% if (errorMessage != null) { %>
+    <div class="alert alert-danger" style="color: red;">
+        <%= errorMessage %>
+    </div>
+<% } %>
             <div class="colorlib-intro">
                 <div class="container">
                     <div class="row">

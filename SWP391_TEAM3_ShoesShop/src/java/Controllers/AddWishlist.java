@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controllers;
+
 
 import DAL.WishlistDAO;
 import Models.Account;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,56 +13,51 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-
-/**
- *
- * @author thanh
- */
 @WebServlet(name = "AddWishlist", urlPatterns = {"/addWishlist"})
 public class AddWishlist extends HttpServlet {
+    @Override
 
-private static final long serialVersionUID = 1L;
-private WishlistDAO wishlistDAO; // Khai báo WishlistDAO
-@Override
- public void init() {
-        // Khởi tạo WishlistDAO (bạn cần điều chỉnh theo cách khởi tạo của mình)
-        wishlistDAO = new WishlistDAO(); // Hoặc bạn có thể sử dụng Dependency Injection nếu có
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    HttpSession session = request.getSession();
+    Account acc = (Account) session.getAttribute("acc");
+
+    if (acc == null) {
+        // Redirect to login page if user is not logged in
+        response.sendRedirect("login");
+        return;
     }
 
-@Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        String productIdStr = request.getParameter("id"); // Lấy ID sản phẩm từ yêu cầu
-        HttpSession session = request.getSession();
-        
-        // Kiểm tra xem người dùng đã đăng nhập chưa
-        if (session.getAttribute("acc") != null) {
-            int accountId = ((Account) session.getAttribute("acc")).getAccountID(); // Lấy accountId từ session
-            int productId = Integer.parseInt(productIdStr); // Chuyển đổi sang int
+    Integer accountId = acc.getAccountID();
+    String productIdParam = request.getParameter("id");
+    if (productIdParam == null || productIdParam.isEmpty()) {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Product ID is required");
+        return;
+    }
 
-            try {
-                // Gọi hàm addProductToWishlist
-                boolean added = wishlistDAO.addProductToWishlist(accountId, productId);
-                if (added) {
-                    // Thành công
-                    response.sendRedirect(request.getHeader("Referer"));
-                } else {
-                    // Xử lý khi không thêm được sản phẩm
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Could not add to wishlist.");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error.");
-            
-            }
+    int productId;
+    try {
+        productId = Integer.parseInt(productIdParam);
+    } catch (NumberFormatException e) {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Product ID");
+        return;
+    }
+
+   WishlistDAO wishlistDAO = new WishlistDAO();
+    try {
+        boolean added = wishlistDAO.addProductToWishlist(accountId, productId);
+        if (added) {
+            request.setAttribute("successMessage", "Product has been successfully added to the wishlist.");
         } else {
-            // Nếu người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-            response.sendRedirect("login");
+            request.setAttribute("errorMessage", "The product is already in the wishlist.");
         }
+    } catch (SQLException e) {
+        request.setAttribute("errorMessage", "An error occurred while adding the product to the wishlist.");
+        e.printStackTrace();
     }
+
+    // Forward request to home.jsp with the message attributes
+    request.getRequestDispatcher("products?page=1").forward(request, response);
+}
 }
