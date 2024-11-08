@@ -399,6 +399,12 @@
                                             Add New
                                         </a>
                                     </div>
+                                      <div class="col-auto">						    
+                                        <a class="btn app-btn-secondary" href="addColor">
+
+                                            Add Color
+                                        </a>
+                                    </div>
                                 </div><!--//row-->
                             </div><!--//table-utilities-->
                         </div><!--//col-auto-->

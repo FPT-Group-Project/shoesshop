@@ -1,38 +1,51 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="Models.ProductAdmin" %> 
 <!DOCTYPE html>
 <html lang="en"> 
-    <head>
-        <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
+<head>
+    <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+    
+    <!-- FontAwesome JS-->
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    
+    <!-- App CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
 
-        <!-- Meta -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-        <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
-        <link rel="shortcut icon" href="../../favicon.ico"> 
+    <style>
+        html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
 
-        <!-- FontAwesome JS -->
-        <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+.app-footer {
+    margin-top: auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+}
 
-        <!-- App CSS -->  
-        <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
-        <style>
-            .d-flex {
-                display: flex;
-                justify-content: center; /* Căn giữa theo chiều ngang */
-                align-items: center; /* Căn giữa theo chiều dọc (nếu cần) */
-                height: 100vh; /* Đặt chiều cao của div cha nếu cần */
-            }
-        </style>
-    </head> 
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
 
+.app-footer .copyright {
+    color: #6c757d;
+}
 
-    <body class="app">   	
+    </style>
+</head> 
+
+<body class="app">   	
         <header class="app-header fixed-top">	   	            
             <div class="app-header-inner">  
                 <div class="container-fluid py-2">
@@ -50,7 +63,7 @@
                             <div class="app-search-box col">
                                 <form class="app-search-form" method="get" action="your_servlet_url_here">
                                     <input type="text" placeholder="Search..." name="keyW" value="${param.search}" class="form-control search-input">
-                                    <!-- Khi người dùng tìm kiếm, trang mặc định sẽ là 1 -->
+                                    <!-- Khi ng??i d�ng t�m ki?m, trang m?c ??nh s? l� 1 -->
                                     <input type="hidden" name="page" value="1">
                                     <button type="submit" class="btn search-btn btn-primary" value="Search">
                                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -219,13 +232,21 @@
                                     <span class="nav-link-text">List Product </span>
                                 </a><!--//nav-link-->
                             </li>
+
+                            
                             <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link" href="BrandController">
+                                <a class="nav-link " href="BrandController">
                                     <span class="nav-icon">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"></path>
-                                        <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"></path>
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+
+                                        <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/>
+                                        <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/>
+
+
+                                        <circle cx="3.5" cy="5.5" r=".5"/>
+                                        <circle cx="3.5" cy="8" r=".5"/>
+                                        <circle cx="3.5" cy="10.5" r=".5"/>
                                         </svg>
                                     </span>
                                     <span class="nav-link-text">List Brand</span>
@@ -353,305 +374,70 @@
                 </div><!--//sidepanel-inner-->
             </div><!--//app-sidepanel-->
         </header><!--//app-header-->
-
-        <div class="app-wrapper">
-
-            <div class="app-content pt-3 p-md-3 p-lg-4">
-                <div class="container-xl">
-
-                    <div class="row g-3 mb-4 align-items-center justify-content-between">
-                        <div class="col-auto">
-                            <h1 class="app-page-title mb-0">Product List</h1>
-                        </div>
-                        <div class="col-auto">
-                            <div class="page-utilities">
-                                <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-                                    <div class="col-auto" style="margin: 0 auto;display: flex;margin-right: 50px;">
-                                        <form class="table-search-form row gx-1 align-items-center" method="get" action="ProductListController" style="margin: 0 auto;">
-                                            <div class="col-auto">
-                                                <input type="text" placeholder="Search..." name="keyW" value="${param.keyW}" class="form-control search-orders">
-                                            </div>
-
-
-                                            <div class="col-auto">
-                                                <select name="brand" >
-                                                    <c:forEach var="category" items="${brandDisplay}">
-                                                        <option value="${category.brandID}">${category.brandName}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-
-
-                                            <input type="hidden" name="page" value="1">		
-                                            <div class="col-auto">
-                                                <button type="submit" class="btn search-btn btn-primary" value="Search">
-                                                    Search <i class="fa-solid fa-magnifying-glass"></i>
-                                                </button>					
-                                            </div>
-                                        </form>
-                                    </div><!--//col-->
-                                    <!--//col-->
-
-
-                                    <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="addProduct">
-
-                                            Add New
-                                        </a>
-                                    </div>
-                                      <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="addColor">
-
-                                            Add Color
-                                        </a>
-                                    </div>
-                                </div><!--//row-->
-                            </div><!--//table-utilities-->
-                        </div><!--//col-auto-->
-                    </div><!--//row-->
-
-                    <%-- Kiểm tra thông báo  --%>
-                    <c:if test="${not empty message}">
-                        <div class="alert alert-success" role="alert">
-                            ${message}
-                        </div>
-                    </c:if>
-
-
-
-                    <div class="tab-content" id="orders-table-tab-content">
-                        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
-                            <div class="app-card app-card-orders-table shadow-sm mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table app-table-hover mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Product ID</th>
-                                                    <th class="cell">Product Name</th>
-                                                    <th class="cell">Quantity</th>
-                                                    <th class="cell">Price</th>
-                                                    <th class="cell">Category</th>
-                                                    <th class="cell">Image</th>
-                                                    <th class="cell">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:if test="${not empty productList}">
-                                                    <c:forEach var="product" items="${productList}">
-                                                        <tr>
-                                                            <td>${product.productID}</td>
-                                                            <td><span class="truncate">${product.productName}</span></td>
-                                                            <td>${product.quantity}</td>
-                                                            <td>$${product.price}</td>
-                                                            <td>${product.brandID.brandName}</td>  
-                                                     
-                                                            <td>
-    <img src="${pageContext.request.contextPath}/ImageProductAvt/${product.avatarP}" alt="${product.productName}" style="width: 50px; height: 50px;" />
-</td>
-
-                                                            <td>
-                                                                <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Delete</a></button>
-                                                            <form action="manageStock" method="get" style="display:inline;">
-                                                                    <input type="hidden" name="productID" value="${product.productID}">
-                                                                    <input type="submit" value="Update Stock">
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </c:if>
-                                                <c:if test="${empty productList}">
-                                                    <tr>
-                                                        <td colspan="8" class="cell">No products found.</td>
-                                                    </tr>
-                                                </c:if>
-                                            </tbody>
-                                        </table>
-
-
-                                    </div><!--//table-responsive-->
-
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                            <nav class="app-pagination">
-                                <ul class="pagination justify-content-center">
-                                    <!-- Nút Previous -->
-                                    <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
-                                        <a class="page-link" href="?page=${currentPage - 1}" tabindex="-1" aria-disabled="true">Previous</a>
-                                    </li>
-
-                                    <!-- Lặp qua các số trang -->
-                                    <c:forEach var="i" begin="1" end="${totalPages}">
-                                        <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                            <a class="page-link" href="?page=${i}">${i}</a>
-                                        </li>
-                                    </c:forEach>
-
-                                    <!-- Nút Next -->
-                                    <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
-                                        <a class="page-link" href="?page=${currentPage + 1}">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <!--//app-pagination-->
-
-                        </div><!--//tab-pane-->
-
-                        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">#15346</td>
-                                                    <td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-                                                    <td class="cell">John Sanders</td>
-                                                    <td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$259.35</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="cell">#15344</td>
-                                                    <td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-                                                    <td class="cell">Teresa Holland</td>
-                                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$123.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="cell">#15343</td>
-                                                    <td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-                                                    <td class="cell">Jayden Massey</td>
-                                                    <td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$199.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-
-                                                <tr>
-                                                    <td class="cell">#15341</td>
-                                                    <td class="cell"><span class="truncate">Morbi vulputate lacinia neque et sollicitudin</span></td>
-                                                    <td class="cell">Raymond Atkins</td>
-                                                    <td class="cell"><span class="cell-data">11 Oct</span><span class="note">11:18 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$678.26</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-
-                        <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">#15345</td>
-                                                    <td class="cell"><span class="truncate">Consectetur adipiscing elit</span></td>
-                                                    <td class="cell">Dylan Ambrose</td>
-                                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">03:16 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-warning">Pending</span></td>
-                                                    <td class="cell">$96.20</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-                        <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <td class="cell">#15342</td>
-                                                    <td class="cell"><span class="truncate">Justo feugiat neque</span></td>
-                                                    <td class="cell">Reina Brooks</td>
-                                                    <td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-danger">Cancelled</span></td>
-                                                    <td class="cell">$59.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-                    </div><!--//tab-content-->
-
-
-
-                </div><!--//container-fluid-->
-            </div><!--//app-content-->
-
-            <footer class="app-footer">
-                <div class="container text-center py-3">
-                    <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-                    <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-
+    
+    <div class="app-wrapper">
+	    
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">			    
+                        <h1 class="app-page-title" ><a href="addColor">Add Color</a></h1>
+			    <hr class="mb-4">
+                <div class="row g-4 settings-section">
+	                
+	                <div class="col-12 col-md-8">
+		                <div class="app-card app-card-settings shadow-sm p-4">
+						    
+						    <div class="app-card-body">
+    <% String mess = (String) request.getAttribute("mess");
+    if (mess != null) { %>
+        <div class="alert alert-info mt-3"><%= mess %></div>
+    <% } %>
+<% if (request.getAttribute("successMessage") != null) { %>
+                <div class="alert alert-success">
+                    <%= request.getAttribute("successMessage") %>
                 </div>
-            </footer><!--//app-footer-->
+                <% } %>
+                <% if (request.getAttribute("errorMessage") != null) { %>
+                <div class="alert alert-danger">
+                    <%= request.getAttribute("errorMessage") %>
+                </div>
+                <% } %>
+    <form action="addColor" method="post" class="form-group">
+                <div class="form-row">
+                    <label for="brandName">Color:</label>
+                    <input type="text" id="color" name="color" class="form-control" required>
+                </div>
+                <div class="form-row text-end">
+                    <input type="submit" value="Add Brand" class="btn btn-primary">
+                </div>
+                
+            </form>
+</div>
+<!--//app-card-body-->
+						    
+						</div><!--//app-card-->
+	                </div>
+                </div><!--//row-->
+               
+		    </div><!--//container-fluid-->
+	    </div><!--//app-content-->
+	  <footer class="app-footer" style="position: fixed; bottom: 0; width: 100%; background-color: #f8f9fa; padding: 20px; text-align: center;">
+    <div class="container text-center py-3">
+        <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+        <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+    </div>
+</footer>
 
-        </div><!--//app-wrapper-->    					
+	    
+    </div><!--//app-wrapper-->    					
 
+ 
+    <!-- Javascript -->          
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    
+    <!-- Page Specific JS -->
+    <script src="assets/js/app.js"></script> 
 
-        <!-- Javascript -->          
-        <script src="assets/plugins/popper.min.js"></script>
-        <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
-        <script src="assets/js/app.js"></script> 
-
-    </body>
+</body>
 </html> 
 

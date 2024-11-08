@@ -215,4 +215,129 @@ public class OrderDAO extends DBContext {
     
     return order;
 }
+    /////////////////////// tuan anh ///////////////////
+public int addOrder22(int accountId, List<Cart> carts, String address, String payment, double total) {
+    String sql = "INSERT INTO [Order] (AccountID, Address, TotalPrice, OrderDate, StatusID, PaymentStatus) VALUES (?, ?, ?, ?, ?, ?)";
+    int orderId = -1; // Giá trị mặc định nếu có lỗi
+    try {
+        // Chuẩn bị statement để lấy OrderID sau khi thêm vào
+            PreparedStatement pre = connection.prepareStatement(sql);
+        pre.setInt(1, accountId);
+        pre.setString(2, address);
+        pre.setDouble(3, total);
+        Date curr = new Date(new java.util.Date().getTime());
+        pre.setDate(4, curr);
+        pre.setInt(5, 1);
+        pre.setString(6, payment);
+
+        int rowsAffected = pre.executeUpdate();
+
+        // Lấy OrderID từ generated keys
+        ResultSet generatedKeys = pre.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            orderId = generatedKeys.getInt(1);
+        }
+
+        // Thêm chi tiết đơn hàng vào bảng OrderDetail nếu đơn hàng đã được thêm thành công
+        if (orderId != -1) {
+            for (Cart cart : carts) {
+                PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO OrderDetail (OrderID, ProductID, StockID, Quantity, UnitPrice) VALUES (?, ?, ?, ?, ?)"
+                );
+                ps.setInt(1, orderId);
+                ps.setInt(2, cart.getProductID());
+                ps.setInt(3, cart.getStockID());
+                ps.setInt(4, cart.getQuantity());
+                ps.setDouble(5, cart.getQuantity() * cart.getProduct().getPrice());
+                ps.executeUpdate();
+
+                
+            }
+
+            // Xóa giỏ hàng của người dùng sau khi tạo đơn hàng thành công
+            PreparedStatement od = connection.prepareStatement("DELETE FROM [Cart] WHERE AccountID = ?");
+            od.setInt(1, accountId);
+            od.executeUpdate();
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return orderId; // Trả về OrderID hoặc -1 nếu có lỗi
+}
+public boolean changeStatusPayment(int orderId) {
+    String query = "UPDATE [Order] SET PaymentStatus = ? WHERE OrderID = ?";
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        // Đặt PaymentStatus thành "paid" để biểu thị đã thanh toán
+        preparedStatement.setString(1, "paid"); // Cập nhật trạng thái thanh toán thành "paid"
+        preparedStatement.setInt(2, orderId);
+
+        int rowsAffected = preparedStatement.executeUpdate();
+        return rowsAffected > 0; // Trả về true nếu có dòng được cập nhật
+    } catch (SQLException e) {
+        System.out.println("Error changing payment status: " + e);
+        return false;
+    }
+}
+public boolean clearCart(int accountId) {
+    String sql = "DELETE FROM [Cart] WHERE AccountID = ?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, accountId);
+        return ps.executeUpdate() > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+public boolean addOrderDetails(int orderId, List<Cart> carts) {
+    try {
+        for (Cart cart : carts) {
+            PreparedStatement ps = connection.prepareStatement(
+                "INSERT INTO OrderDetail (OrderID, ProductID, StockID, Quantity, UnitPrice) VALUES (?, ?, ?, ?, ?)"
+            );
+            ps.setInt(1, orderId);
+            ps.setInt(2, cart.getProductID());
+            ps.setInt(3, cart.getStockID());
+            ps.setInt(4, cart.getQuantity());
+            ps.setDouble(5, cart.getQuantity() * cart.getProduct().getPrice());
+            ps.executeUpdate();
+        }
+        return true;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+public int addOrder(int accountId, String address, double total, String payment) {
+    String sql = "INSERT INTO [Order] (AccountID, Address, TotalPrice, OrderDate, StatusID, PaymentStatus) VALUES (?, ?, ?, ?, ?, ?)";
+    try {
+        PreparedStatement pre = connection.prepareStatement(sql, PreparedStatement.NO_GENERATED_KEYS);
+        pre.setInt(1, accountId);
+        pre.setString(2, address);
+        pre.setDouble(3, total);
+        Date curr = new Date(new java.util.Date().getTime());
+        pre.setDate(4, curr);
+        pre.setInt(5, 1);  // Active status
+        pre.setString(6, payment);
+
+        int rowsAffected = pre.executeUpdate();
+
+        if (rowsAffected > 0) {
+            // Sử dụng câu lệnh truy vấn riêng để lấy ID của đơn hàng vừa thêm
+            String selectSql = "SELECT MAX(OrderID) FROM [Order]";
+            PreparedStatement ps = connection.prepareStatement(selectSql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);  // Trả về OrderID vừa được chèn
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return -1;  // Nếu không thành công, trả về -1
+}
+
+
+////////////////////////////////////////////////////////////
 }
