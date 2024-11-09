@@ -2,6 +2,7 @@ package DAL;
 import Models.TopQuantity;
 import Models.ProductAdmin;
 import Models.Brand;
+import Models.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -464,7 +465,26 @@ public List<ProductAdmin> getProductListForAdmin1(int page, Integer brandID) {
     return productList;
 }
 
-
+        public Product getProductById(int id){
+            Product p = new Product();
+            String sql ="Select * from Product where ProductID =?";
+            try{PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if(rs.next()){
+                    int productId = rs.getInt("ProductID");
+                String productName = rs.getString("ProductName");
+                String description = rs.getString("Description");
+                double price = rs.getDouble("Price");
+                int brandId = rs.getInt("BrandID");
+                String avatarP = rs.getString("AvatarP");
+                p = new Product(productId, productName, description, price, brandId, avatarP);
+                }
+            }catch(SQLException e){
+                
+            }
+            return p;
+        }
       public static void main(String[] args) {
         // Khởi tạo đối tượng DAO để quản lý sản phẩm
         ListProductAdminDao productAdminDao = new ListProductAdminDao();
