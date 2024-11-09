@@ -330,6 +330,11 @@
                                                 <div class="order-header">
                                                     <span class="shop-name">${order.orderDate}</span>
                                                     <span class="order-id">Order Code: ${order.orderID}</span>
+                                                   <span>
+    ${empty order.paymentStatus ? 'Thanh toán khi nhận hàng' : 'Paid'}
+</span>
+
+
                                                     <span class="order-status">
                                                         <c:choose>
                                                             <c:when test="${order.statusID == 1}">Pending</c:when>
@@ -341,8 +346,9 @@
                                                             <c:otherwise>Không xác định</c:otherwise>
                                                         </c:choose>
                                                     </span>
+                                                    
                                                 </div>
-
+ 
                                                 <!-- Thông tin sản phẩm trong đơn hàng -->
                                                 <div class="order-details">
                                                     <c:forEach var="detail" items="${order.orderDetails}">
