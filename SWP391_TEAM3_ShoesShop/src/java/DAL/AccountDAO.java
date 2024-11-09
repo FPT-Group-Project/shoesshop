@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAL;
-
+import Models.LoginResponse;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,31 +17,33 @@ import java.util.List;
  * @author vh69
  */
 public class AccountDAO extends DBContext {
-    public Account login(String user, String pass){
-        String sql="SELECT * FROM Account\n" +
-                   "WHERE UserName =?\n" +
-                   "AND Password=?";
-        try{
+    public LoginResponse login(String user, String pass) {
+        String sql = "SELECT * FROM Account WHERE UserName = ? AND Password = ?";
+        try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1,user);
-            st.setString(2,pass);
+            st.setString(1, user);
+            st.setString(2, pass);
             ResultSet rs = st.executeQuery();
-            while(rs.next()){
-                return new Account(rs.getInt(1),
-                rs.getString(2),
-                rs.getString(3),
-                rs.getString(4),
-                rs.getString(5),
-                rs.getString(6),
-                rs.getInt(7));
+            if (rs.next()) { // Check if there is at least one result
+                Account a = new Account(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getInt(7),
+                        rs.getBoolean(8));
+                // Check if the account is banned
+                if (!a.isStatus()) {
+                    return new LoginResponse(null, "Your account has been banned.");
+                }
+                return new LoginResponse(a, "Login successful.");
+            } else {
+                return new LoginResponse(null, "Wrong username or password.");
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return new LoginResponse(null, "An error occurred during login.");
         }
-        return null;
     }
     public void signup(String user, String pass, String name, String email, String phone) {
-        String sql = "INSERT INTO Account (UserName, Password, FullName, Email, PhoneNumber, RoleID) VALUES (?, ?, ?, ?, ?, 3)";
+        String sql = "INSERT INTO Account (UserName, Password, FullName, Email, PhoneNumber, RoleID, Status) VALUES (?, ?, ?, ?, ?, 3, 1)";
         try{
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1,user);
@@ -246,6 +248,5 @@ public Account getAccountById(int id) {
         } catch (Exception e) {
         }
     }
-
 
 }

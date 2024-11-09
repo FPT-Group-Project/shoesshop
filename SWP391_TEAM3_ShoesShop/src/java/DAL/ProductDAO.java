@@ -463,7 +463,6 @@ public class ProductDAO extends DBContext{
         }
         return filtered;
     }
-    
     //Return a list of products sold the most
     public List<Product> getBestSellerProducts(int n){
         List<Product> list=new ArrayList<>();

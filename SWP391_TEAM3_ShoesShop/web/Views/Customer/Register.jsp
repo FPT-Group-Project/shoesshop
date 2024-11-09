@@ -30,6 +30,7 @@
                 </c:if>
                 <input name="user" type="text" id="inputUser" class="form-control" placeholder="User name" required="" autofocus="">
                 <input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Password" required autofocus="">
+                <input name="repass" type="password" id="inputPassword" class="form-control" placeholder="Re-password" required autofocus="">
                 <input name="name" type="text" id="inputName" class="form-control" placeholder="Full name" required="" autofocus="">
                 <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
                 <input name="phone" type="text" id="inputPhone" class="form-control" placeholder="Phone number" required="" autofocus="">

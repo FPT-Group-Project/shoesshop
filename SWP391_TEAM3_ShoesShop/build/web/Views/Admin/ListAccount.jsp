@@ -162,7 +162,7 @@
                                         <li><a class="dropdown-item" href="account.html">Account</a></li>
                                         <li><a class="dropdown-item" href="settings.html">Settings</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="login">Log Out</a></li>
+                                        <li><a class="dropdown-item" href="logout">Log Out</a></li>
                                     </ul>
                                 </div><!--//app-user-dropdown--> 
                             </div><!--//app-utilities-->
@@ -288,7 +288,7 @@
                                         <path fill-rule="evenodd" d="M6 1H1v3h5V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12h-5v3h5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5zM6 8H1v7h5V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H1zm14-6h-5v7h5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1h-5z"/>
                                         </svg>
                                     </span>
-                                    <span class="nav-link-text">External</span>
+                                    <span class="nav-link-text">Statistics</span>
                                     <span class="submenu-arrow">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
@@ -297,23 +297,22 @@
                                 </a><!--//nav-link-->
                                 <div id="submenu-2" class="collapse submenu submenu-2" data-bs-parent="#menu-accordion">
                                     <ul class="submenu-list list-unstyled">
-                                        <li class="submenu-item"><a class="submenu-link" href="login.html">Login</a></li>
-                                        <li class="submenu-item"><a class="submenu-link" href="signup.html">Signup</a></li>
-                                        <li class="submenu-item"><a class="submenu-link" href="reset-password.html">Reset password</a></li>
-                                        <li class="submenu-item"><a class="submenu-link" href="404.html">404 page</a></li>
+                                        <li class="submenu-item"><a class="submenu-link" href="MonthRevenue">Month revenue</a></li>
+                                        <li class="submenu-item"><a class="submenu-link" href="WeekRevenue">Week revenue</a></li>
+                                        <li class="submenu-item"><a class="submenu-link" href="MonthQuantity">Month quantity</a></li>
+                                        <li class="submenu-item"><a class="submenu-link" href="WeekQuantity">Week quantity</a></li>
                                     </ul>
                                 </div>
                             </li><!--//nav-item-->
-
                             <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link" href="charts.html">
+                                <a class="nav-link" href="Top10Products">
                                     <span class="nav-icon">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
+                                           <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
                                         </svg>
                                     </span>
-                                    <span class="nav-link-text">Charts</span>
+                                    <span class="nav-link-text">Top 10 Products</span>
                                 </a><!--//nav-link-->
                             </li><!--//nav-item-->
                             <li class="nav-item">
@@ -383,7 +382,7 @@
 
                     <div class="row g-3 mb-4 align-items-center justify-content-between">
                         <div class="col-auto">
-                            <h1 class="app-page-title mb-0">Orders</h1>
+                            <h1 class="app-page-title mb-0">Accounts</h1>
                         </div>
                         <div class="col-auto">
                             <div class="page-utilities">
@@ -459,11 +458,18 @@
                                                             <td>${account.fullName}</td>
                                                             <td>${account.email}</td> 
                                                             <td>${account.phoneNumber}</td> 
-                                                              <td> 
+                                                            <td>
                                                                   <button>  <a class="btn-sm app-btn-danger" href="DeleteAccountController?id=${account.accountID}" onclick="return confirm('Are you sure you want to delete this account?Delete');">Delete</a></button>
-                                                                    <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Detail</a></button>
-
-                                                              </td> 
+                                                                  <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Detail</a></button>                                                               
+    <c:choose>
+        <c:when test="${account.status == true}">
+            <button><a class="btn-sm app-btn-danger" href="BanAccount?id=${account.accountID}" onclick="return confirm('Are you sure you want to ban this account?');">Ban</a></button>
+        </c:when>
+        <c:when test="${account.status == false}">
+            <button><a class="btn-sm app-btn-danger" href="UnbanAccount?id=${account.accountID}" onclick="return confirm('Are you sure you want to unban this account?');">Unban</a></button>
+        </c:when>
+    </c:choose>
+                                                            </td>
                                                         
                                                         </tr>
                                                     </c:forEach>
@@ -659,7 +665,5 @@
         <script src="assets/plugins/popper.min.js"></script>
         <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
         <script src="assets/js/app.js"></script> 
-
     </body>
 </html> 
-

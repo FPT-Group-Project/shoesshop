@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
+import Models.LoginResponse;
 /**
  *
  * @author vh69
@@ -54,6 +55,17 @@ public class LoginControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession(false); // Do not create a new session
+    if (session != null && session.getAttribute("acc") != null) {
+        // User is already logged in, redirect to home or dashboard
+        Account account = (Account) session.getAttribute("acc");
+        if (account.getRoleID() == 1) {
+            response.sendRedirect("AccoutListController"); // Redirect to admin page
+        } else {
+            response.sendRedirect("home"); // Redirect to user home page
+        }
+    } else {
+        // No session or user not logged in, proceed to show the login page
         Cookie arr[] = request.getCookies();
         if (arr != null) {
             for (Cookie o : arr) {
@@ -66,6 +78,7 @@ public class LoginControl extends HttpServlet {
             }
         }
         request.getRequestDispatcher("Views/Customer/Login.jsp").forward(request, response);
+    }
     } 
 
     /** 
@@ -79,49 +92,45 @@ public class LoginControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("user");
-        String password = request.getParameter("pass");
-        String remember = request.getParameter("remember");
-        AccountDAO dao = new AccountDAO();
-        Account a = dao.login(username, password);
-        if (a == null) {
-            request.setAttribute("error", "Wrong username or password!");
-            request.getRequestDispatcher("Views/Customer/Login.jsp").forward(request, response);
-        } else {
-            if (a.getRoleID()==1){
-                HttpSession session = request.getSession();
-                session.setAttribute("acc", a);
-                session.setMaxInactiveInterval(60 * 60 * 24);
-                Cookie u = new Cookie("userC", username);
-                Cookie p = new Cookie("passC", password);
-                if (remember != null) {
-                    p.setMaxAge(60 * 60 * 24);
-                } else {
-                    p.setMaxAge(0);
-                }
-                u.setMaxAge(60 * 60 * 24 * 365);
-                response.addCookie(u);
-                response.addCookie(p);
-                response.sendRedirect("AccoutListController");
+    String username = request.getParameter("user");
+    String password = request.getParameter("pass");
+    String remember = request.getParameter("remember");
+    
+    AccountDAO dao = new AccountDAO();
+    LoginResponse loginResponse = dao.login(username, password);
 
-            }
-            else{
-                HttpSession session = request.getSession();
-                session.setAttribute("acc", a);
-                session.setMaxInactiveInterval(60 * 60 * 24);
-                Cookie u = new Cookie("userC", username);
-                Cookie p = new Cookie("passC", password);
-                if (remember != null) {
-                    p.setMaxAge(60 * 60 * 24);
-                } else {
-                    p.setMaxAge(0);
-                }
-                u.setMaxAge(60 * 60 * 24 * 365);
-                response.addCookie(u);
-                response.addCookie(p);
-                response.sendRedirect("home");
-            }
+    if (loginResponse.getAccount() == null) { 
+        // Handle the case where login failed
+        request.setAttribute("error", loginResponse.getMessage());
+        request.getRequestDispatcher("Views/Customer/Login.jsp").forward(request, response);
+    } else { 
+        // Authentication successful
+        Account a = loginResponse.getAccount();
+        HttpSession session = request.getSession();
+        
+        session.setMaxInactiveInterval(60 * 60 * 24); // Session timeout in seconds
+
+        // Manage cookies for "remember me" functionality
+        Cookie u = new Cookie("userC", username);
+        Cookie p = new Cookie("passC", password);
+        if (remember != null) {
+            p.setMaxAge(60 * 60 * 24); // 1 day
+        } else {
+            p.setMaxAge(0); // Delete cookie
         }
+        u.setMaxAge(60 * 60 * 24 * 365); // 1 year
+        response.addCookie(u);
+        response.addCookie(p);
+
+        // Redirect based on the user's role
+        if (a.getRoleID() == 1) {
+            session.setAttribute("acc", a);
+            response.sendRedirect("AccoutListController"); // Admin redirection
+        } else {
+            session.setAttribute("acc", a);
+            response.sendRedirect("home"); // Regular user redirection
+        }
+    }
     }
 
     /** 

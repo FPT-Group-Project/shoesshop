@@ -82,7 +82,7 @@
                                     <li><a href="women.html">Women</a></li>
                                     <li><a href="about.html">About</a></li>
                                     <li><a href="contact">Contact</a></li>
-                                    <c:if test="${sessionScope.acc!=null}">
+                                    <c:if test="${sessionScope.account!=null}">
                                         <li class="logout">
                                             <a href="logout">Logout</a>
                                         </li>
@@ -139,7 +139,7 @@
                                         <input type="text" class="form-control" value="${account.getFullName()}" name="name" id="ufullname">
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="labels">Mobile Number</label>
+                                        <label class="labels">Phone Number</label>
                                         <input type="text" class="form-control"  value="${account.getPhoneNumber()}" name="phone" id="uphone">
                                     </div>
                                     <div class="col-md-12">
@@ -197,9 +197,6 @@
                         <div class="mt-5 text-center">
                             <button class="btn btn-primary profile-button" type="submit" onclick="savePassword()" name="update" value="password">Save Password</button>
                             <button class="btn btn-secondary profile-button" type="button" onclick="closePasswordModal()">Cancel</button>
-                        </div>
-                        <div class="mt-5 text-center">
-                            <a href="forgot">Forget Password?</a>
                         </div>
                     </form>
                 </div>
@@ -373,7 +370,7 @@
                     return false;
                 }
                 if ((phoneNumber) === "" || phoneNumber.trim() === "") {
-                    alert("Please input numberphone before update !!!");
+                    alert("Please input phone number before update !!!");
                     return false;
                 }
                 if ((email) === "" || email.trim() === "") {
@@ -383,9 +380,9 @@
 
                 // Kiểm tra số điện thoại là số nguyên dương
                 // Kiểm tra số điện thoại là số nguyên dương và có đúng 10 chữ số
-                var phoneNumberRegex = /^[0-9]\d{9}$/;
+                var phoneNumberRegex = /^0\d{9}$/;
                 if (!phoneNumberRegex.test(phoneNumber)) {
-                    alert("Mobile number must be a positive integer with exactly 10 digits!");
+                    alert("Phone number must be a positive integer with exactly 10 digits and started with 0!");
                     return false;
                 }
                 //check email
@@ -394,12 +391,7 @@
                     alert("Please enter a valid email address!");
                     return false;
                 }
-
-
-
             }
-
         </script>
-
     </body>
 </html>

@@ -28,6 +28,34 @@
         <servlet-name>displayAllProducts</servlet-name>
         <servlet-class>Controllers.displayAllProducts</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BanAccount</servlet-name>
+        <servlet-class>ControllersAdmin.BanAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WeekRevenue</servlet-name>
+        <servlet-class>ControllersAdmin.WeekRevenue</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MonthRevenue</servlet-name>
+        <servlet-class>ControllersAdmin.MonthRevenue</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UnbanAccount</servlet-name>
+        <servlet-class>ControllersAdmin.UnbanAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Top10Products</servlet-name>
+        <servlet-class>ControllersAdmin.Top10Products</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MonthQuantity</servlet-name>
+        <servlet-class>ControllersAdmin.MonthQuantity</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WeekQuantity</servlet-name>
+        <servlet-class>ControllersAdmin.WeekQuantity</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>home</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -143,5 +171,33 @@
     <servlet-mapping>
         <servlet-name>showCoupons</servlet-name>
         <url-pattern>/showCoupons</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BanAccount</servlet-name>
+        <url-pattern>/BanAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WeekRevenue</servlet-name>
+        <url-pattern>/WeekRevenue</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MonthRevenue</servlet-name>
+        <url-pattern>/MonthRevenue</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UnbanAccount</servlet-name>
+        <url-pattern>/UnbanAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Top10Products</servlet-name>
+        <url-pattern>/Top10Products</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MonthQuantity</servlet-name>
+        <url-pattern>/MonthQuantity</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WeekQuantity</servlet-name>
+        <url-pattern>/WeekQuantity</url-pattern>
     </servlet-mapping>
 </web-app>

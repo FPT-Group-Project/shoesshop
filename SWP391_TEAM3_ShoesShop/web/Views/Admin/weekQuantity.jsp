@@ -1,10 +1,13 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="Models.ProductAdmin" %> 
+<%-- 
+    Document   : weekQuantity
+    Created on : Nov 8, 2024, 8:22:23 PM
+    Author     : vh69
+--%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en"> 
+<html>
     <head>
         <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
 
@@ -22,17 +25,52 @@
         <!-- App CSS -->  
         <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
         <style>
-            .d-flex {
-                display: flex;
-                justify-content: center; /* Căn giữa theo chiều ngang */
-                align-items: center; /* Căn giữa theo chiều dọc (nếu cần) */
-                height: 100vh; /* Đặt chiều cao của div cha nếu cần */
+            body {
+                margin: 0;
+                padding: 0;
             }
         </style>
-    </head> 
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb5/3.8.1/compiled.min.css"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css"><style>body {
+                background-color: #fbfbfb;
+            }
+            @media (min-width: 991.98px) {
+                main {
+                    padding-left: 240px;
+                }
+            }
+            /* Sidebar */
+            .sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                padding: 58px 0 0; /* Height of navbar */
+                box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+                width: 240px;
+                z-index: 600;
+            }
 
+            @media (max-width: 991.98px) {
+                .sidebar {
+                    width: 100%;
+                }
+            }
+            .sidebar .active {
+                border-radius: 5px;
+                box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+            }
 
-    <body class="app">   	
+            .sidebar-sticky {
+                position: relative;
+                top: 0;
+                height: calc(100vh - 48px);
+                padding-top: 0.5rem;
+                overflow-x: hidden;
+                overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+           }
+           </style>
+    </head>
+    <body class="app">
         <header class="app-header fixed-top">	   	            
             <div class="app-header-inner">  
                 <div class="container-fluid py-2">
@@ -195,7 +233,7 @@
 
                             <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link active" href="AccoutListController">
+                                <a class="nav-link" href="AccoutListController">
                                     <span class="nav-icon">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 
@@ -300,7 +338,7 @@
                                         <li class="submenu-item"><a class="submenu-link" href="MonthRevenue">Month revenue</a></li>
                                         <li class="submenu-item"><a class="submenu-link" href="WeekRevenue">Week revenue</a></li>
                                         <li class="submenu-item"><a class="submenu-link" href="MonthQuantity">Month quantity</a></li>
-                                        <li class="submenu-item"><a class="submenu-link" href="WeekQuantity">Week quantity</a></li>
+                                        <li class="submenu-item"><a class="submenu-link active" href="WeekQuantity">Week quantity</a></li>
                                     </ul>
                                 </div>
                             </li><!--//nav-item-->
@@ -374,296 +412,125 @@
                 </div><!--//sidepanel-inner-->
             </div><!--//app-sidepanel-->
         </header><!--//app-header-->
+            <!--Main layout-->
+            <main>
+                <div class="container pt-4">
 
-        <div class="app-wrapper">
-
-            <div class="app-content pt-3 p-md-3 p-lg-4">
-                <div class="container-xl">
-
-                    <div class="row g-3 mb-4 align-items-center justify-content-between">
-                        <div class="col-auto">
-                            <h1 class="app-page-title mb-0">Accounts</h1>
+                    <!-- Section: Main chart -->
+                    <section class="mb-4" id="doanhThuThu">
+                        <div class="card">
+                            <div class="card-header py-3">
+                                <h3 class="mb-0 text-center">
+                                    <strong>Quantity by week</strong>
+                                    <form id="f1" method="get" action="WeekQuantity">
+                                        <select name="year" class="form-control" id="dropdownYear" style="width: 120px;">
+                                        <c:set var="currentYear" value="2024"/>
+                                        <c:set var="endYear" value="2018"/>
+                                        <c:forEach var="year" begin="0" end="${currentYear - endYear}">
+                                            <option ${requestScope.year == (currentYear - year) ? "selected" : ""} value="${currentYear - year}">${currentYear - year}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                    <input style="width: 200px;" value="" type="week" class="form-control" id="weekInput" onclick="setDefaultWeek()">
+                                    <input value="" type="hidden" class="form-control" name="from" id="from">
+                                    <input value="" type="hidden" class="form-control" name="to" id="to">
+                                    <input value="" type="hidden" class="form-control" name="month" id="month">
+                                    <button style="width: 100px; padding: 0" class="form-control" type="button" onclick="submitForm()">Submit</button>
+                                </form>
+                            </h3>
                         </div>
-                        <div class="col-auto">
-                            <div class="page-utilities">
-                                <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-                                    <div class="col-auto" style="margin: 0 auto;display: flex;margin-right: 50px;">
-                                        <form class="table-search-form row gx-1 align-items-center" method="get" action="AccoutListController" style="margin: 0 auto;">
-                                            <div class="col-auto">
-                                                <input type="text" placeholder="Search..." name="keyW" value="${param.keyW}" class="form-control search-orders">
-                                            </div>
-                                            <div class="col-auto">
-                                                <select name="role" class="">
-                                                    <option value="1" ${param.role == '1' ? 'selected' : ''}>Role admin</option>
-                                                    <option value="2" ${param.role == '2' ? 'selected' : ''}>Role staff</option>
-                                                    <option value="3" ${param.role == '3' ? 'selected' : ''}>Role customer</option>
-                                                    <option value="4" ${param.role == '3' ? 'selected' : ''}>Role Guest</option>
-
-                                                </select>
-                                            </div>
-                                            <input type="hidden" name="page" value="1">		
-                                            <div class="col-auto">
-                                                <button type="submit" class="btn search-btn btn-primary" value="Search">
-                                                    Submit <i class="fa-solid fa-magnifying-glass"></i>
-                                                </button>					
-                                            </div>
-                                        </form>
-
-                                    </div><!--//col-->
-                                    <!--//col-->
-
-
-                                    <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="manageAccount">
-
-                                            Add New
-                                        </a>
-                                    </div>
-                                </div><!--//row-->
-                            </div><!--//table-utilities-->
-                        </div><!--//col-auto-->
-                    </div><!--//row-->
-
-
-                   <c:if test="${not empty message}">
-                        <div class="alert alert-success" role="alert">
-                            ${message}
+                        <div class="card-body">
+                            <canvas class="my-4 w-100" id="pieChart" height="380"></canvas>
                         </div>
-                    </c:if>
+                    </div>
+                </section>
+                <!-- Section: Main chart -->
+            </div>
+        </main>
 
-
-                    <div class="tab-content" id="orders-table-tab-content">
-                        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
-                            <div class="app-card app-card-orders-table shadow-sm mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table app-table-hover mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">AccountID</th>
-                                                    <th class="cell">UserName</th>
-                                                    <th class="cell">FullName</th>
-                                                    <th class="cell">Email</th>
-                                                    <th class="cell">PhoneNumber</th>
-                                                    <th class="cell">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- Kiểm tra xem danh sách tài khoản có trống không -->
-                                                <c:if test="${not empty accList}">
-                                                    <c:forEach var="account" items="${accList}">
-                                                        <tr>
-                                                            <td>${account.accountID}</td>
-                                                            <td><span class="truncate">${account.userName}</span></td>
-                                                            <td>${account.fullName}</td>
-                                                            <td>${account.email}</td> 
-                                                            <td>${account.phoneNumber}</td> 
-                                                            <td>
-                                                                  <button>  <a class="btn-sm app-btn-danger" href="DeleteAccountController?id=${account.accountID}" onclick="return confirm('Are you sure you want to delete this account?Delete');">Delete</a></button>
-                                                                  <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Detail</a></button>                                                               
-    <c:choose>
-        <c:when test="${account.status == true}">
-            <button><a class="btn-sm app-btn-danger" href="BanAccount?id=${account.accountID}" onclick="return confirm('Are you sure you want to ban this account?');">Ban</a></button>
-        </c:when>
-        <c:when test="${account.status == false}">
-            <button><a class="btn-sm app-btn-danger" href="UnbanAccount?id=${account.accountID}" onclick="return confirm('Are you sure you want to unban this account?');">Unban</a></button>
-        </c:when>
-    </c:choose>
-                                                            </td>
-                                                        
-                                                        </tr>
-                                                    </c:forEach>
-                                                </c:if>
-                                                <!-- Nếu danh sách trống, hiển thị thông báo -->
-                                                <c:if test="${empty accList}">
-                                                    <tr>
-                                                        <td colspan="7" class="cell">No accounts found.</td>
-                                                    </tr>
-                                                </c:if>
-                                            </tbody>
-                                        </table>
-
-                                    </div><!--//table-responsive-->
-
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                            <nav class="app-pagination">
-                                <ul class="pagination justify-content-center">
-                                    <!-- Nút Previous -->
-                                    <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
-                                        <a class="page-link" href="?page=${currentPage - 1}" tabindex="-1" aria-disabled="true">Previous</a>
-                                    </li>
-
-                                    <!-- Lặp qua các số trang -->
-                                    <c:forEach var="i" begin="1" end="${totalPages}">
-                                        <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                            <a class="page-link" href="?keyW=${keyW}&role=${role}&page=${i}">${i}</a>
-                                        </li>
-                                    </c:forEach>
-
-                                    <!-- Nút Next -->
-                                    <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
-                                        <a class="page-link" href="?page=${currentPage + 1}">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <!--//app-pagination-->
-
-                        </div><!--//tab-pane-->
-
-                        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">#15346</td>
-                                                    <td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-                                                    <td class="cell">John Sanders</td>
-                                                    <td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$259.35</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="cell">#15344</td>
-                                                    <td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-                                                    <td class="cell">Teresa Holland</td>
-                                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$123.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="cell">#15343</td>
-                                                    <td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-                                                    <td class="cell">Jayden Massey</td>
-                                                    <td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$199.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-
-                                                <tr>
-                                                    <td class="cell">#15341</td>
-                                                    <td class="cell"><span class="truncate">Morbi vulputate lacinia neque et sollicitudin</span></td>
-                                                    <td class="cell">Raymond Atkins</td>
-                                                    <td class="cell"><span class="cell-data">11 Oct</span><span class="note">11:18 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                                    <td class="cell">$678.26</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-
-                        <div class="tab-pane fade" id="orders-pending" role="tabpanel" aria-labelledby="orders-pending-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">#15345</td>
-                                                    <td class="cell"><span class="truncate">Consectetur adipiscing elit</span></td>
-                                                    <td class="cell">Dylan Ambrose</td>
-                                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">03:16 AM</span></td>
-                                                    <td class="cell"><span class="badge bg-warning">Pending</span></td>
-                                                    <td class="cell">$96.20</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-                        <div class="tab-pane fade" id="orders-cancelled" role="tabpanel" aria-labelledby="orders-cancelled-tab">
-                            <div class="app-card app-card-orders-table mb-5">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0 text-left">
-                                            <thead>
-                                                <tr>
-                                                    <th class="cell">Order</th>
-                                                    <th class="cell">Product</th>
-                                                    <th class="cell">Customer</th>
-                                                    <th class="cell">Date</th>
-                                                    <th class="cell">Status</th>
-                                                    <th class="cell">Total</th>
-                                                    <th class="cell"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <tr>
-                                                    <td class="cell">#15342</td>
-                                                    <td class="cell"><span class="truncate">Justo feugiat neque</span></td>
-                                                    <td class="cell">Reina Brooks</td>
-                                                    <td class="cell"><span class="cell-data">12 Oct</span><span class="note">04:23 PM</span></td>
-                                                    <td class="cell"><span class="badge bg-danger">Cancelled</span></td>
-                                                    <td class="cell">$59.00</td>
-                                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div><!--//table-responsive-->
-                                </div><!--//app-card-body-->		
-                            </div><!--//app-card-->
-                        </div><!--//tab-pane-->
-                    </div><!--//tab-content-->
-
-
-
-                </div><!--//container-fluid-->
-            </div><!--//app-content-->
-
-            <footer class="app-footer">
-                <div class="container text-center py-3">
-                    <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-                    <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-
-                </div>
-            </footer><!--//app-footer-->
-
-        </div><!--//app-wrapper-->    					
-
-
-        <!-- Javascript -->          
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!--Main layout-->
+        <!-- SCRIPTS -->
+        <!-- JQuery -->
+        <script src="https://mdbootstrap.com/previews/ecommerce-demo/js/jquery-3.4.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/bootstrap.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.min.js"></script>
+        <!-- MDB Ecommerce JavaScript -->
+        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.ecommerce.min.js"></script>
+        <!-- MDB -->
+        <script type="text/javascript" src="js/mdb.min.js"></script>
+        <!-- Custom scripts -->
+        <script type="text/javascript" src="js/script.js"></script>
         <script src="assets/plugins/popper.min.js"></script>
         <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
         <script src="assets/js/app.js"></script> 
+        <script src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Free_3.8.1/js/mdb.min.js"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+        <script type="text/javascript">// Graph
+                                        var ctxP = document.getElementById("pieChart").getContext('2d');
+
+                                        var myPieChart = new Chart(ctxP, {
+                                            type: 'pie',
+                                            data: {
+                                                labels: ["Sunday", "Saturday", "Friday", "Thursday", "Wednesday", "Tuesday", "Monday"],
+                                                datasets: [{
+                                                        data: [${totalQuantity1}, ${totalQuantity7}, ${totalQuantity6}, ${totalQuantity5}, ${totalQuantity4}, ${totalQuantity3}, ${totalQuantity2}],
+                                                        backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360", "#1874CD", "#CDB5CD"],
+                                                        hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774", "#1E90FF", "#FFE1FF"]
+                                                    }]
+                                            },
+                                            options: {
+                                                responsive: true
+                                            }
+                                        });
+
+                                        function submitForm(obj) {
+                                            var year = document.getElementById("dropdownYear").value;
+                                            const weekInput = document.getElementById('weekInput');
+                                            const selectedWeek = weekInput.value;
+                                            const [, week] = selectedWeek.split('-W');
+                                            const startDate = getDateFromWeek(year, parseInt(week));
+                                            const endDate = new Date(startDate);
+                                            endDate.setDate(startDate.getDate() + 6);
+                                            const month = startDate.toLocaleString('en-US', {month: 'long'});
+                                            const monthNumber = getMonthNumber(month);
+                                            const startDay = startDate.getDate();
+                                            const endDay = endDate.getDate();
+                                            document.getElementById("from").value = startDay;
+                                            document.getElementById("to").value = endDay;
+                                            document.getElementById("month").value = monthNumber;
+                                            document.getElementById("f1").submit();
+                                        }
+                                        function getDateFromWeek(year, week) {
+                                            const januaryFourth = new Date(year, 0, 4);
+                                            const daysToAdd = (week - 1) * 7;
+                                            januaryFourth.setDate(januaryFourth.getDate() + daysToAdd - januaryFourth.getDay() + 1);
+                                            return januaryFourth;
+                                        }
+                                        function getMonthNumber(monthName) {
+                                            const monthsMap = {
+                                                'January': 1,
+                                                'February': 2,
+                                                'March': 3,
+                                                'April': 4,
+                                                'May': 5,
+                                                'June': 6,
+                                                'July': 7,
+                                                'August': 8,
+                                                'September': 9,
+                                                'October': 10,
+                                                'November': 11,
+                                                'December': 12
+                                            };
+                                            return monthsMap[monthName];
+                                        }
+
+        </script>
+        <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-plugins-gathered.min.js"></script>
+        <!-- MDB -->
+        <script type="text/javascript" src="js/mdb.min.js"></script>
     </body>
-</html> 
+</html>

@@ -3,20 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controllers;
-
+package ControllersAdmin;
+import DAL.ListProductAdminDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.List;
+import Models.TopQuantity;
+import java.util.Map;
+
 /**
  *
  * @author vh69
  */
-public class LogoutControl extends HttpServlet {
+public class Top10Products extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -28,9 +32,12 @@ public class LogoutControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        session.invalidate();
-        response.sendRedirect("home");
+        ListProductAdminDao dao = new ListProductAdminDao();
+        List<Map<String, Object>> list = dao.getTop10SellerProduct();
+        int listTop10Product = list.size();
+        request.setAttribute("list", list);
+        request.setAttribute("listTop10Product", listTop10Product);
+        request.getRequestDispatcher("Views/Admin/top10Sellers.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -45,7 +52,8 @@ public class LogoutControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
+    
 
     /** 
      * Handles the HTTP <code>POST</code> method.

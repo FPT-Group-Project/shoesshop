@@ -4,7 +4,7 @@
  */
 package DAL;
 
-import Models.AccountAdmin;
+import Models.Account;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,10 +15,10 @@ import java.util.List;
 
 public class ListAccountDao extends DBContext {
 
-    public List<AccountAdmin> getListAccounts(int page, int roleID, String keyWord) {
+    public List<Account> getListAccounts(int page, int roleID, String keyWord) {
         int itemDisplay = 5; // số lượng item 
         int offset = (page - 1) * itemDisplay; //
-        List<AccountAdmin> listAccounts = new ArrayList<>();
+        List<Account> listAccounts = new ArrayList<>();
 
         // SQL query chỉnh sửa
         String sql = "SELECT \n"
@@ -28,7 +28,7 @@ public class ListAccountDao extends DBContext {
                 + "    FullName,\n"
                 + "    Email,\n"
                 + "    PhoneNumber,\n"
-                + "    RoleID\n"
+                + "    RoleID, Status\n"
                 + "FROM \n"
                 + "    [dbo].[Account]\n"
                 + "WHERE RoleID = ?\n"
@@ -46,14 +46,16 @@ public class ListAccountDao extends DBContext {
             // Thực thi truy vấn
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                AccountAdmin acc = new AccountAdmin(
+                Account acc = new Account(
                         rs.getInt("AccountID"),
                         rs.getString("UserName"),
                         rs.getString("Password"),
                         rs.getString("FullName"),
                         rs.getString("Email"),
                         rs.getString("PhoneNumber"),
-                        rs.getInt("RoleID")
+                        rs.getInt("RoleID"),
+                        rs.getBoolean("Status")
+                        
                 );
                 listAccounts.add(acc);
             }
@@ -64,10 +66,10 @@ public class ListAccountDao extends DBContext {
         return listAccounts;
     }
 
-    public List<AccountAdmin> getListAccounts(int page, int roleID) {
+    public List<Account> getListAccounts(int page, int roleID) {
         int itemDisplay = 5; // Số lượng item trên mỗi trang
         int offset = (page - 1) * itemDisplay; // Tính offset cho phân trang
-        List<AccountAdmin> listAccounts = new ArrayList<>();
+        List<Account> listAccounts = new ArrayList<>();
 
         String sql = "SELECT \n"
                 + "    AccountID,\n"
@@ -76,7 +78,7 @@ public class ListAccountDao extends DBContext {
                 + "    FullName,\n"
                 + "    Email,\n"
                 + "    PhoneNumber,\n"
-                + "    RoleID\n"
+                + "    RoleID, Status\n"
                 + "FROM \n"
                 + "    [dbo].[Account]\n"
                 + "WHERE RoleID = ?\n"//1
@@ -91,14 +93,15 @@ public class ListAccountDao extends DBContext {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                AccountAdmin acc = new AccountAdmin(
+                Account acc = new Account(
                         rs.getInt("AccountID"),
                         rs.getString("UserName"),
                         rs.getString("Password"),
                         rs.getString("FullName"),
                         rs.getString("Email"),
                         rs.getString("PhoneNumber"),
-                        rs.getInt("RoleID")
+                        rs.getInt("RoleID"),
+                        rs.getBoolean("Status")
                 );
                 listAccounts.add(acc);
             }
@@ -174,8 +177,8 @@ public class ListAccountDao extends DBContext {
 
     public static void main(String[] args) {
         ListAccountDao accountDao = new ListAccountDao();
-        List<AccountAdmin> accounts = accountDao.getListAccounts(2, 2);
-        for (AccountAdmin account : accounts) {
+        List<Account> accounts = accountDao.getListAccounts(2, 2);
+        for (Account account : accounts) {
             System.out.println(account.toString());
         }
     }
