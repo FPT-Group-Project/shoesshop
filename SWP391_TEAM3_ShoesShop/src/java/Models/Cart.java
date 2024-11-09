@@ -4,6 +4,8 @@
  */
 package Models;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author thanh
@@ -17,8 +19,16 @@ public class Cart extends Product{
     private String image;// Có thể null
     private Product product;
     private Stock stock;
-
+    private BigDecimal discount;  // Thêm trường Discount
     public Cart() {
+    }
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
     }
 
     // Constructor

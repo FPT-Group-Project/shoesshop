@@ -252,18 +252,13 @@
                                 <ul>
                                     <li><a href="home">Home</a></li>
                                     <li class="has-dropdown">
-                                        <a href="men.html">Men</a>
-                                        <ul class="dropdown">
-                                            <li><a href="product-detail.html">Product Detail</a></li>
-                                            <li><a href="cart">Shopping Cart</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li>
-                                            <li><a href="order-complete.html">Order Complete</a></li>
-                                            <li><a href="add-to-wishlist.html">Wishlist</a></li>
-                                        </ul>
+                                        <a href="products?page=1">Product</a>
+                                        
                                     </li>
-                                    <li class="active"><a href="women.html">Women</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li class="active"><a href="orderHistory">Order History</a></li>
+                                    
+                                    <li><a href="contact">Contact</a></li>
+                                    <li><a href="ShowNews">News</a></li>
                                     <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
                                 </ul>
                             </div>
@@ -330,6 +325,11 @@
                                                 <div class="order-header">
                                                     <span class="shop-name">${order.orderDate}</span>
                                                     <span class="order-id">Order Code: ${order.orderID}</span>
+                                                   <span>
+    ${empty order.paymentStatus ? 'Thanh toán khi nhận hàng' : 'Paid'}
+</span>
+
+
                                                     <span class="order-status">
                                                         <c:choose>
                                                             <c:when test="${order.statusID == 1}">Pending</c:when>
@@ -341,8 +341,9 @@
                                                             <c:otherwise>Không xác định</c:otherwise>
                                                         </c:choose>
                                                     </span>
+                                                    
                                                 </div>
-
+ 
                                                 <!-- Thông tin sản phẩm trong đơn hàng -->
                                                 <div class="order-details">
                                                     <c:forEach var="detail" items="${order.orderDetails}">

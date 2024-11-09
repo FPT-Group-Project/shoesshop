@@ -5,6 +5,7 @@
 package DAL;
 
 import Models.UsedCoupon;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,12 +40,61 @@ public class UsedCouponDAO extends DBContext{
         }
         return list;
     }
+    public UsedCoupon getCouponByCodeName(String codeName) {
+        String query = "SELECT * FROM UsedCoupons WHERE CodeName = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, codeName);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int codeID = rs.getInt("CodeID");
+                String name = rs.getString("CodeName");
+                Double discount = rs.getDouble("Discount");
+                String couponType = rs.getString("CouponType");
+                int quantity = rs.getInt("Quantity");
+
+                return new UsedCoupon(codeID, name, discount, couponType, quantity);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;  // Không tìm thấy mã giảm giá
+    }
     
-    public static void main(String[] args){
-        UsedCouponDAO ucd=new UsedCouponDAO();
-        List<UsedCoupon> list=ucd.getAllUsedCoupons();
-        for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i).getCodeName());
+
+    public void updateCouponQuantity(String codeName, int newQuantity) {
+        String sql = "UPDATE UsedCoupons SET quantity = ? WHERE codeName = ?";
+        
+        try ( PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, newQuantity);
+            ps.setString(2, codeName);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-}
+
+
+    public static void main(String[] args){
+        UsedCouponDAO ucd=new UsedCouponDAO();
+          
+
+            // Gọi phương thức getCouponByCodeName để lấy thông tin mã giảm giá
+            String codeName = "FREESHIP";  // Thay đổi giá trị này với mã giảm giá bạn muốn tìm
+            UsedCoupon coupon = ucd.getCouponByCodeName(codeName);
+
+            // In ra thông tin mã giảm giá nếu tìm thấy
+            if (coupon != null) {
+                System.out.println("Coupon Found:");
+                System.out.println("Code ID: " + coupon.getCodeId());
+                System.out.println("Code Name: " + coupon.getCodeName());
+                System.out.println("Discount: " + coupon.getDiscount());
+                System.out.println("Coupon Type: " + coupon.getCouponType());
+                System.out.println("Quantity: " + coupon.getQuantity());
+            } else {
+                System.out.println("Coupon with code " + codeName + " not found.");
+            }
+        } 
+        }
+    
+
