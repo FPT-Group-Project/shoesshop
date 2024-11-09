@@ -186,11 +186,11 @@
                 <h2>Cart Total</h2>
                 <ul>
                     <li>
-                        <span>Subtotal</span> <span>${total}₫</span>
+                        <span>Subtotal</span> <span>${finalTotal}₫</span>
                     </li>
                     <li><span>Shipping</span> <span>${shipping}₫</span></li>
-                    <li><span>Order Total</span> <span>${total + shipping}₫</span></li>
-                    <input type="hidden" name="total" value="${total + shipping}"> <!-- Đảm bảo giá trị tổng được gửi đi -->
+                    <li><span>Order Total</span> <span>${finalTotal}₫</span></li>
+                    <input type="hidden" name="total" value="${finalTotal}"> <!-- Đảm bảo giá trị tổng được gửi đi -->
                 </ul>
             </div>
 

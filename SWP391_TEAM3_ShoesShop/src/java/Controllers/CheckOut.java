@@ -43,6 +43,9 @@ public class CheckOut extends HttpServlet {
             throws ServletException, IOException {
         CartDAO cartDAO = new CartDAO();
         //int accountId = 3; //CÓ LOGIN THÌ SỬA ĐOẠN NÀY THÀNH ID CỦA ACCOUNT
+         String finalTotalStr = request.getParameter("finalTotal");
+        double finalTotal = Double.parseDouble(finalTotalStr);
+         request.setAttribute("finalTotal", finalTotal);
          HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
             Integer accountId = acc.getAccountID();
@@ -103,7 +106,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
         }
 
         OrderDAO orderDAO = new OrderDAO();
-        int total = Integer.parseInt(request.getParameter("total"));
+double total = Double.parseDouble(request.getParameter("total")); // Parse as double
         String address = request.getParameter("address");
         String payment = request.getParameter("optradio"); // Lấy phương thức thanh toán từ "optradio"
 
