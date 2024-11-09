@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package ControllersAdmin;
-
+import jakarta.servlet.http.HttpSession;
 import DAL.ListAccountDao;
 import Models.AccountAdmin;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-
+import Models.Account;
 /**
  *
  * @author Tuan anh
@@ -58,34 +58,38 @@ public class AccoutListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String role = request.getParameter("role");
-        String keyW = request.getParameter("keyW");
-        String pageStr = request.getParameter("page");
+        HttpSession session = request.getSession();
+        Account a = (Account) session.getAttribute("acc");
+        if (a != null && a.getRoleID() == 1) { // Check if user is logged in and is an admin
+            String role = request.getParameter("role");
+            String keyW = request.getParameter("keyW");
+            String pageStr = request.getParameter("page");
+            int roleID = (role == null || role.isEmpty()) ? 1 : Integer.parseInt(role);
+            int page = (pageStr == null || pageStr.isEmpty()) ? 1 : Integer.parseInt(pageStr);
+            List<Account> listA;
+            ListAccountDao accountDao = new ListAccountDao();
+            int totalAcc = 0;
 
-        int roleID = (role == null || role.isEmpty()) ? 1 : Integer.parseInt(role);
-        int page = (pageStr == null || pageStr.isEmpty()) ? 1 : Integer.parseInt(pageStr);
-        List<AccountAdmin> listA;
-        ListAccountDao accountDao = new ListAccountDao();
-        int totalAcc=0;
-        if (keyW != null && !keyW.isEmpty()) {
-            listA = accountDao.getListAccounts(page, roleID, keyW);
-            totalAcc = accountDao.countAccounts( roleID, keyW);
+            if (keyW != null && !keyW.isEmpty()) {
+                listA = accountDao.getListAccounts(page, roleID, keyW);
+                totalAcc = accountDao.countAccounts(roleID, keyW);
+            } else {
+                listA = accountDao.getListAccounts(page, roleID);
+                totalAcc = accountDao.countAccounts(roleID);
+            }
+
+            int totalPages = (int) Math.ceil((double) totalAcc / 5);
+            request.setAttribute("role", role);
+            request.setAttribute("keyW", keyW);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("accList", listA);
+            request.getRequestDispatcher("Views/Admin/ListAccount.jsp").forward(request, response);
         } else {
-            listA = accountDao.getListAccounts(page, roleID);
-             totalAcc = accountDao.countAccounts(roleID);
+            response.sendRedirect("Views/Staff/404.html"); // Redirect to login if not logged in or not an admin
         }
-
-    
-        int totalPages = (int) Math.ceil((double) totalAcc / 5);
-        request.setAttribute("role", role);
-        request.setAttribute("keyW", keyW);
-
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("accList", listA);
-        request.getRequestDispatcher("Views/Admin/ListAccount.jsp").forward(request, response);
     }
      
 

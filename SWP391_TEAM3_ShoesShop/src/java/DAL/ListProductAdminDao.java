@@ -1,12 +1,14 @@
 package DAL;
-
+import Models.TopQuantity;
 import Models.ProductAdmin;
 import Models.Brand;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ListProductAdminDao extends DBContext {
     // xóa producct qua id
@@ -124,6 +126,36 @@ public void deleteAccountById(int accountID) {
         e.printStackTrace();
     }
 }
+public void updateStatus (int accountID) {
+        String sql = "UPDATE Account SET Status = 0 WHERE AccountID = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, accountID);
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Account has been successfully banned.");
+            } else {
+                System.out.println("No account found with the given ID.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+public void unban (int accountID) {
+        String sql = "UPDATE Account SET Status = 1 WHERE AccountID = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, accountID);
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Account has been successfully unbanned.");
+            } else {
+                System.out.println("No account found with the given ID.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 
   public int getQuantity(int productId) {
@@ -456,6 +488,127 @@ public List<ProductAdmin> getProductListForAdmin1(int page, Integer brandID) {
             e.printStackTrace();
         }
     }
-
-
+    public double totalMoneyMonth(int month, int year) {
+        String sql = "select SUM([TotalPrice]) from [Order]\r\n"
+                + "where MONTH([OrderDate])=? and year([OrderDate])=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, month);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public double totalQuantityMonth(int month, int year) {
+        String sql = "select SUM([Quantity]) from OrderDetail od JOIN [Order] o ON o.OrderID=od.OrderID\r\n"
+                + "where MONTH([OrderDate])=? and year([OrderDate])=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, month);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public double totalMoneyWeek(int day, int from, int to, int year, int month) {
+        String sql = "";
+        if (from > to) {
+            sql = "SELECT SUM(TotalPrice)\n"
+                    + "FROM [dbo].[Order]\n"
+                    + "WHERE ((DAY([OrderDate]) >= ? AND MONTH([OrderDate]) = ?) OR (DAY([OrderDate]) <= ? AND MONTH([OrderDate]) = ?)) AND YEAR([OrderDate]) = ? and DATEPART(dw,[OrderDate]) = ?";
+        } else {
+            sql = "SELECT SUM(TotalPrice)\n"
+                    + "from [dbo].[Order]\n"
+                    + "where day([OrderDate]) between ? and ? and month([OrderDate]) = ? and year([OrderDate])= ?  and DATEPART(dw,[OrderDate]) = ?";
+        }
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            if (from > to) {
+                st.setInt(1, from);
+                st.setInt(2, month);
+                st.setInt(3, to);
+                st.setInt(4, (month + 1));
+                st.setInt(5, year);
+                st.setInt(6, day);
+            } else {
+                st.setInt(1, from);
+                st.setInt(2, to);
+                st.setInt(3, month);
+                st.setInt(4, year);
+                st.setInt(5, day);
+            }
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    public double totalQuantityWeek(int day, int from, int to, int year, int month) {
+        String sql = "";
+        if (from > to) {
+            sql = "SELECT SUM(Quantity)\n"
+                    + "FROM [dbo].[OrderDetail] od join [Order] o ON o.OrderID=od.OrderID\n"
+                    + "WHERE ((DAY([OrderDate]) >= ? AND MONTH([OrderDate]) = ?) OR (DAY([OrderDate]) <= ? AND MONTH([OrderDate]) = ?)) AND YEAR([OrderDate]) = ? and DATEPART(dw,[OrderDate]) = ?";
+        } else {
+            sql = "SELECT SUM(Quantity)\n"
+                    + "FROM [dbo].[OrderDetail] od join [Order] o ON o.OrderID=od.OrderID\n"
+                    + "where day([OrderDate]) between ? and ? and month([OrderDate]) = ? and year([OrderDate])= ?  and DATEPART(dw,[OrderDate]) = ?";
+        }
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            if (from > to) {
+                st.setInt(1, from);
+                st.setInt(2, month);
+                st.setInt(3, to);
+                st.setInt(4, (month + 1));
+                st.setInt(5, year);
+                st.setInt(6, day);
+            } else {
+                st.setInt(1, from);
+                st.setInt(2, to);
+                st.setInt(3, month);
+                st.setInt(4, year);
+                st.setInt(5, day);
+            }
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    public List<Map<String, Object>> getTop10SellerProduct() {
+        List<Map<String, Object>> list = new ArrayList<>();
+        String sql = "SELECT TOP 10 p.ProductID, p.ProductName, SUM(od.Quantity) AS TotalQuantity\n"
+                + "FROM Product p JOIN OrderDetail od ON od.ProductID = p.ProductID\n"
+                + "GROUP BY p.ProductID, p.ProductName ORDER BY TotalQuantity DESC";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                row.put("ProductID", rs.getInt("ProductID"));
+                row.put("ProductName", rs.getString("ProductName"));
+                row.put("TotalQuantity", rs.getInt("TotalQuantity"));
+                list.add(row);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

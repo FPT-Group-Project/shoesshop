@@ -12,10 +12,21 @@ public class Account {
     private int accountID;
     private String userName,passWord,fullName,email,phoneNumber;
     private int roleID;
-
+    private boolean status;
     public Account() {
     }
 
+    public Account(int accountID, String userName, String passWord, String fullName, String email, String phoneNumber, int roleID, boolean status) {
+        this.accountID = accountID;
+        this.userName = userName;
+        this.passWord = passWord;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.roleID = roleID;
+        this.status = status;
+    }
+    
     public Account(int accountID, String userName, String passWord, String fullName, String email, String phoneNumber, int roleID) {
         this.accountID = accountID;
         this.userName = userName;
@@ -80,6 +91,14 @@ public class Account {
 
     public void setRoleID(int roleID) {
         this.roleID = roleID;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     

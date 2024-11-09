@@ -70,6 +70,7 @@ public class RegisterControl extends HttpServlet {
     throws ServletException, IOException {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
+        String repass = request.getParameter("repass");
         String email = request.getParameter("email");
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
@@ -104,6 +105,12 @@ public class RegisterControl extends HttpServlet {
             request.setAttribute("name", name);
             request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
         } 
+        else if (repass != pass){
+            request.setAttribute("error", "Repass must be the same as password");
+            request.setAttribute("user", user);
+            request.setAttribute("name", name);
+            request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
+        }
         else if (phonenum != null) {
             request.setAttribute("error", "Phone number already exists");
             request.setAttribute("user", user);
