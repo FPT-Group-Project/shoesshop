@@ -60,6 +60,21 @@ public class UsedCouponDAO extends DBContext{
         }
         return null;  // Không tìm thấy mã giảm giá
     }
+    
+
+    public void updateCouponQuantity(String codeName, int newQuantity) {
+        String sql = "UPDATE UsedCoupons SET quantity = ? WHERE codeName = ?";
+        
+        try ( PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, newQuantity);
+            ps.setString(2, codeName);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static void main(String[] args){
         UsedCouponDAO ucd=new UsedCouponDAO();
           

@@ -68,19 +68,14 @@
                             <div class="col-sm-12 text-left menu-1">
                                 <ul>
                                     <li><a href="home">Home</a></li>
-                                    <li class="has-dropdown active">
-                                        <a href="men.html">Men</a>
-                                        <ul class="dropdown">
-                                            <li><a href="product-detail.html">Product Detail</a></li>
-                                            <li><a href="cart">Shopping Cart</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li>
-                                            <li><a href="order-complete.html">Order Complete</a></li>
-                                            <li><a href="add-to-wishlist.html">Wishlist</a></li>
-                                        </ul>
+                                    <li class="has-dropdown">
+                                        <a href="products?page=1">Product</a>
+                                        
                                     </li>
-                                    <li><a href="women.html">Women</a></li>
-                                    <li><a href="about.html">About</a></li>
+                                    <li class="active"><a href="orderHistory">Order History</a></li>
+                                    
                                     <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="ShowNews">News</a></li>
                                     <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [${itemCount}]</a></li>
                                 </ul>
                             </div>
