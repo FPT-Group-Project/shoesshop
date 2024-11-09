@@ -399,12 +399,6 @@
                                             Add New
                                         </a>
                                     </div>
-                                      <div class="col-auto">						    
-                                        <a class="btn app-btn-secondary" href="addColor">
-
-                                            Add Color
-                                        </a>
-                                    </div>
                                 </div><!--//row-->
                             </div><!--//table-utilities-->
                         </div><!--//col-auto-->
@@ -445,16 +439,20 @@
                                                             <td>${product.quantity}</td>
                                                             <td>$${product.price}</td>
                                                             <td>${product.brandID.brandName}</td>  
-                                                     
+
                                                             <td>
-    <img src="${pageContext.request.contextPath}/ImageProductAvt/${product.avatarP}" alt="${product.productName}" style="width: 50px; height: 50px;" />
-</td>
+                                                                <img src="${pageContext.request.contextPath}/ImageProductAvt/${product.avatarP}" alt="${product.productName}" style="width: 50px; height: 50px;" />
+                                                            </td>
 
                                                             <td>
                                                                 <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Delete</a></button>
-                                                            <form action="manageStock" method="get" style="display:inline;">
+                                                                <form action="manageStock" method="get" style="display:inline;">
                                                                     <input type="hidden" name="productID" value="${product.productID}">
                                                                     <input type="submit" value="Update Stock">
+                                                                </form>
+                                                                <form action="editProduct" method="get" style="display:inline;">
+                                                                    <input type="hidden" name="productID" value="${product.productID}">
+                                                                    <input type="submit" value="Edit">
                                                                 </form>
                                                             </td>
                                                         </tr>

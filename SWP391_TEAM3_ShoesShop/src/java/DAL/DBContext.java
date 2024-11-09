@@ -14,12 +14,26 @@ public class DBContext {
             // Edit URL , username, password to authenticate with your MS SQL Server
             String url = "jdbc:sqlserver://localhost:1433;databaseName=ShopDatabase_Team3_1870";
             String username = "sa";
-            String password = "123";
+            String password = "123456";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException | SQLException ex) {
            ex.printStackTrace();
             System.out.println(ex);
+        }
+    }
+    
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error closing connection: " + ex);
         }
     }
     public static void main(String[] args) {
