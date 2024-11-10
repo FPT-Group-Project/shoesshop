@@ -81,7 +81,7 @@
 									</ul>
                                                                 </li>
                                                                 <li><a href="women.html">Women</a></li>
-                                                                <li class="active"><a href="about.html">News</a></li>
+                                                                <li class="active"><a href="ShowNews">News</a></li>
                                                                 <li><a href="contact.html">Contact</a></li>
                                                                 <li class="cart"><a href="cart.html"><i class="icon-shopping-cart"></i> Cart </a></li>
                                                         </ul>
@@ -193,7 +193,8 @@
             <c:forEach var="topNews" items="${newsListTop5}">
                 <div class="row">
                     <div class="col-md-2">
-                        <img src="${pageContext.request.contextPath}/ImageNews/mwc.jpg" alt="${topNews.title}" style="width: 40px; height: auto;" />
+                      <img src="${pageContext.request.contextPath}/ImageNews/${topNews.image}" alt="${topNews.title}" style="width: 40px;" />
+
                     </div>
                     <div class="col-md-8">
                         <div class="top-news-item">

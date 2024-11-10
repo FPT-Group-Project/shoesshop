@@ -473,6 +473,10 @@
                                                 }
                                             }
                                         });
+                                        function getYear(obj) {
+                                            var year = obj.value;
+                                            document.getElementById("f1").submit();
+                                        }
 
                                         function submitForm(obj) {
                                             var year = document.getElementById("dropdownYear").value;
@@ -481,7 +485,8 @@
                                             const [, week] = selectedWeek.split('-W');
                                             const startDate = getDateFromWeek(year, parseInt(week));
                                             const endDate = new Date(startDate);
-                                            endDate.setDate(startDate.getDate() + 6);/-strong/-heart:>:o:-((:-h const month = startDate.toLocaleString('en-US', {month: 'long'});
+                                            endDate.setDate(startDate.getDate() + 6);
+                                            const month = startDate.toLocaleString('en-US', {month: 'long'});
                                             const monthNumber = getMonthNumber(month);
                                             const startDay = startDate.getDate();
                                             const endDay = endDate.getDate();

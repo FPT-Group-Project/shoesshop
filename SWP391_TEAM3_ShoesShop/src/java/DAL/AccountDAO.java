@@ -24,7 +24,7 @@ public class AccountDAO extends DBContext {
             st.setString(1, user);
             st.setString(2, pass);
             ResultSet rs = st.executeQuery();
-            if (rs.next()) { // Check if there is at least one result
+            if (rs.next()) { 
                 Account a = new Account(rs.getInt(1), rs.getString(2), rs.getString(3),
                         rs.getString(4), rs.getString(5),
                         rs.getString(6), rs.getInt(7),

@@ -110,18 +110,14 @@ public class MessageDAO {
         public static void main(String[] args) {
         // Kết nối cơ sở dữ liệu
         try {
-            // Kết nối với database
-            DBContext dbContext = new DBContext(); // Hoặc dùng DriverManager nếu bạn cần tự thiết lập
+            DBContext dbContext = new DBContext(); 
             Connection connection = dbContext.getConnection();
             
-            // Khởi tạo MessageDAO
             MessageDAO messageDAO = new MessageDAO(connection);
             
-            // Gọi thử phương thức với customerId giả định
-            int customerId = 3; // Thay bằng ID cụ thể cần kiểm tra
+            int customerId = 3; 
             List<Message> messages = messageDAO.getMessagesByCustomerId(customerId);
             
-            // In ra các tin nhắn đã lấy được
             for (Message message : messages) {
                 System.out.println("Message ID: " + message.getMessageId());
                 System.out.println("Conversation ID: " + message.getConversationId());
