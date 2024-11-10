@@ -8,20 +8,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 @WebServlet(name = "OrderListServlet", urlPatterns = {"/orderList"})
 public class OrderListServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        OrderDAO orderDAO = new OrderDAO(); // Tạo đối tượng OrderDAO
-        List<Map<String, Object>> orders = orderDAO.getAllOrdersWithCustomerNames(); // Gọi phương thức DAO đã chỉnh sửa
-        
-        request.setAttribute("orders", orders); // Gán danh sách đơn hàng vào request attribute
-        request.getRequestDispatcher("/Views/Admin/orderList.jsp").forward(request, response); // Chuyển tiếp đến JSP
-    }
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    OrderDAO orderDAO = new OrderDAO(); // Tạo đối tượng OrderDAO
+    List<Map<String, Object>> orders = orderDAO.getAllOrdersWithCustomerNames(); // Gọi phương thức DAO đã chỉnh sửa
+
+    Collections.reverse(orders); // Đảo ngược thứ tự danh sách đơn hàng
+
+    request.setAttribute("orders", orders); // Gán danh sách đơn hàng vào request attribute
+    request.getRequestDispatcher("/Views/Admin/orderList.jsp").forward(request, response); // Chuyển tiếp đến JSP
+}
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

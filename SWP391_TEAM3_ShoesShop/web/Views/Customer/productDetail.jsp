@@ -202,7 +202,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-7 col-md-9">
-                                <div id="colorlib-logo"><a href="home">Footwear</a></div>
+                                <div id="colorlib-logo"><a href="home">Shoes Shop</a></div>
                             </div>
                             <div class="col-sm-5 col-md-3">
                                 <form action="search" method="GET" class="search-wrap">
@@ -284,7 +284,7 @@
                                             <div class="item">
                                                 <div class="product-entry border">
                                                     <a href="#" class="prod-img">
-                                                        <img src="ImageProductAvt/${p.getAvatarP()}" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                                                        <img src="ImageProductAvt/${p.getAvatarP()}"  style="height: 700px"class="img-fluid" alt="Free html5 bootstrap 4 template">
                                                     </a>
                                                 </div>
                                             </div>

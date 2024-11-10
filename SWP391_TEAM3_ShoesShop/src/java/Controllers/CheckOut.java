@@ -113,8 +113,8 @@ double total = Double.parseDouble(request.getParameter("total")); // Parse as do
         List<Cart> carts = cartDAO.getCartItemsByAccountId(accountId);
 
         // Thêm đơn hàng vào cơ sở dữ liệu
-double totalAmount = (double) total; // If total is an integer or another numeric type
-int addOrder = orderDAO.addOrder(acc.getAccountID(), address, totalAmount, "NULL");
+int totalAmount = (int) total; // If total is an integer or another numeric type
+int addOrder = orderDAO.addOrder(acc.getAccountID(), address, total, "NULL");
         boolean a2= orderDAO.addOrderDetails(addOrder, carts);
 boolean a1= orderDAO.clearCart(acc.getAccountID());
 
@@ -122,10 +122,8 @@ boolean a1= orderDAO.clearCart(acc.getAccountID());
 
         // Kiểm tra phương thức thanh toán
         if ("bank".equalsIgnoreCase(payment)) {
-            //  ssuwr lí khi check out = COD = bank
-            response.sendRedirect("vnpay?amount=" + total);
+            response.sendRedirect("vnpay?amount=" + totalAmount);
         } else if ("COD".equalsIgnoreCase(payment)) {
-            //  ssuwr lí khi check out = COD
 request.getRequestDispatcher("/Views/Customer/orderSuccess.jsp").forward(request, response);        }
     }
 

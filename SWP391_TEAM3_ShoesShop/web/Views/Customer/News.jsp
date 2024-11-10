@@ -158,7 +158,7 @@
                                     </div>
                                 </div>
 
-                                <c:if test="${status.index % 3 == 2 || status.last}"> <!-- Sau mỗi 3 phần tử, đóng hàng và mở hàng mới -->
+                                <c:if test="${status.index % 3 == 2 || status.last}"> 
                                 </div><div class="row">
                                 </c:if>
                             </c:forEach>

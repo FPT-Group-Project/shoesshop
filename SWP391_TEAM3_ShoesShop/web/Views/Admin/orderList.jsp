@@ -132,7 +132,11 @@
                                                     </c:choose>
                                                 </td>
 
-                                                <td><a href="orderDetail?orderID=${order.orderID}&accountID=${order.accountID}">View Details</a></td>
+                                                <td>
+    <a href="orderDetail?orderID=${order.orderID}&accountID=${order.accountID}&orderDate=${order.orderDate}&approveDate=${order.approveDate}&sendDate=${order.sendDate}&arrivalDate=${order.arrivalDate}">
+        View Details
+    </a>
+</td>
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${order.statusID == 1}"> <!-- Pending -->
@@ -149,10 +153,7 @@
                                                             </form>
                                                         </c:when>
                                                         <c:when test="${order.statusID == 3}"> <!-- Delivering -->
-                                                            <form action="updateOrderStatus" method="post">
-                                                                <input type="hidden" name="orderID" value="${order.orderID}" />
-                                                                <button type="submit" name="action" value="delivered">Delivered</button>
-                                                            </form>
+                                                            Delivering
                                                         </c:when>
                                                         <c:when test="${order.statusID == 4}"> <!-- Delivered -->
                                                             Delivered
@@ -164,6 +165,7 @@
                                                 </td>
                                             </tr>
                                         </c:forEach>
+
                                     </tbody>
                                 </table>
 

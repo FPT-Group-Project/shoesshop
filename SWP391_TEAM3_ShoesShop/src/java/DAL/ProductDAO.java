@@ -505,6 +505,23 @@ public class ProductDAO extends DBContext {
         return avatarP;
     }
     
+    public boolean checkProductExists(String productName) {
+        boolean exists = false;
+        try {
+            String sql = "SELECT COUNT(*) FROM Product WHERE productName = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, productName);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                exists = count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exists;
+    }
+    
     public class ProductSold {
 
         private Product product;

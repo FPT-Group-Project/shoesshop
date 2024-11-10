@@ -326,7 +326,14 @@
                                                     <span class="shop-name">${order.orderDate}</span>
                                                     <span class="order-id">Order Code: ${order.orderID}</span>
                                                    <span>
-    ${empty order.paymentStatus ? 'Thanh toán khi nhận hàng' : 'Paid'}
+   <c:choose>
+    <c:when test="${empty order.paymentStatus || order.paymentStatus == 'NULL'}">
+        Not paid
+    </c:when>
+    <c:otherwise>
+        Paid
+    </c:otherwise>
+</c:choose>
 </span>
 
 
@@ -355,7 +362,7 @@
                                                                 <span class="product-size">Size: ${detail.size}</span>
                                                                 <span class="product-color">Color: ${detail.color}</span>
                                                                 <span class="product-quantity">Quantity: ${detail.quantity}</span>
-                                                                <span class="product-price">Price: ${detail.unitPrice}₫</span>
+                                                                <span class="product-price">Price: $${detail.unitPrice}</span>
                                                             </div>
                                                         </div>
                                                     </c:forEach>
@@ -363,7 +370,7 @@
 
                                                 <!-- Tổng giá trị đơn hàng -->
                                                 <div class="order-footer">
-                                                    <span class="order-total">Total: ${order.totalPrice}₫</span>
+                                                    <span class="order-total">Total: $${order.totalPrice}</span>
                                                 </div>
 
                                                 <!-- Hành động cho đơn hàng -->
