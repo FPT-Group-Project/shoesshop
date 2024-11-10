@@ -61,7 +61,7 @@
                 <!-- Product ID (hidden) -->
                 <div class="form-row">
                 <input type="hidden" name="productId" value="${product.productId}">
-                </div>z
+                </div>
                 <!-- Product Name -->
                 <div class="form-row">
                     <label for="productName">Product Name:</label>
@@ -115,8 +115,6 @@
                     <p>Current Image: 
                         <img src="${pageContext.request.contextPath}/ImageProductAvt/${product.avatarP}" style="width: 100px;" alt="${product.productName}">
                     </p>
-                    <!-- Lưu đường dẫn ảnh cũ nếu không có ảnh mới được tải lên -->
-                    <input type="hidden" name="currentAvatarPath" value="${product.avatarP}">
                 </div>
 
 

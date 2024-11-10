@@ -1,46 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>Footwear - Free Bootstrap 4 Template by Colorlib</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+        <!-- CSS links -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
-
-        <!-- Animate.css -->
         <link rel="stylesheet" href="css/animate.css">
-        <!-- Icomoon Icon Fonts-->
         <link rel="stylesheet" href="css/icomoon.css">
-        <!-- Ion Icon Fonts-->
         <link rel="stylesheet" href="css/ionicons.min.css">
-        <!-- Bootstrap  -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
-
-        <!-- Magnific Popup -->
         <link rel="stylesheet" href="css/magnific-popup.css">
-
-        <!-- Flexslider  -->
         <link rel="stylesheet" href="css/flexslider.css">
-
-        <!-- Owl Carousel -->
         <link rel="stylesheet" href="css/owl.carousel.min.css">
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
-
-        <!-- Date Picker -->
         <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-        <!-- Flaticons  -->
         <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-        <!-- Theme style  -->
         <link rel="stylesheet" href="css/style.css">
-
     </head>
     <body>
         <div class="container">
-            <!--thanh dieu huong-->
             <nav class="colorlib-nav" role="navigation">
                 <div class="top-menu">
                     <div class="container">
@@ -48,43 +33,68 @@
                             <div class="col-sm-7 col-md-9">
                                 <div id="colorlib-logo"><a href="index.html">Footwear</a></div>
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="col-sm-12 text-left menu-1">
                                 <ul>
                                     <li class="active"><a href="orderList">Back</a></li>
-
-
-
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </nav>
             <h1>Order Detail</h1>
             <div class="tab-content" id="orders-table-tab-content">
                 <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
                     <div class="app-card app-card-orders-table shadow-sm mb-5">
                         <div class="app-card-body">
-
                             <div class="table-responsive">
-                                <!-- Thông tin khách hàng và đơn hàng -->
                                 <h3>Customer & Order Information</h3>
                                 <p><strong>Customer ID:</strong> ${account.accountID}</p>
                                 <p><strong>Customer Name:</strong> ${account.fullName}</p>
                                 <p><strong>Customer Email:</strong> ${account.email}</p>
                                 <p><strong>Customer Phone:</strong> ${account.phoneNumber}</p>
 
-                                <p><strong>Order Date:</strong> ${not empty order.orderDate ? fn:formatDate(order.orderDate, "dd/MM/yyyy") : 'N/A'}</p>
-                                <p><strong>Approve Date:</strong> ${not empty order.approveDate ? fn:formatDate(order.approveDate, "dd/MM/yyyy") : 'N/A'}</p>
-                                <p><strong>Send Date:</strong> ${not empty order.sendDate ? fn:formatDate(order.sendDate, "dd/MM/yyyy") : 'N/A'}</p>
-                                <p><strong>Arrival Date:</strong> ${not empty order.arrivalDate ? fn:formatDate(order.arrivalDate, "dd/MM/yyyy") : 'N/A'}</p>
-                                <p><strong>Address:</strong> ${order.address != null ? order.address : 'N/A'}</p>
+<p><strong>Order Date:</strong> 
+    <c:choose>
+        <c:when test="${not empty param.orderDate}">
+            ${param.orderDate}
+        </c:when>
+        <c:otherwise>N/A</c:otherwise>
+    </c:choose>
+</p>
 
-                                <!-- Chi tiết đơn hàng -->
+<p><strong>Approve Date:</strong> 
+    <c:choose>
+        <c:when test="${not empty param.approveDate}">
+            ${param.approveDate}
+        </c:when>
+        <c:otherwise>N/A</c:otherwise>
+    </c:choose>
+</p>
+
+<p><strong>Send Date:</strong> 
+    <c:choose>
+        <c:when test="${not empty param.sendDate}">
+            ${param.sendDate}
+        </c:when>
+        <c:otherwise>N/A</c:otherwise>
+    </c:choose>
+</p>
+
+<p><strong>Arrival Date:</strong> 
+    <c:choose>
+        <c:when test="${not empty param.arrivalDate}">
+            ${param.arrivalDate}
+        </c:when>
+        <c:otherwise>N/A</c:otherwise>
+    </c:choose>
+</p>
+
+
+ 
+
                                 <h3>Order Details</h3>
                                 <table class="table app-table-hover mb-0 text-left">
                                     <thead>
@@ -93,11 +103,11 @@
                                             <th>Product ID</th>
                                             <th>Stock ID</th>
                                             <th>Quantity</th>
+                                            <th>Price</th>
+
                                             <th>Unit Price</th>
-                                            <th>Avatar</th> <!-- Cột Avatar -->
-                                            <th>Price</th>  <!-- Cột Price -->
-                                            <th>Color</th>  <!-- Cột Color -->
-                                            <th>Size</th>   <!-- Cột Size -->
+                                            <th>Color</th>
+                                            <th>Size</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,19 +118,18 @@
                                                 <td>${detail.stockID}</td>
                                                 <td>${detail.quantity}</td>
                                                 <td>${detail.unitPrice}</td>
-                                                <td>
-                                                    <img src="${productInfoMap[detail.stockID]['avatarP']}" alt="Product Image" width="50" height="50"/>
-                                                </td> <!-- Hiển thị avatarP -->
-                                                <td>${productInfoMap[detail.stockID]['price']}</td> <!-- Hiển thị price -->
-                                                <td>${productInfoMap[detail.stockID]['color']}</td> <!-- Hiển thị color -->
-                                                <td>${productInfoMap[detail.stockID]['size']}</td> <!-- Hiển thị size -->
+
+                                                <td>${productInfoMap[detail.stockID]['price']}</td>
+                                                <td>${colorMap[productInfoMap[detail.stockID]['color']]}</td>
+                                                <td>${sizeMap[productInfoMap[detail.stockID]['size']]}</td>
+
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                            </div><!--//table-responsive-->
-                        </div><!--//app-card-body-->		
-                    </div><!--//app-card-->
+                            </div>
+                        </div>		
+                    </div>
                 </div>
             </div>
         </div>

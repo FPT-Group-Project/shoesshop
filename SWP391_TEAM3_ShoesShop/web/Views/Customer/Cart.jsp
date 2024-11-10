@@ -53,7 +53,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-7 col-md-9">
-                                <div id="colorlib-logo"><a href="home">Footwear</a></div>
+                                <div id="colorlib-logo"><a href="home">Shoes Shop</a></div>
                             </div>
                             <div class="col-sm-5 col-md-3">
                                 <form action="#" class="search-wrap">
@@ -74,7 +74,7 @@
                                     </li>
                                     <li class="active"><a href="orderHistory">Order History</a></li>
                                     
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="contact">Contact</a></li>
                                     <li><a href="ShowNews">News</a></li>
                                     <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [${itemCount}]</a></li>
                                 </ul>
@@ -276,11 +276,11 @@
                                                                          
                                         <div class="total">
                                             <div class="sub">
-                                                <p><span>Subtotal:</span> <span id="subtotal">${total}₫</span></p>
-                                                <p><span>Discount:</span> <span>${coupon.discount}₫</span></p>
+                                                <p><span>Subtotal:</span> <span id="subtotal">$${total}</span></p>
+                                                <p><span>Discount:</span> <span>$${coupon.discount}</span></p>
                                             </div>
                                             <div class="grand-total">
-                                                <p><span><strong>Total:</strong></span> <span id="total">${finalTotal}₫</span></p>
+                                                <p><span><strong>Total:</strong></span> <span id="total">$${finalTotal}</span></p>
                                             </div>
                                         </div>
 

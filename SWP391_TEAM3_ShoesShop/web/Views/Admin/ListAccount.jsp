@@ -76,7 +76,6 @@
                                             <div class="item p-3">
                                                 <div class="row gx-2 justify-content-between align-items-center">
                                                     <div class="col-auto">
-                                                        <img class="profile-image" src="../../assets/images/profiles/profile-1.png" alt="">
                                                     </div><!--//col-->
                                                     <div class="col">
                                                         <div class="info"> 
@@ -159,7 +158,8 @@
                                 <div class="app-utility-item app-user-dropdown dropdown">
                                     <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><img src="../../assets/images/user.png" alt="user profile"></a>
                                     <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-                                        <li><a class="dropdown-item" href="account.html">Account</a></li>
+                                        <li><a class="dropdown-item" href="profile?id=${acc.getAccountID()}
+">Account</a></li>
                                         <li><a class="dropdown-item" href="settings.html">Settings</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="logout">Log Out</a></li>
@@ -175,7 +175,7 @@
                 <div class="sidepanel-inner d-flex flex-column">
                     <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                     <div class="app-branding">
-                        <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="../../assets/images/app-logo.svg" alt="logo"><span class="logo-text">ADMIN PAGE</span></a>
+                        <a class="app-logo" href="index.html"><span class="logo-text">ADMIN PAGE</span></a>
 
                     </div><!--//app-branding-->  
                     <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
@@ -241,32 +241,7 @@
                                     <span class="nav-link-text">List Brand</span>
                                 </a><!--//nav-link-->
                             </li><!--//nav-item-->
-                            <li class="nav-item has-submenu">
-                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
-                                    <span class="nav-icon">
-                                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-files" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M4 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4z"/>
-                                        <path d="M6 0h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1H4a2 2 0 0 1 2-2z"/>
-                                        </svg>
-                                    </span>
-                                    <span class="nav-link-text">Pages</span>
-                                    <span class="submenu-arrow">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                                        </svg>
-                                    </span><!--//submenu-arrow-->
-                                </a><!--//nav-link-->
-                                <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
-                                    <ul class="submenu-list list-unstyled">
-                                        <li class="submenu-item"><a class="submenu-link" href="notifications.html">Notifications</a></li>
-                                        <li class="submenu-item"><a class="submenu-link" href="account.html">Account</a></li>
-                                        <li class="submenu-item"><a class="submenu-link" href="settings.html">Settings</a></li>
-
-                                    </ul>
-                                </div>
-                            </li><!--//nav-item-->
+                           
                             <li class="nav-item">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                 <a class="nav-link " href="ManageNews">
@@ -279,6 +254,40 @@
                                     <span class="nav-link-text">List News</span>
                                 </a><!--//nav-link-->
                             </li>
+                            
+                                                        <li class="nav-item">
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <a class="nav-link" href="orderList">
+                                    <span class="nav-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                        <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
+
+                                        <circle cx="3.5" cy="5.5" r=".5"/>
+                                        <circle cx="3.5" cy="8" r=".5"/>
+                                        <circle cx="3.5" cy="10.5" r=".5"/>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-text">Order List</span>
+                                </a><!--//nav-link-->
+                            </li><!--//nav-item-->
+                            
+                                                        <li class="nav-item">
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <a class="nav-link" href="ConversationListServlet">
+                                    <span class="nav-icon">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                        <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
+
+                                        <circle cx="3.5" cy="5.5" r=".5"/>
+                                        <circle cx="3.5" cy="8" r=".5"/>
+                                        <circle cx="3.5" cy="10.5" r=".5"/>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-text">Chat</span>
+                                </a><!--//nav-link-->
+                            </li><!--//nav-item-->
                             <li class="nav-item has-submenu">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                 <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
@@ -416,7 +425,7 @@
                                     <div class="col-auto">						    
                                         <a class="btn app-btn-secondary" href="manageAccount">
 
-                                            Add New
+                                            Manage Role
                                         </a>
                                     </div>
                                 </div><!--//row-->
@@ -459,8 +468,6 @@
                                                             <td>${account.email}</td> 
                                                             <td>${account.phoneNumber}</td> 
                                                             <td>
-                                                                  <button>  <a class="btn-sm app-btn-danger" href="DeleteAccountController?id=${account.accountID}" onclick="return confirm('Are you sure you want to delete this account?Delete');">Delete</a></button>
-                                                                  <button>  <a class="btn-sm app-btn-danger" href="DeleteProductController?id=${product.productID}" onclick="return confirm('Are you sure you want to delete this product?Delete');">Detail</a></button>                                                               
     <c:choose>
         <c:when test="${account.status == true}">
             <button><a class="btn-sm app-btn-danger" href="BanAccount?id=${account.accountID}" onclick="return confirm('Are you sure you want to ban this account?');">Ban</a></button>
@@ -650,13 +657,7 @@
                 </div><!--//container-fluid-->
             </div><!--//app-content-->
 
-            <footer class="app-footer">
-                <div class="container text-center py-3">
-                    <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-                    <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-
-                </div>
-            </footer><!--//app-footer-->
+            
 
         </div><!--//app-wrapper-->    					
 

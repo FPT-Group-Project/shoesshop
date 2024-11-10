@@ -52,7 +52,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-7 col-md-9">
-                                <div id="colorlib-logo"><a href="home">Footwear</a></div>
+                                <div id="colorlib-logo"><a href="home">Shoes Shop</a></div>
                             </div>
                             <div class="col-sm-5 col-md-3">
                                 <form action="search" method="GET" class="search-wrap">
@@ -76,6 +76,8 @@
                                    
                                     <li><a href="contact">Contact</a></li>
                                     <li><a href="ShowNews">News</a></li>
+                                    <li><a href="CustomerChatServlet">Chat</a></li>
+
                                     <c:if test="${sessionScope.acc==null}">
                                        <li class="login">
                                            <a href="login">Login</a>
@@ -89,7 +91,7 @@
                                            <a href="profile?id=${acc.getAccountID()}">Profile</a>
                                        </li>
                                     </c:if>
-                                    <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+                                    <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -120,34 +122,65 @@
             </nav>
             <!---->
             <aside id="colorlib-hero">
-                <div class="flexslider">
-                    <style>
-                        #banner_slide li:hover{
-                            cursor: pointer;
-                        }
-                    </style>
-                    <ul class="slides" id="banner_slide">
-                        <c:forEach items="${banners}" var="ba">
-                            <li style="background-image: url('ImageBanner/${ba.getImage()}');" onclick="location.href='${ba.getLink()}'">
-                                <div class="overlay"></div>
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-sm-6 offset-sm-3 text-center slider-text">
-                                            <div class="slider-text-inner">
-                                                <div class="desc">
-                                                    <p><a href="products" class="btn btn-primary">Shop All Products</a></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-
-
-                        </c:forEach>
-                    </ul>
-                </div>
-            </aside>
+			<div class="flexslider">
+				<ul class="slides">
+			   	<li style="background-image: url(https://bizweb.dktcdn.net/100/347/092/themes/708609/assets/banner_project_1.jpg?1728199294144);">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+				   			<div class="col-sm-6 offset-sm-3 text-center slider-text">
+				   				<div class="slider-text-inner">
+				   					<div class="desc">
+					   					<h1 class="head-1">Men's</h1>
+					   					<h2 class="head-2">Shoes</h2>
+					   					<h2 class="head-3">Collection</h2>
+					   					<p class="category"><span>New trending shoes</span></p>
+					   					<p><a href="#" class="btn btn-primary">Shop Collection</a></p>
+				   					</div>
+				   				</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+			   	<li style="background-image: url(https://file.hstatic.net/200000174405/collection/19238246_1997064527179566_5473797071884482645_o_ff15685be80c4d21973dcb914398e04f.jpg);">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+				   			<div class="col-sm-6 offset-sm-3 text-center slider-text">
+				   				<div class="slider-text-inner">
+				   					<div class="desc">
+					   					<h1 class="head-1">Huge</h1>
+					   					<h2 class="head-2">Sale</h2>
+					   					<h2 class="head-3"><strong class="font-weight-bold">50%</strong> Off</h2>
+					   					<p class="category"><span>Big sale sandals</span></p>
+					   					<p><a href="#" class="btn btn-primary">Shop Collection</a></p>
+				   					</div>
+				   				</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+			   	<li style="background-image: url(https://p-vn.ipricegroup.com/media/1Ly/banner_01.jpg);">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+				   			<div class="col-sm-6 offset-sm-3 text-center slider-text">
+				   				<div class="slider-text-inner">
+				   					<div class="desc">
+					   					<h1 class="head-1">New</h1>
+					   					<h2 class="head-2">Arrival</h2>
+					   					<h2 class="head-3">up to <strong class="font-weight-bold">30%</strong> off</h2>
+					   					<p class="category"><span>New stylish shoes for men</span></p>
+					   					<p><a href="#" class="btn btn-primary">Shop Collection</a></p>
+				   					</div>
+				   				</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+			  	</ul>
+		  	</div>
+		</aside>
             <div class="colorlib-intro">
                 <div class="container">
                     <div class="row">
@@ -305,12 +338,7 @@
                 <div class="copy">
                     <div class="row">
                         <div class="col-sm-12 text-center">
-                            <p>
-                                <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
-                                <span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
-                            </p>
+                            
                         </div>
                     </div>
                 </div>

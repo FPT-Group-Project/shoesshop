@@ -101,6 +101,12 @@
                 <div class="form-row text-center">
                     <input type="submit" value="Add Product" class="btn btn-primary">
                 </div>
+                    
+                    <% if (request.getAttribute("errorMessage") != null) { %>
+                <div class="alert alert-danger">
+                    <%= request.getAttribute("errorMessage") %>
+                </div>
+                <% } %>
 
                 <% if (request.getAttribute("successMessage") != null) { %>
                 <div class="alert alert-success">

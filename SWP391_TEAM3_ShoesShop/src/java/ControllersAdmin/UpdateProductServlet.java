@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Paths;
 
 /**
  *
@@ -37,21 +39,32 @@ public class UpdateProductServlet extends HttpServlet {
         String description = request.getParameter("description");
         double price = Double.parseDouble(request.getParameter("price"));
         int brandId = Integer.parseInt(request.getParameter("brandId"));
-        Part avatarP = request.getPart("avatarP");
+        Part filePart = request.getPart("avatarP");
+    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Lấy tên tệp
 
         // Xử lý ảnh (nếu có thay đổi)
-        String avatarPath = null;
-        if (avatarP != null && avatarP.getSize() > 0) {
-            avatarPath = "ImageProductAvt/" + avatarP.getSubmittedFileName();
-            avatarP.write(getServletContext().getRealPath("") + "/ImageProductAvt/" + avatarP.getSubmittedFileName());
-        } else {
-            avatarPath = request.getParameter("currentAvatarPath");  // Lấy đường dẫn ảnh cũ nếu không chọn ảnh mới
+//        String avatarPath = null;
+//        if (avatarP != null && avatarP.getSize() > 0) {
+//            avatarPath = "ImageProductAvt/" + avatarP.getSubmittedFileName();
+//            avatarP.write(getServletContext().getRealPath("") + "/ImageProductAvt/" + avatarP.getSubmittedFileName());
+//        } else {
+//            avatarPath = request.getParameter("currentAvatarPath");  // Lấy đường dẫn ảnh cũ nếu không chọn ảnh mới
+//        }
+String uploadPath = getServletContext().getRealPath("/ImageProductAvt");
+
+        // tạo thư mục nếu chưa tồn tại
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
         }
+        String filePath = uploadPath + File.separator + fileName;
+            filePart.write(filePath);
+        String avatarP =  fileName;
 
         // Cập nhật sản phẩm trong cơ sở dữ liệu
         ProductDAO productDAO = new ProductDAO();
         // Tạo đối tượng Product để cập nhật
-        Product product = new Product(productId, productName, description, price, brandId, avatarPath);
+        Product product = new Product(productId, productName, description, price, brandId, avatarP);
         productDAO.updateProduct(product);
 
         // Sau khi cập nhật xong, chuyển hướng về trang quản lý sản phẩm

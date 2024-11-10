@@ -95,6 +95,35 @@ public class UsedCouponDAO extends DBContext{
                 System.out.println("Coupon with code " + codeName + " not found.");
             }
         } 
+    
+public void addCoupon(UsedCoupon coupon) throws SQLException {
+    String sql = "INSERT INTO UsedCoupons (CodeName, Discount, CouponType, Quantity) VALUES (?, ?, ?, ?)";
+
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setString(1, coupon.getCodeName());
+        ps.setDouble(2, coupon.getDiscount());
+        ps.setString(3, coupon.getCouponType());
+        ps.setInt(4, coupon.getQuantity());
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        throw new SQLException("Lỗi khi thêm mã giảm giá: " + e.getMessage(), e);
+    }
+}
+
+public boolean isCouponCodeExists(String codeName) {
+        String sql = "SELECT COUNT(*) FROM UsedCoupons WHERE CodeName = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, codeName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;  // Nếu COUNT > 0, mã giảm giá đã tồn tại
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;  // Nếu không có mã giảm giá trùng
+    }
+
         }
     
 

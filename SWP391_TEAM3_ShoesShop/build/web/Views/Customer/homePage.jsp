@@ -77,7 +77,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-7 col-md-9">
-                                <div id="colorlib-logo"><a href="home">Footwear</a></div>
+                                <div id="colorlib-logo"><a href="home">Shoes Shop</a></div>
                             </div>
                             <div class="col-sm-5 col-md-3">
                                 <form action="search" method="GET" class="search-wrap">
@@ -94,26 +94,29 @@
                                 <ul>
                                     <li class="active"><a href="home">Home</a></li>
                                     <li class="has-dropdown">
-                                        <a href="WishlistControl">Whishlist</a>
+                                        <a href="products?page=1">Product</a>
                                         
                                     </li>
                                     <li><a href="orderHistory">Order History</a></li>
-                                    
+                                   
                                     <li><a href="contact">Contact</a></li>
-                                        <c:if test="${sessionScope.acc==null}">
-                                        <li class="login">
-                                            <a href="login">Login</a>
-                                        </li>
+                                    <li><a href="ShowNews">News</a></li>
+                                    <li><a href="CustomerChatServlet">Chat</a></li>
+
+                                    <c:if test="${sessionScope.acc==null}">
+                                       <li class="login">
+                                           <a href="login">Login</a>
+                                       </li>
                                     </c:if>
                                     <c:if test="${sessionScope.acc!=null}">
-                                        <li class="logout">
-                                            <a href="logout">Logout</a>
-                                        </li>
-                                        <li class="profile">
-                                            <a href="profile?id=${acc.getAccountID()}">Profile</a>
-                                        </li>
+                                       <li class="logout">
+                                           <a href="logout">Logout</a>
+                                       </li>
+                                       <li class="profile">
+                                           <a href="profile?id=${acc.getAccountID()}">Profile</a>
+                                       </li>
                                     </c:if>
-                                    <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+                                    <li class="cart"><a href="cart"><i class="icon-shopping-cart"></i> Cart</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -228,7 +231,7 @@
     <div class="col-lg-3 mb-4 text-center">
         <div class="product-entry border" style="position: relative;"> <!-- Thêm position: relative -->
             <a href="productDetail?id=${p.getProductId()}" class="prod-img">
-                <img src="ImageProductAvt/${p.getAvatarP()}" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                <img src="${pageContext.request.contextPath}/ImageProductAvt/${p.getAvatarP()}" class="img-fluid">
             </a>
             <div class="wishlist-icon">
                 <a href="addWishlist?id=${p.getProductId()}" title="Add to Wishlist">

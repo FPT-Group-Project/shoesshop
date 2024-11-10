@@ -52,7 +52,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-7 col-md-9">
-                                <div id="colorlib-logo"><a href="home">Footwear</a></div>
+                                <div id="colorlib-logo"><a href="home">Shoes Shop</a></div>
                             </div>
                             <div class="col-sm-5 col-md-3">
                                 <form action="#" class="search-wrap">
@@ -186,10 +186,10 @@
                 <h2>Cart Total</h2>
                 <ul>
                     <li>
-                        <span>Subtotal</span> <span>${finalTotal}₫</span>
+                        <span>Subtotal</span> <span>$${finalTotal}</span>
                     </li>
-                    <li><span>Shipping</span> <span>${shipping}₫</span></li>
-                    <li><span>Order Total</span> <span>${finalTotal}₫</span></li>
+                    <li><span>Shipping</span> <span>$${shipping}</span></li>
+                    <li><span>Order Total</span> <span>$${finalTotal}</span></li>
                     <input type="hidden" name="total" value="${finalTotal}"> <!-- Đảm bảo giá trị tổng được gửi đi -->
                 </ul>
             </div>
