@@ -450,9 +450,10 @@
                                             "data": {
                                                 "labels": ["Sunday", "Saturday", "Friday", "Thursday", "Wednesday", "Tuesday", "Monday"],
                                                 "datasets": [{
-                                                        "label": "Quantity",
+                                                        "label": "Revenue $",
                                                         "data": [${totalMoney1}, ${totalMoney7}, ${totalMoney6}, ${totalMoney5}, ${totalMoney4}, ${totalMoney3}, ${totalMoney2}],
-                                                        "fill": false,/-strong/-heart:>:o:-((:-h "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
+                                                        "fill": false,
+                                                        "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
                                                             "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
                                                             "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"
                                                         ],
@@ -472,6 +473,10 @@
                                                 }
                                             }
                                         });
+                                        function getYear(obj) {
+                                            var year = obj.value;
+                                            document.getElementById("f1").submit();
+                                        }
 
                                         function submitForm(obj) {
                                             var year = document.getElementById("dropdownYear").value;
@@ -489,7 +494,8 @@
                                             document.getElementById("to").value = endDay;
                                             document.getElementById("month").value = monthNumber;
                                             document.getElementById("f1").submit();
-                                        }/-strong/-heart:>:o:-((:-h function getDateFromWeek(year, week) {
+                                        }
+                                        function getDateFromWeek(year, week) {
                                             const januaryFourth = new Date(year, 0, 4);
                                             const daysToAdd = (week - 1) * 7;
                                             januaryFourth.setDate(januaryFourth.getDate() + daysToAdd - januaryFourth.getDay() + 1);

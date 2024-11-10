@@ -25,25 +25,21 @@ public boolean deleteProductById(int productID) {
     try {
         connection.setAutoCommit(false); // Bắt đầu giao dịch
 
-        // Bước 1: Xóa các bản ghi trong bảng Product_Image trước
         try (PreparedStatement stmt = connection.prepareStatement(deleteFromProductImage)) {
             stmt.setInt(1, productID);
             stmt.executeUpdate();
         }
 
-        // Bước 2: Xóa các bản ghi trong bảng ProductStock
         try (PreparedStatement stmt = connection.prepareStatement(deleteFromProductStock)) {
             stmt.setInt(1, productID);
             stmt.executeUpdate();
         }
 
-        // Bước 3: Xóa các bản ghi trong bảng OrderDetail
         try (PreparedStatement stmt = connection.prepareStatement(deleteFromOrderDetail)) {
             stmt.setInt(1, productID);
             stmt.executeUpdate();
         }
 
-        // Bước 4: Xóa các bản ghi trong bảng Feedback
         try (PreparedStatement stmt = connection.prepareStatement(deleteFromFeedback)) {
             stmt.setInt(1, productID);
             stmt.executeUpdate();
@@ -51,7 +47,6 @@ public boolean deleteProductById(int productID) {
 
        
 
-        // Bước 6: Xóa các bản ghi trong bảng Cart
         try (PreparedStatement stmt = connection.prepareStatement(deleteFromCart)) {
             stmt.setInt(1, productID);
             stmt.executeUpdate();
@@ -71,22 +66,22 @@ public boolean deleteProductById(int productID) {
             }
         }
 
-        connection.commit(); // Xác nhận giao dịch
+        connection.commit(); 
     } catch (SQLException e) {
-        e.printStackTrace(); // Xử lý lỗi
+        e.printStackTrace(); 
         try {
-            connection.rollback(); // Hoàn tác giao dịch nếu có lỗi
+            connection.rollback(); 
         } catch (SQLException rollbackEx) {
             rollbackEx.printStackTrace();
         }
     } finally {
         try {
-            connection.setAutoCommit(true); // Đặt lại chế độ tự động cam kết
+            connection.setAutoCommit(true); 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    return false; // Trả về false nếu không xóa thành công
+    return false; 
 }
 
 public void deleteBrandById(int brandID) {
@@ -486,24 +481,19 @@ public List<ProductAdmin> getProductListForAdmin1(int page, Integer brandID) {
             return p;
         }
       public static void main(String[] args) {
-        // Khởi tạo đối tượng DAO để quản lý sản phẩm
         ListProductAdminDao productAdminDao = new ListProductAdminDao();
 
-        // Xác định ID sản phẩm cần xóa
-        int productIDToDelete = 3; // Thay đổi ID theo sản phẩm bạn muốn xóa
+        int productIDToDelete = 3; 
 
         try {
-            // Gọi phương thức deleteProductById để xóa sản phẩm
             boolean isDeleted = productAdminDao.deleteProductById(productIDToDelete);
 
-            // Kiểm tra kết quả và in ra thông báo
             if (isDeleted) {
                 System.out.println("Sản phẩm với ID " + productIDToDelete + " đã được xóa thành công.");
             } else {
                 System.out.println("Không tìm thấy sản phẩm với ID " + productIDToDelete + ".");
             }
         } catch (Exception e) {
-            // Xử lý ngoại lệ
             System.err.println("Đã xảy ra lỗi khi xóa sản phẩm: " + e.getMessage());
             e.printStackTrace();
         }

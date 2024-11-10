@@ -150,12 +150,13 @@
                         <div class="row">
                             <c:forEach var="news" items="${newsList}" varStatus="status">
                                 <div class="col-md-4"> <!-- Mỗi phần tử tin tức chiếm 1/3 chiều rộng -->
+                                    <div class="row">
                                     <div class="about-wrap row-pb-lg"> 
                                         <div>
-                                            <img src="${pageContext.request.contextPath}/ImageNews/${news.image}" alt="${news.title}" style="width: 100%; height: auto;" />
+                                            <img src="${pageContext.request.contextPath}/ImageNews/${news.image}" alt="${news.title}" style="width: 100%; height: 250px;" />
                                         </div>
                                         <h3> <a href="NewsDetailController?id=${news.newsID}">${news.title}</a></h3>
-                                    </div>
+                                    </div></div>
                                 </div>
 
                                 <c:if test="${status.index % 3 == 2 || status.last}"> 
@@ -171,8 +172,7 @@
                         <c:forEach var="topNews" items="${newsListTop5}">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <img src="${pageContext.request.contextPath}/ImageNews/mwc.jpg" alt="${topNews.title}" style="width: 100%; height: auto;" />
-                                </div>
+ <img src="${pageContext.request.contextPath}/ImageNews/${topNews.image}" alt="${topNews.title}" style="width: 40px;" />                                </div>
                                 <div class="col-md-8">
                                     <div class="top-news-item">
                                         <h4> <a href="NewsDetailController?id=${topNews.newsID}">${topNews.title}</a></h4>

@@ -232,13 +232,11 @@ public int addOrder22(int accountId, List<Cart> carts, String address, String pa
 
         int rowsAffected = pre.executeUpdate();
 
-        // Lấy OrderID từ generated keys
         ResultSet generatedKeys = pre.getGeneratedKeys();
         if (generatedKeys.next()) {
             orderId = generatedKeys.getInt(1);
         }
 
-        // Thêm chi tiết đơn hàng vào bảng OrderDetail nếu đơn hàng đã được thêm thành công
         if (orderId != -1) {
             for (Cart cart : carts) {
                 PreparedStatement ps = connection.prepareStatement(
@@ -254,7 +252,6 @@ public int addOrder22(int accountId, List<Cart> carts, String address, String pa
                 
             }
 
-            // Xóa giỏ hàng của người dùng sau khi tạo đơn hàng thành công
             PreparedStatement od = connection.prepareStatement("DELETE FROM [Cart] WHERE AccountID = ?");
             od.setInt(1, accountId);
             od.executeUpdate();
@@ -324,7 +321,6 @@ public int addOrder(int accountId, String address, double total, String payment)
         int rowsAffected = pre.executeUpdate();
 
         if (rowsAffected > 0) {
-            // Sử dụng câu lệnh truy vấn riêng để lấy ID của đơn hàng vừa thêm
             String selectSql = "SELECT MAX(OrderID) FROM [Order]";
             PreparedStatement ps = connection.prepareStatement(selectSql);
             ResultSet rs = ps.executeQuery();

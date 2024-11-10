@@ -13,10 +13,10 @@ public class ProductStockDAO {
     private final DBContext dbContext;
 
     public ProductStockDAO(DBContext dbContext) {
-        this.dbContext = dbContext; // Sử dụng DBContext có sẵn
+        this.dbContext = dbContext; 
     }
 
-    // Cập nhật số lượng trong bảng ProductStock
+  
     public boolean updateProductStock(ProductStock productStock) {
         String sql = "UPDATE ProductStock SET quantity = ? WHERE ProductID = ? AND SizeID = ? AND ColorID = ?";
         try {
@@ -55,16 +55,16 @@ public class ProductStockDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ProductStock stock = new ProductStock();
-                stock.setProductID(productId); // Set ProductID
-                stock.setSizeID(rs.getInt("SizeID")); // Set SizeID từ kết quả truy vấn
-                stock.setColorID(rs.getInt("ColorID")); // Set ColorID từ kết quả truy vấn
-                stock.setQuantity(rs.getInt("Quantity")); // Set Quantity từ kết quả truy vấn
+                stock.setProductID(productId); 
+                stock.setSizeID(rs.getInt("SizeID")); 
+                stock.setColorID(rs.getInt("ColorID")); 
+                stock.setQuantity(rs.getInt("Quantity")); 
                 productStocks.add(stock); // Thêm vào danh sách
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return productStocks; // Trả về danh sách ProductStock
+        return productStocks; 
     }
 
 public int getQuantityByProductSizeColor(int productID, int sizeID, int colorID) {

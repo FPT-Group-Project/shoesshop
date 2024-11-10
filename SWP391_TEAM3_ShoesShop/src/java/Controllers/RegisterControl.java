@@ -105,8 +105,8 @@ public class RegisterControl extends HttpServlet {
             request.setAttribute("name", name);
             request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
         } 
-        else if (repass != pass){
-            request.setAttribute("error", "Repass must be the same as password");
+        else if (repass == pass){
+            request.setAttribute("error", "Repass must not be the same as password");
             request.setAttribute("user", user);
             request.setAttribute("name", name);
             request.getRequestDispatcher("Views/Customer/Register.jsp").forward(request, response);
