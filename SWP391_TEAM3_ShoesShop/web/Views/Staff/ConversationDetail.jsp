@@ -98,7 +98,8 @@
                     <td>
                         <!-- Hiển thị thông tin khách hàng -->
                         <div class="customer-info">
-                            <h3>Khách hàng: ${customer.fullName}</h3>
+                            <h3>Customer: ${customer.fullName}</h3>
+                            <h2>Contact:</h2>
                             <p>Email: ${customer.email}</p>
                             <p>Phone number: ${customer.phoneNumber}</p>
                         </div>

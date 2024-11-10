@@ -53,7 +53,7 @@ public class OrderDAO2 extends DBContext {
     }
 
     public void confirmOrder(int orderId) {
-        int newStatusId = 3; // Trạng thái mới, 3 nghĩa là đã nhận được hàng
+        int newStatusId = 4; // Trạng thái mới, 3 nghĩa là đã nhận được hàng
         String query = "UPDATE [dbo].[Order] SET StatusID = ? WHERE OrderID = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
